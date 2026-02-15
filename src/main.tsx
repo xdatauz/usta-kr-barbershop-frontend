@@ -1,8 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
-
+import { HelmetProvider } from "react-helmet-async";
 import App from "./app/App";
 
 import "./index.css";
@@ -10,10 +9,10 @@ import "./styles/global.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
-		<HelmetProvider>
-			<BrowserRouter>
+		<BrowserRouter>
+			<HelmetProvider>
 				<App />
-			</BrowserRouter>
-		</HelmetProvider>
+			</HelmetProvider>
+		</BrowserRouter>
 	</React.StrictMode>,
 );

@@ -1,7 +1,9 @@
-// src/widgets/Navbar.tsx
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Instagram, Send, Menu, X, Phone } from "lucide-react";
+import { Instagram, Send, Menu, X, Phone, ExternalLink } from "lucide-react";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { ThemeToggle } from "../../ui/ThemeToggle";
+import { UserProfileMenu } from "../../ui/UserProfile";
 
 interface NavbarProps {
 	scrolled: boolean;
@@ -10,22 +12,32 @@ interface NavbarProps {
 const Navbar = ({ scrolled }: NavbarProps) => {
 	const location = useLocation();
 	const [isOpen, setIsOpen] = useState(false);
+	const locale = location.pathname.split("/")[1] || "uz";
+
+	const currentUser = {
+		_id: "123",
+		userType: "USER" as "USER" | "ADMIN",
+	};
+
+	const logoutHandler = () => {
+		console.log("Logging out...");
+	};
 
 	const navItems = [
-		{ name: "Home", path: "/" },
-		{ name: "Services", path: "/services" },
-		{ name: "Gallery", path: "/gallery" },
-		{ name: "About", path: "/about" },
-		{ name: "Contact", path: "/contact" },
+		{ name: "Home", path: "" },
+		{ name: "Services", path: "services" },
+		{ name: "Gallery", path: "gallery" },
+		{ name: "About", path: "about" },
+		{ name: "Contact", path: "contact" },
 	];
 
 	return (
 		<header
-			className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-				scrolled ? "bg-black shadow-md py-3" : "bg-black/90 backdrop-blur-md py-5"
+			className={`w-full fixed top-0 z-50 transition-all duration-300 ${
+				scrolled ? "bg-gray-800 shadow-md py-3" : "bg-gray-900 backdrop-blur-md py-5"
 			}`}
 		>
-			<div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+			<div className="navbar-container mx-auto px-6 flex items-center justify-between">
 				{/* LOGO */}
 				<Link to="/" className="text-2xl font-bold tracking-widest text-white">
 					USTA <span className="text-green-600">BARBER</span>
@@ -34,55 +46,63 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 				{/* DESKTOP NAV */}
 				<nav className="hidden lg:flex items-center gap-8">
 					{navItems.map((item) => {
-						const isActive = item.path === "/" ? location.pathname === "/" : location.pathname.startsWith(item.path);
+						const isActive =
+							item.path === ""
+								? location.pathname === `/${locale}`
+								: location.pathname.startsWith(`/${locale}/${item.path}`);
 
 						return (
 							<Link
 								key={item.name}
-								to={item.path}
+								to={`/${locale}${item.path ? `/${item.path}` : ""}`}
 								className={`relative font-medium transition duration-300 ${
 									isActive ? "text-green-600" : "text-white hover:text-green-600"
 								}`}
 							>
 								{item.name}
-								{/* Underline */}
-								<span
-									className={`absolute left-0 -bottom-1 h-[2px] bg-green-600 transition-all duration-300 ${
-										isActive ? "w-full" : "w-0 group-hover:w-full"
-									}`}
-								/>
 							</Link>
 						);
 					})}
 
-					{/* CALL BUTTON */}
-					<a
-						href="tel:+998901234567"
-						className="flex items-center gap-2 bg-green-600 text-white px-5 py-2.5 rounded-md hover:bg-green-700 transition duration-300"
-					>
-						<Phone className="w-4 h-4" />
-						Book Now
-					</a>
+					{/* THEME TOGGLE */}
+					<ThemeToggle />
+
+					{/* LANGUAGE SWICHTER */}
+					<LanguageSwitcher />
 
 					{/* SOCIALS */}
 					<div className="flex items-center gap-4 pl-6 border-l border-neutral-700/50">
 						<a
-							href="https://instagram.com/"
+							href="https://www.instagram.com/usta_2019"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="text-white hover:text-green-600 transition"
 						>
 							<Instagram className="w-5 h-5" />
 						</a>
-
 						<a
-							href="https://t.me/"
+							href="https://t.me/usta_2019"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="text-white hover:text-green-600 transition"
 						>
 							<Send className="w-5 h-5" />
 						</a>
+						<a
+							href="https://www.usta.best"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-white hover:text-green-600 transition"
+						>
+							<ExternalLink className="w-5 h-5" />
+            </a>
+            
+            {/* TODO: Shu qismiga keldim */}
+						{/* <UserProfileMenu
+							currentUser={currentUser}
+							closeMenuHandler={() => setIsOpen(false)}
+							logoutHandler={logoutHandler}
+						/> */}
 					</div>
 				</nav>
 

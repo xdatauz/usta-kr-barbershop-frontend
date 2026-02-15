@@ -1,26 +1,23 @@
-import { Routes, Route } from "react-router-dom";
-import withLayoutHome from "../layouts/withLayoutHome";
-
+import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "../pages/Home";
-import Services from "../pages/Services";
+import ServicePage from "../pages/Services";
 import GalleryPage from "../pages/Gallery";
 import AboutPage from "../pages/About";
 import ContactPage from "../pages/Contact";
 
 const AppRouter = () => {
-	const Home = withLayoutHome(HomePage);
-	const ServicesPage = withLayoutHome(Services);
-	const Gallery = withLayoutHome(GalleryPage);
-	const About = withLayoutHome(AboutPage);
-	const Contact = withLayoutHome(ContactPage);
-
 	return (
 		<Routes>
-			<Route path="/" element={<Home />} />
-			<Route path="/services" element={<ServicesPage />} />
-			<Route path="/gallery" element={<Gallery />} />
-			<Route path="/about" element={<About />} />
-			<Route path="/contact" element={<Contact />} />
+			{/* Redirect root to default language */}
+			<Route path="/" element={<Navigate to="/uz" replace />} />
+
+			<Route path="/:locale">
+				<Route index element={<HomePage />} />
+				<Route path="services" element={<ServicePage />} />
+				<Route path="gallery" element={<GalleryPage />} />
+				<Route path="about" element={<AboutPage />} />
+				<Route path="contact" element={<ContactPage />} />
+			</Route>
 		</Routes>
 	);
 };

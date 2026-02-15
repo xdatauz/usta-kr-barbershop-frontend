@@ -1,6 +1,4 @@
 const HomeHero = () => {
-  return (
-    <div>HomeHero</div>
-  )
-}
-export default HomeHero
+	return <div className="">HomeHero</div>;
+};
+export default HomeHero;
