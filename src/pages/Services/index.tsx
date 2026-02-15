@@ -90,10 +90,41 @@ const ServicePage = ({ preview = false }: ServicePageProps) => {
 				<div className="mt-5 flex justify-end">
 					<Link
 						to={`/${locale}/services`}
+						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 						className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-slate-500 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-950/60 dark:text-slate-100 dark:hover:border-slate-400"
 					>
 						{t("common.more")}
 					</Link>
+				</div>
+			)}
+
+			{!preview && (
+				<div className="mt-8 grid gap-4 lg:grid-cols-3">
+					<div className="rounded-2xl border border-slate-300/70 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950/60">
+						<h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{t("servicesSection.extras.processTitle")}</h3>
+						<ul className="mt-3 space-y-2 text-sm text-slate-700 dark:text-slate-300">
+							<li>1. {t("servicesSection.extras.processOne")}</li>
+							<li>2. {t("servicesSection.extras.processTwo")}</li>
+							<li>3. {t("servicesSection.extras.processThree")}</li>
+						</ul>
+					</div>
+
+					<div className="rounded-2xl border border-slate-300/70 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950/60">
+						<h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{t("servicesSection.extras.popularTitle")}</h3>
+						<p className="mt-2 text-sm text-slate-700 dark:text-slate-300">{t("servicesSection.extras.popularText")}</p>
+						<img src="/images/hairstyle/3.webp" alt={t("servicesSection.extras.popularTitle")} className="mt-3 h-40 w-full rounded-xl object-cover" />
+					</div>
+
+					<div className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-4 dark:bg-emerald-500/15">
+						<h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{t("servicesSection.extras.memberTitle")}</h3>
+						<p className="mt-2 text-sm text-slate-700 dark:text-slate-200">{t("servicesSection.extras.memberText")}</p>
+						<Link
+							to={`/${locale}/contact`}
+							className="mt-4 inline-flex rounded-lg bg-slate-900 px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white dark:bg-slate-100 dark:text-slate-900"
+						>
+							{t("servicesSection.bookNow")}
+						</Link>
+					</div>
 				</div>
 			)}
 		</section>

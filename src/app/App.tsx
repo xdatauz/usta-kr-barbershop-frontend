@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 import Navbar from "../components/shared/Navbar";
 import Footer from "../components/shared/Footer";
 import { ThemeProvider } from "../context/theme/theme-provider";
 
 export default function App() {
 	const { t, i18n } = useTranslation();
+	const location = useLocation();
 	const [scrolled, setScrolled] = useState(false);
 
 	useEffect(() => {
@@ -16,6 +18,10 @@ export default function App() {
 		window.addEventListener("scroll", onScroll);
 		return () => window.removeEventListener("scroll", onScroll);
 	}, []);
+
+	useEffect(() => {
+		window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+	}, [location.pathname]);
 
 	return (
 		<>

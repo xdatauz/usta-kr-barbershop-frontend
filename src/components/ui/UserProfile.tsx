@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 interface UserProfileMenuProps {
 	currentUser?: {
-		_id: string;
+		id: string;
 		userType: "ADMIN" | "USER";
 		image?: string | null;
 		avatar?: string | null;
@@ -14,6 +14,7 @@ interface UserProfileMenuProps {
 		name?: string;
 	};
 	locale?: string;
+	onAuthOpen?: () => void;
 	closeMenuHandler?: () => void;
 	logoutHandler: () => void;
 }
@@ -21,6 +22,7 @@ interface UserProfileMenuProps {
 export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
 	currentUser,
 	locale,
+	onAuthOpen,
 	closeMenuHandler,
 	logoutHandler,
 }) => {
@@ -75,12 +77,13 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
 
 	if (!currentUser) {
 		return (
-			<Link
-				to={buildPath("/login")}
+			<button
+				type="button"
+				onClick={onAuthOpen}
 				className="rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-700 transition-colors hover:border-slate-500 hover:bg-slate-100 md:text-base dark:border-slate-700 dark:text-slate-100 dark:hover:border-slate-400 dark:hover:bg-slate-900"
 			>
 				{t("profile.signIn")}
-			</Link>
+			</button>
 		);
 	}
 
@@ -107,14 +110,14 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
 			{isOpen && (
 				<div className="absolute right-0 top-full z-50 mt-2 min-w-56 rounded-lg border border-slate-300 bg-white p-2 shadow-xl dark:border-slate-700 dark:bg-slate-900">
 					<Link
-						to={buildPath(`/user/my-page?userId=${currentUser._id}`)}
+						to={buildPath("/profile")}
 						className="block rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 md:text-base dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white"
 						onClick={closeDropdown}
 					>
 						{t("profile.myProfile")}
 					</Link>
 					<Link
-						to={buildPath("/user/last-visited")}
+						to={buildPath("/gallery")}
 						className="block rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 md:text-base dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white"
 						onClick={closeDropdown}
 					>
@@ -133,21 +136,21 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
 						</Link>
 					)}
 					<Link
-						to={buildPath("/user/barbers")}
+						to={buildPath("/services")}
 						className="block rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 md:text-base dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white"
 						onClick={closeDropdown}
 					>
 						{t("profile.myBarbers")}
 					</Link>
 					<Link
-						to={buildPath("/user/notifications")}
+						to={buildPath("/about")}
 						className="block rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 md:text-base dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white"
 						onClick={closeDropdown}
 					>
 						{t("profile.notifications")}
 					</Link>
 					<Link
-						to={buildPath("/user/cs")}
+						to={buildPath("/contact")}
 						className="block rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 md:text-base dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white"
 						onClick={closeDropdown}
 					>

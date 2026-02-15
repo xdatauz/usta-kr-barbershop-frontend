@@ -172,7 +172,7 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 										className="inline-flex items-center gap-2 rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] transition hover:border-slate-500 dark:border-slate-600 dark:hover:border-slate-400"
 									>
 										<Instagram className="h-3.5 w-3.5" />
-										Instagram
+										{t("social.instagram")}
 									</a>
 									<a
 										href="https://t.me/usta_2019"
@@ -181,7 +181,7 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 										className="inline-flex items-center gap-2 rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] transition hover:border-slate-500 dark:border-slate-600 dark:hover:border-slate-400"
 									>
 										<Send className="h-3.5 w-3.5" />
-										Telegram
+										{t("social.telegram")}
 									</a>
 								</div>
 							</div>
@@ -204,10 +204,31 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 				<div className="mt-5 flex justify-end">
 					<Link
 						to={`/${locale}/contact`}
+						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 						className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 transition hover:border-slate-500 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-950/60 dark:text-slate-100 dark:hover:border-slate-400"
 					>
 						{t("common.more")}
 					</Link>
+				</div>
+			)}
+
+			{!preview && (
+				<div className="mt-8 grid gap-4 lg:grid-cols-2">
+					<div className="rounded-2xl border border-slate-300/70 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950/60">
+						<h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{t("contactSection.extras.faqTitle")}</h3>
+						<div className="mt-3 space-y-3 text-sm text-slate-700 dark:text-slate-300">
+							<p><strong>{t("contactSection.extras.faqOneQ")}</strong><br />{t("contactSection.extras.faqOneA")}</p>
+							<p><strong>{t("contactSection.extras.faqTwoQ")}</strong><br />{t("contactSection.extras.faqTwoA")}</p>
+						</div>
+					</div>
+					<div className="rounded-2xl border border-slate-300/70 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950/60">
+						<h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{t("contactSection.extras.tipsTitle")}</h3>
+						<ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
+							<li>{t("contactSection.extras.tipOne")}</li>
+							<li>{t("contactSection.extras.tipTwo")}</li>
+							<li>{t("contactSection.extras.tipThree")}</li>
+						</ul>
+					</div>
 				</div>
 			)}
 		</section>

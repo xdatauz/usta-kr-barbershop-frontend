@@ -95,6 +95,16 @@
         "price": "190,000 UZS",
         "duration": "50분"
       }
+    },
+    "extras": {
+      "processThree": "수염/디테일 마무리 및 최종 확인",
+      "memberText": "월간 멤버십으로 우선 예약과 패키지 할인 혜택을 받을 수 있습니다.",
+      "processOne": "간단한 상담 및 스타일 선택",
+      "processTitle": "방문 진행 과정",
+      "popularText": "스킨 페이드 + 수염 스타일링은 가장 많이 요청되는 조합입니다.",
+      "popularTitle": "가장 인기 있는 조합",
+      "memberTitle": "멤버십 혜택",
+      "processTwo": "정교한 컷과 블렌딩 진행"
     }
   },
   "gallerySection": {
@@ -106,6 +116,16 @@
       "interior": "인테리어",
       "barbers": "바버 작업",
       "atmosphere": "분위기"
+    },
+    "extras": {
+      "noteLabel": "안내",
+      "noteText": "갤러리의 모든 이미지는 매장 실제 작업 장면입니다.",
+      "noteTitle": "실제 사진, 실제 고객",
+      "stylesTitle": "요청 가능한 스타일",
+      "styleOne": "Skin Fade",
+      "styleTwo": "Textured Crop",
+      "styleThree": "Classic Taper",
+      "styleFour": "Beard Line Up"
     }
   },
   "aboutSection": {
@@ -149,6 +169,11 @@
         "role": "그루밍 스페셜리스트",
         "bio": "종합 그루밍 패키지와 고객 편안함에 집중합니다."
       }
+    },
+    "extras": {
+      "timelineTwo": "이후 팀 확장과 프리미엄 패키지를 도입했습니다.",
+      "timelineOne": "Usta는 1인 의자 바버샵에서 시작했습니다.",
+      "timelineThree": "현재는 수천 명의 단골 고객이 선택하는 매장입니다."
     }
   },
   "contactSection": {
@@ -183,6 +208,17 @@
       "weekend": "일요일: 10:00 - 18:00",
       "socialLabel": "소셜 미디어",
       "mapLabel": "Usta 바버샵 지도"
+    },
+    "extras": {
+      "tipOne": "원하는 스타일이 있으면 참고 이미지를 준비해 주세요.",
+      "faqTitle": "자주 묻는 질문",
+      "faqOneA": "워킹 방문도 가능하지만, 예약 시 원하는 시간을 보장받을 수 있습니다.",
+      "faqTwoQ": "카드 결제가 가능한가요?",
+      "tipTwo": "상담을 위해 5-10분 일찍 도착해 주세요.",
+      "faqTwoA": "네, 현금 및 카드 결제를 모두 지원합니다.",
+      "tipThree": "홈케어 제품과 관리 방법을 바버에게 문의하세요.",
+      "faqOneQ": "사전 예약이 꼭 필요한가요?",
+      "tipsTitle": "방문 전 안내"
     }
   },
   "footer": {
@@ -210,5 +246,31 @@
   },
   "common": {
     "more": "더보기"
+  },
+  "social": {
+    "telegram": "Telegram",
+    "instagram": "Instagram"
+  },
+  "auth": {
+    "signupCta": "회원가입",
+    "loginCta": "로그인",
+    "signupTitle": "계정 만들기",
+    "email": "이메일",
+    "switchToLogin": "로그인",
+    "loginTitle": "계정 로그인",
+    "switchToSignup": "회원가입",
+    "haveAccount": "이미 계정이 있으신가요?",
+    "password": "비밀번호",
+    "name": "이름",
+    "noAccount": "계정이 없으신가요?"
+  },
+  "userPage": {
+    "backHome": "홈으로",
+    "bookingsEmpty": "아직 예약이 없습니다. 서비스 페이지에서 첫 예약을 진행하세요.",
+    "subtitle": "기본 계정 정보와 예약 활동을 관리하세요.",
+    "guestDescription": "개인 프로필을 보려면 먼저 로그인하세요.",
+    "guestTitle": "로그인이 필요합니다",
+    "bookingsTitle": "최근 예약",
+    "title": "내 프로필"
   }
 }

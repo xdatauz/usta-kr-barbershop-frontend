@@ -95,6 +95,16 @@
         "price": "$18",
         "duration": "50 min"
       }
+    },
+    "extras": {
+      "processTwo": "Precision cut and blend execution",
+      "processThree": "Beard/details finishing and final check",
+      "popularText": "Skin Fade + Beard Styling is our top requested combo for a modern sharp look.",
+      "processTitle": "How Your Visit Works",
+      "processOne": "Quick consultation and style selection",
+      "popularTitle": "Most Popular",
+      "memberText": "Join monthly membership to get priority slots and discounted package grooming.",
+      "memberTitle": "Member Benefits"
     }
   },
   "gallerySection": {
@@ -106,6 +116,12 @@
       "interior": "Interior",
       "barbers": "Barbers at Work",
       "atmosphere": "Atmosphere"
+    },
+    "extras": {
+      "stylesTitle": "Styles You Can Request",
+      "noteLabel": "Note",
+      "noteText": "All shots are from our own shop and daily workflow. No stock photos are used in this section.",
+      "noteTitle": "Real Photos, Real Clients"
     }
   },
   "aboutSection": {
@@ -149,6 +165,11 @@
         "role": "Grooming Specialist",
         "bio": "Focuses on complete grooming packages and comfort."
       }
+    },
+    "extras": {
+      "timelineOne": "Usta started as a single-chair local barbershop.",
+      "timelineTwo": "Expanded to a full team and premium grooming packages.",
+      "timelineThree": "Trusted by thousands of returning clients across the city."
     }
   },
   "contactSection": {
@@ -183,6 +204,17 @@
       "weekend": "Sunday: 10:00 - 18:00",
       "socialLabel": "Social media",
       "mapLabel": "Usta barbershop map"
+    },
+    "extras": {
+      "faqTwoQ": "Do you accept card payments?",
+      "tipThree": "Ask your barber about home maintenance products.",
+      "faqOneQ": "Do I need to book in advance?",
+      "tipTwo": "Arrive 5-10 minutes early for consultation.",
+      "faqTwoA": "Yes, we accept cash and card payments.",
+      "tipsTitle": "Before Your Appointment",
+      "faqOneA": "Walk-ins are welcome, but booking guarantees your preferred time slot.",
+      "tipOne": "Bring a reference photo if you have a specific style in mind.",
+      "faqTitle": "Frequently Asked Questions"
     }
   },
   "footer": {
@@ -210,5 +242,31 @@
   },
   "common": {
     "more": "More"
+  },
+  "social": {
+    "instagram": "Instagram",
+    "telegram": "Telegram"
+  },
+  "auth": {
+    "name": "Full name",
+    "haveAccount": "Already have an account?",
+    "noAccount": "No account yet?",
+    "email": "Email",
+    "switchToLogin": "Login",
+    "loginTitle": "Login to your account",
+    "signupCta": "Sign up",
+    "signupTitle": "Create your account",
+    "password": "Password",
+    "loginCta": "Login",
+    "switchToSignup": "Sign up"
+  },
+  "userPage": {
+    "guestDescription": "Please login to access your personal profile.",
+    "bookingsEmpty": "No bookings yet. Book your first appointment from Services.",
+    "guestTitle": "Login required",
+    "title": "My Profile",
+    "subtitle": "Manage your basic account details and booking activity.",
+    "bookingsTitle": "Recent bookings",
+    "backHome": "Back to Home"
   }
 }

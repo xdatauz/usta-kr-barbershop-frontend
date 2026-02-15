@@ -4,6 +4,7 @@ import ServicePage from "../pages/Services";
 import GalleryPage from "../pages/Gallery";
 import AboutPage from "../pages/About";
 import ContactPage from "../pages/Contact";
+import UserPage from "../pages/User";
 
 const supportedLocales = ["uz", "kr", "en", "ru"] as const;
 
@@ -29,6 +30,7 @@ const AppRouter = () => {
 				<Route path="gallery" element={<GalleryPage />} />
 				<Route path="about" element={<AboutPage />} />
 				<Route path="contact" element={<ContactPage />} />
+				<Route path="profile" element={<UserPage />} />
 			</Route>
 
 			<Route path="*" element={<Navigate to="/uz" replace />} />

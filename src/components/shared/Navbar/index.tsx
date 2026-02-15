@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { ThemeToggle } from "../../ui/ThemeToggle";
 import { UserProfileMenu } from "../../ui/UserProfile";
+import AuthModal from "../../ui/AuthModal";
+import { useAuth } from "../../../context/auth/auth-provider";
 
 interface NavbarProps {
 	scrolled: boolean;
@@ -14,15 +16,12 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 	const location = useLocation();
 	const { t } = useTranslation();
 	const [isOpen, setIsOpen] = useState(false);
+	const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 	const locale = location.pathname.split("/")[1] || "uz";
-
-	const currentUser = {
-		_id: "123",
-		userType: "USER" as "USER" | "ADMIN",
-	};
+	const { currentUser, logout } = useAuth();
 
 	const logoutHandler = () => {
-		console.log("Logging out...");
+		logout();
 	};
 
 	const navItems = [
@@ -43,7 +42,11 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 		>
 			<div className="navbar-container mx-auto px-6 flex items-center justify-between">
 				{/* LOGO */}
-				<Link to={`/${locale}`} className="text-xl font-black tracking-[0.14em] text-slate-900 sm:text-2xl dark:text-slate-100">
+				<Link
+					to={`/${locale}`}
+					onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+					className="text-xl font-black tracking-[0.14em] text-slate-900 sm:text-2xl dark:text-slate-100"
+				>
 					USTA <span className="text-emerald-600 dark:text-emerald-400">BARBER</span>
 				</Link>
 
@@ -73,8 +76,9 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 
 					{/* USER PROFILE */}
 					<UserProfileMenu
-						currentUser={currentUser}
+						currentUser={currentUser ?? undefined}
 						locale={locale}
+						onAuthOpen={() => setIsAuthModalOpen(true)}
 						closeMenuHandler={() => setIsOpen(false)}
 						logoutHandler={logoutHandler}
 					/>
@@ -176,6 +180,11 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 					</div>
 				</div>
 			)}
+
+			<AuthModal
+				isOpen={isAuthModalOpen}
+				onClose={() => setIsAuthModalOpen(false)}
+			/>
 		</header>
 	);
 };
