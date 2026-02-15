@@ -1,18 +1,28 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import HomePage from "../pages/HomePage";
-import LoginPage from "../pages/LoginPage";
-import DashboardPage from "../pages/DashboardPage";
-import BookingPage from "../pages/BookingPage";
+import { Routes, Route } from "react-router-dom";
+import withLayoutHome from "../layouts/withLayoutHome";
 
+import HomePage from "../pages/Home";
+import Services from "../pages/Services";
+import GalleryPage from "../pages/Gallery";
+import AboutPage from "../pages/About";
+import ContactPage from "../pages/Contact";
 
-export const AppRouter = () => {
+const AppRouter = () => {
+	const Home = withLayoutHome(HomePage);
+	const ServicesPage = withLayoutHome(Services);
+	const Gallery = withLayoutHome(GalleryPage);
+	const About = withLayoutHome(AboutPage);
+	const Contact = withLayoutHome(ContactPage);
+
 	return (
 		<Routes>
-			<Route path="/" element={<HomePage />} />
-			<Route path="/login" element={<LoginPage />} />
-			<Route path="/dashboard" element={<DashboardPage />} />
-			<Route path="/booking" element={<BookingPage />} />
-			<Route path="*" element={<Navigate to="/" replace />} />
+			<Route path="/" element={<Home />} />
+			<Route path="/services" element={<ServicesPage />} />
+			<Route path="/gallery" element={<Gallery />} />
+			<Route path="/about" element={<About />} />
+			<Route path="/contact" element={<Contact />} />
 		</Routes>
 	);
 };
+
+export default AppRouter;

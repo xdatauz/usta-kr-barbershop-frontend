@@ -1,11 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: [
-		"./index.html",
-		"./src/**/*.{ts,tsx}",
-		"./node_modules/shadcn-ui/**/*.{js,ts,jsx,tsx}",
-	],
-	darkMode: "class", // enables dark mode with 'dark' class
+	content: ["./index.html", "./src/**/*.{ts,tsx}", "./node_modules/shadcn-ui/**/*.{js,ts,jsx,tsx}"],
+	darkMode: "class",
 	theme: {
 		extend: {
 			screens: {
@@ -30,5 +26,5 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
+	plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography"), require("tailwindcss-animate")],
 };
