@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import AboutPage from "../About";
 import ContactPage from "../Contact";
 import GalleryPage from "../Gallery";
@@ -6,22 +7,23 @@ import HomeHero from "./HomeHero";
 
 const HomePage = () => {
 	return (
-		<main className="w-full relative">
-			<section className="relative h-screen flex flex-col justify-center items-center  px-6 text-center">
+		<main className="relative w-full px-3 pb-14 pt-24 sm:px-5 lg:px-8">
+			<div className="mx-auto w-full max-w-6xl space-y-8">
 				<HomeHero />
-			</section>
-			<section className="relative h-screen flex flex-col justify-center items-center  px-6 text-center">
-				<ServicePage />
-			</section>
-			<section className="relative h-screen flex flex-col justify-center items-center  px-6 text-center">
-				<GalleryPage />
-			</section>
-			<section className="relative h-screen flex flex-col justify-center items-center  px-6 text-center">
-				<AboutPage />
-			</section>
-			<section className="relative h-screen flex flex-col justify-center items-center  px-6 text-center">
-				<ContactPage />
-			</section>
+
+				<motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.35 }}>
+					<ServicePage preview />
+				</motion.div>
+				<motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.35 }}>
+					<GalleryPage preview />
+				</motion.div>
+				<motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.35 }}>
+					<AboutPage preview />
+				</motion.div>
+				<motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.35 }}>
+					<ContactPage preview />
+				</motion.div>
+			</div>
 		</main>
 	);
 };

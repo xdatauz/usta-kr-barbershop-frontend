@@ -1,6 +1,7 @@
 import { Moon, Sun } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTheme } from "../../context/theme/theme-provider";
+import { useTranslation } from "react-i18next";
 
 interface ThemeToggleProps {
 	isScrolled?: boolean;
@@ -8,6 +9,7 @@ interface ThemeToggleProps {
 
 export const ThemeToggle: React.FC<ThemeToggleProps> = ({ isScrolled = true }) => {
 	const { theme, toggleTheme } = useTheme();
+	const { t } = useTranslation();
 
 	return (
 		<button
@@ -17,10 +19,10 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ isScrolled = true }) =
 					? "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
 					: "bg-white/10 hover:bg-white/20"
 			}`}
-			aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+			aria-label={theme === "light" ? t("theme.switchToDark") : t("theme.switchToLight")}
 		>
 			<motion.div initial={false} animate={{ rotate: theme === "dark" ? 180 : 0 }} transition={{ duration: 0.3 }}>
-				{theme === "light" ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
+				{theme === "light" ? <Sun className="h-5 w-5 text-amber-500" /> : <Moon className="h-5 w-5 text-emerald-300" />}
 			</motion.div>
 		</button>
 	);

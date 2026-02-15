@@ -1,9 +1,21 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, Outlet, useParams } from "react-router-dom";
 import HomePage from "../pages/Home";
 import ServicePage from "../pages/Services";
 import GalleryPage from "../pages/Gallery";
 import AboutPage from "../pages/About";
 import ContactPage from "../pages/Contact";
+
+const supportedLocales = ["uz", "kr", "en", "ru"] as const;
+
+const LocaleGuard = () => {
+	const { locale } = useParams();
+
+	if (!locale || !supportedLocales.includes(locale as (typeof supportedLocales)[number])) {
+		return <Navigate to="/uz" replace />;
+	}
+
+	return <Outlet />;
+};
 
 const AppRouter = () => {
 	return (
@@ -11,13 +23,15 @@ const AppRouter = () => {
 			{/* Redirect root to default language */}
 			<Route path="/" element={<Navigate to="/uz" replace />} />
 
-			<Route path="/:locale">
+			<Route path="/:locale" element={<LocaleGuard />}>
 				<Route index element={<HomePage />} />
 				<Route path="services" element={<ServicePage />} />
 				<Route path="gallery" element={<GalleryPage />} />
 				<Route path="about" element={<AboutPage />} />
 				<Route path="contact" element={<ContactPage />} />
 			</Route>
+
+			<Route path="*" element={<Navigate to="/uz" replace />} />
 		</Routes>
 	);
 };
