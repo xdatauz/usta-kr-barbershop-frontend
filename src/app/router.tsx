@@ -5,6 +5,8 @@ import GalleryPage from "../pages/Gallery";
 import AboutPage from "../pages/About";
 import ContactPage from "../pages/Contact";
 import UserPage from "../pages/User";
+import BookingPage from "../pages/Booking";
+import BarbersPage from "../pages/Barbers";
 
 const supportedLocales = ["uz", "kr", "en", "ru"] as const;
 
@@ -30,6 +32,9 @@ const AppRouter = () => {
 				<Route path="gallery" element={<GalleryPage />} />
 				<Route path="about" element={<AboutPage />} />
 				<Route path="contact" element={<ContactPage />} />
+				<Route path="booking" element={<BookingPage />} />
+				<Route path="barbers" element={<BarbersPage />} />
+				<Route path="barbers/:barberId" element={<BarbersPage />} />
 				<Route path="profile" element={<UserPage />} />
 			</Route>
 

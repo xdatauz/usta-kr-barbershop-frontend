@@ -1,276 +1,278 @@
 {
-  "meta": {
-    "title": "Usta | 프리미엄 바버샵",
-    "description": "Usta는 현대적인 헤어컷, 수염 스타일링, 전문 그루밍 서비스를 제공하는 프리미엄 바버샵입니다.",
-    "ogTitle": "Usta | 프리미엄 바버샵",
-    "ogDescription": "정교한 컷, 수염 트림, 프리미엄 그루밍을 Usta에서 경험하세요."
-  },
-  "nav": {
-    "home": "홈",
-    "services": "서비스",
-    "gallery": "갤러리",
-    "about": "소개",
-    "contact": "문의",
-    "bookAppointment": "예약하기"
-  },
-  "language": {
-    "select": "언어 선택"
-  },
-  "profile": {
-    "toggleMenu": "사용자 메뉴 열기",
-    "imageAlt": "사용자 프로필",
-    "imageAltSuffix": "프로필",
-    "signIn": "로그인",
-    "myProfile": "내 프로필",
-    "lastVisited": "최근 방문",
-    "dashboard": "대시보드",
-    "myBarbers": "내 바버",
-    "notifications": "알림",
-    "customerService": "고객 서비스",
-    "logout": "로그아웃"
-  },
-  "theme": {
-    "switchToDark": "다크 모드로 전환",
-    "switchToLight": "라이트 모드로 전환"
-  },
-  "homeHero": {
-    "badge": "프리미엄 그루밍",
-    "title": "날카로운 스타일, 자신감 있는 인상, 디테일까지 완성합니다.",
-    "subtitle": "클래식 컷부터 모던 페이드까지, Usta는 숙련된 바버와 편안한 분위기로 완성도 높은 경험을 제공합니다.",
-    "primaryCta": "예약하기",
-    "secondaryCta": "섹션 펼치기",
-    "revealDone": "섹션이 열렸습니다",
-    "stats": {
-      "years": "경력 연수",
-      "clients": "만족 고객",
-      "rating": "평균 평점"
-    },
-    "imageAltOne": "고객의 헤어를 스타일링하는 바버",
-    "imageAltTwo": "수염을 정교하게 트림하는 장면"
-  },
-  "homeReveal": {
-    "description": "히어로 섹션부터 시작하고, 아래 섹션을 단계적으로 열어 더 깔끔하게 탐색하세요.",
-    "showMoreButton": "섹션 {{count}} 열기",
-    "resetButton": "섹션 숨기기"
-  },
-  "servicesSection": {
-    "eyebrow": "서비스",
-    "title": "모든 스타일을 위한 프리미엄 서비스",
-    "description": "원하는 서비스를 선택하면, 팀이 정밀함과 위생 기준으로 완성도 높은 결과를 제공합니다.",
-    "bookNow": "지금 예약",
-    "items": {
-      "classicCut": {
-        "name": "클래식 헤어컷",
-        "description": "가위와 클리퍼로 깔끔하게 컷하고 스타일링으로 마무리합니다.",
-        "price": "120,000 UZS",
-        "duration": "35분"
-      },
-      "beardStyling": {
-        "name": "수염 스타일링",
-        "description": "얼굴형에 맞춰 수염 라인을 정리하고 균형 있게 디자인합니다.",
-        "price": "100,000 UZS",
-        "duration": "30분"
-      },
-      "skinFade": {
-        "name": "스킨 페이드",
-        "description": "피부 라인부터 자연스럽게 연결되는 정교한 페이드 스타일.",
-        "price": "150,000 UZS",
-        "duration": "45분"
-      },
-      "fatherSon": {
-        "name": "부자 패키지",
-        "description": "두 분이 함께 받을 수 있는 편리한 패키지 서비스입니다.",
-        "price": "220,000 UZS",
-        "duration": "60분"
-      },
-      "deluxePackage": {
-        "name": "디럭스 그루밍",
-        "description": "헤어컷, 수염 정리, 세정, 핫타월까지 포함된 프리미엄 코스.",
-        "price": "280,000 UZS",
-        "duration": "70분"
-      },
-      "hairColor": {
-        "name": "헤어 컬러 리프레시",
-        "description": "자연스러운 톤 보정과 새치 커버를 전문 제품으로 진행합니다.",
-        "price": "190,000 UZS",
-        "duration": "50분"
-      }
-    },
-    "extras": {
-      "processThree": "수염/디테일 마무리 및 최종 확인",
-      "memberText": "월간 멤버십으로 우선 예약과 패키지 할인 혜택을 받을 수 있습니다.",
-      "processOne": "간단한 상담 및 스타일 선택",
-      "processTitle": "방문 진행 과정",
-      "popularText": "스킨 페이드 + 수염 스타일링은 가장 많이 요청되는 조합입니다.",
-      "popularTitle": "가장 인기 있는 조합",
-      "memberTitle": "멤버십 혜택",
-      "processTwo": "정교한 컷과 블렌딩 진행"
-    }
-  },
-  "gallerySection": {
-    "eyebrow": "갤러리",
-    "title": "우리의 일상적인 작업 장면",
-    "description": "전후 변화, 매장 인테리어, 바버들의 실제 작업 순간을 확인하세요.",
-    "categories": {
-      "cuts": "전 / 후",
-      "interior": "인테리어",
-      "barbers": "바버 작업",
-      "atmosphere": "분위기"
-    },
-    "extras": {
-      "noteLabel": "안내",
-      "noteText": "갤러리의 모든 이미지는 매장 실제 작업 장면입니다.",
-      "noteTitle": "실제 사진, 실제 고객",
-      "stylesTitle": "요청 가능한 스타일",
-      "styleOne": "Skin Fade",
-      "styleTwo": "Textured Crop",
-      "styleThree": "Classic Taper",
-      "styleFour": "Beard Line Up"
-    }
-  },
-  "aboutSection": {
-    "eyebrow": "소개",
-    "title": "Usta는 클래식한 기본기와 현대적인 감각을 결합합니다",
-    "description": "정밀한 기술, 고객 신뢰, 팀워크를 중심으로 운영되는 바버샵입니다.",
-    "storyTitle": "우리 이야기",
-    "storyText": "지역의 작은 자리에서 시작해, 지금은 안정적인 퀄리티와 편안함으로 선택받는 바버샵이 되었습니다.",
-    "values": {
-      "precision": {
-        "title": "정밀함 우선",
-        "text": "모든 라인과 블렌딩, 컨투어를 디테일하게 완성합니다."
-      },
-      "hospitality": {
-        "title": "따뜻한 응대",
-        "text": "모든 고객이 편안함과 존중을 느끼는 환경을 만듭니다."
-      },
-      "hygiene": {
-        "title": "엄격한 위생",
-        "text": "도구 소독과 청결한 작업 환경을 철저히 유지합니다."
-      },
-      "craft": {
-        "title": "지속적인 성장",
-        "text": "트렌드 학습과 훈련으로 팀의 기술을 꾸준히 향상합니다."
-      }
-    },
-    "teamTitle": "팀 소개",
-    "team": {
-      "jamshid": {
-        "name": "잠시드",
-        "role": "시니어 바버",
-        "bio": "페이드 컷과 프리미엄 수염 디자인을 전문으로 합니다."
-      },
-      "sardor": {
-        "name": "사르도르",
-        "role": "스타일 전문가",
-        "bio": "텍스처 컷과 모던 스타일 마무리에 강점을 갖고 있습니다."
-      },
-      "aziz": {
-        "name": "아지즈",
-        "role": "그루밍 스페셜리스트",
-        "bio": "종합 그루밍 패키지와 고객 편안함에 집중합니다."
-      }
-    },
-    "extras": {
-      "timelineTwo": "이후 팀 확장과 프리미엄 패키지를 도입했습니다.",
-      "timelineOne": "Usta는 1인 의자 바버샵에서 시작했습니다.",
-      "timelineThree": "현재는 수천 명의 단골 고객이 선택하는 매장입니다."
-    }
-  },
-  "contactSection": {
-    "eyebrow": "문의",
-    "title": "다음 방문 예약 또는 메시지 보내기",
-    "description": "예약 및 문의는 아래 폼을 이용하세요. 운영 시간 내 빠르게 답변드립니다.",
-    "form": {
-      "nameLabel": "이름",
-      "namePlaceholder": "이름을 입력하세요",
-      "phoneLabel": "전화번호",
-      "phonePlaceholder": "+998 ...",
-      "serviceLabel": "희망 서비스",
-      "servicePlaceholder": "서비스 선택",
-      "serviceOptions": {
-        "classic": "클래식 헤어컷",
-        "beard": "수염 스타일링",
-        "premium": "디럭스 그루밍"
-      },
-      "messageLabel": "메시지",
-      "messagePlaceholder": "원하는 시간과 요청 사항을 작성해 주세요",
-      "submit": "요청 보내기",
-      "success": "요청이 접수되었습니다. 곧 연락드리겠습니다.",
-      "error": "이름, 전화번호, 메시지를 모두 입력해 주세요."
-    },
-    "info": {
-      "addressLabel": "주소",
-      "address": "타슈켄트 칠란자르 구 부뇨드코르 거리 12",
-      "phoneLabel": "전화",
-      "emailLabel": "이메일",
-      "hoursLabel": "운영 시간",
-      "weekdays": "월 - 토: 09:00 - 21:00",
-      "weekend": "일요일: 10:00 - 18:00",
-      "socialLabel": "소셜 미디어",
-      "mapLabel": "Usta 바버샵 지도"
-    },
-    "extras": {
-      "tipOne": "원하는 스타일이 있으면 참고 이미지를 준비해 주세요.",
-      "faqTitle": "자주 묻는 질문",
-      "faqOneA": "워킹 방문도 가능하지만, 예약 시 원하는 시간을 보장받을 수 있습니다.",
-      "faqTwoQ": "카드 결제가 가능한가요?",
-      "tipTwo": "상담을 위해 5-10분 일찍 도착해 주세요.",
-      "faqTwoA": "네, 현금 및 카드 결제를 모두 지원합니다.",
-      "tipThree": "홈케어 제품과 관리 방법을 바버에게 문의하세요.",
-      "faqOneQ": "사전 예약이 꼭 필요한가요?",
-      "tipsTitle": "방문 전 안내"
-    }
-  },
-  "footer": {
-    "text": "모든 권리 보유.",
-    "tagline": "현대적인 남성을 위한 프리미엄 바버 서비스.",
-    "quickLinks": "빠른 링크",
-    "contactTitle": "연락처 정보"
-  },
-  "pages": {
-    "home": {
-      "hero": "환영합니다"
-    },
-    "services": {
-      "title": "서비스"
-    },
-    "gallery": {
-      "title": "갤러리"
-    },
-    "about": {
-      "title": "소개"
-    },
-    "contact": {
-      "title": "문의"
-    }
-  },
-  "common": {
-    "more": "더보기"
-  },
-  "social": {
-    "telegram": "Telegram",
-    "instagram": "Instagram"
-  },
-  "auth": {
-    "signupCta": "회원가입",
-    "loginCta": "로그인",
-    "signupTitle": "계정 만들기",
-    "email": "이메일",
-    "switchToLogin": "로그인",
-    "loginTitle": "계정 로그인",
-    "switchToSignup": "회원가입",
-    "haveAccount": "이미 계정이 있으신가요?",
-    "password": "비밀번호",
-    "name": "이름",
-    "noAccount": "계정이 없으신가요?"
-  },
-  "userPage": {
-    "backHome": "홈으로",
-    "bookingsEmpty": "아직 예약이 없습니다. 서비스 페이지에서 첫 예약을 진행하세요.",
-    "subtitle": "기본 계정 정보와 예약 활동을 관리하세요.",
-    "guestDescription": "개인 프로필을 보려면 먼저 로그인하세요.",
-    "guestTitle": "로그인이 필요합니다",
-    "bookingsTitle": "최근 예약",
-    "title": "내 프로필"
-  }
+	"meta": {
+		"title": "Usta | 프리미엄 바버샵",
+		"description": "Usta는 현대적인 헤어컷, 수염 스타일링, 전문 그루밍 서비스를 제공하는 프리미엄 바버샵입니다.",
+		"ogTitle": "Usta | 프리미엄 바버샵",
+		"ogDescription": "정교한 컷, 수염 트림, 프리미엄 그루밍을 Usta에서 경험하세요."
+	},
+	"nav": {
+		"home": "홈",
+		"services": "서비스",
+		"gallery": "갤러리",
+		"about": "소개",
+		"booking": "예약",
+		"barbers": "이발사",
+		"contact": "문의",
+		"bookAppointment": "예약하기"
+	},
+	"language": {
+		"select": "언어 선택"
+	},
+	"profile": {
+		"toggleMenu": "사용자 메뉴 열기",
+		"imageAlt": "사용자 프로필",
+		"imageAltSuffix": "프로필",
+		"signIn": "로그인",
+		"myProfile": "내 프로필",
+		"lastVisited": "최근 방문",
+		"dashboard": "대시보드",
+		"myBarbers": "내 바버",
+		"notifications": "알림",
+		"customerService": "고객 서비스",
+		"logout": "로그아웃"
+	},
+	"theme": {
+		"switchToDark": "다크 모드로 전환",
+		"switchToLight": "라이트 모드로 전환"
+	},
+	"homeHero": {
+		"badge": "프리미엄 그루밍",
+		"title": "날카로운 스타일, 자신감 있는 인상, 디테일까지 완성합니다.",
+		"subtitle": "클래식 컷부터 모던 페이드까지, Usta는 숙련된 바버와 편안한 분위기로 완성도 높은 경험을 제공합니다.",
+		"primaryCta": "예약하기",
+		"secondaryCta": "섹션 펼치기",
+		"revealDone": "섹션이 열렸습니다",
+		"stats": {
+			"years": "경력 연수",
+			"clients": "만족 고객",
+			"rating": "평균 평점"
+		},
+		"imageAltOne": "고객의 헤어를 스타일링하는 바버",
+		"imageAltTwo": "수염을 정교하게 트림하는 장면"
+	},
+	"homeReveal": {
+		"description": "히어로 섹션부터 시작하고, 아래 섹션을 단계적으로 열어 더 깔끔하게 탐색하세요.",
+		"showMoreButton": "섹션 {{count}} 열기",
+		"resetButton": "섹션 숨기기"
+	},
+	"servicesSection": {
+		"eyebrow": "서비스",
+		"title": "모든 스타일을 위한 프리미엄 서비스",
+		"description": "원하는 서비스를 선택하면, 팀이 정밀함과 위생 기준으로 완성도 높은 결과를 제공합니다.",
+		"bookNow": "지금 예약",
+		"items": {
+			"classicCut": {
+				"name": "클래식 헤어컷",
+				"description": "가위와 클리퍼로 깔끔하게 컷하고 스타일링으로 마무리합니다.",
+				"price": "120,000 UZS",
+				"duration": "35분"
+			},
+			"beardStyling": {
+				"name": "수염 스타일링",
+				"description": "얼굴형에 맞춰 수염 라인을 정리하고 균형 있게 디자인합니다.",
+				"price": "100,000 UZS",
+				"duration": "30분"
+			},
+			"skinFade": {
+				"name": "스킨 페이드",
+				"description": "피부 라인부터 자연스럽게 연결되는 정교한 페이드 스타일.",
+				"price": "150,000 UZS",
+				"duration": "45분"
+			},
+			"fatherSon": {
+				"name": "부자 패키지",
+				"description": "두 분이 함께 받을 수 있는 편리한 패키지 서비스입니다.",
+				"price": "220,000 UZS",
+				"duration": "60분"
+			},
+			"deluxePackage": {
+				"name": "디럭스 그루밍",
+				"description": "헤어컷, 수염 정리, 세정, 핫타월까지 포함된 프리미엄 코스.",
+				"price": "280,000 UZS",
+				"duration": "70분"
+			},
+			"hairColor": {
+				"name": "헤어 컬러 리프레시",
+				"description": "자연스러운 톤 보정과 새치 커버를 전문 제품으로 진행합니다.",
+				"price": "190,000 UZS",
+				"duration": "50분"
+			}
+		},
+		"extras": {
+			"processThree": "수염/디테일 마무리 및 최종 확인",
+			"memberText": "월간 멤버십으로 우선 예약과 패키지 할인 혜택을 받을 수 있습니다.",
+			"processOne": "간단한 상담 및 스타일 선택",
+			"processTitle": "방문 진행 과정",
+			"popularText": "스킨 페이드 + 수염 스타일링은 가장 많이 요청되는 조합입니다.",
+			"popularTitle": "가장 인기 있는 조합",
+			"memberTitle": "멤버십 혜택",
+			"processTwo": "정교한 컷과 블렌딩 진행"
+		}
+	},
+	"gallerySection": {
+		"eyebrow": "갤러리",
+		"title": "우리의 일상적인 작업 장면",
+		"description": "전후 변화, 매장 인테리어, 바버들의 실제 작업 순간을 확인하세요.",
+		"categories": {
+			"cuts": "전 / 후",
+			"interior": "인테리어",
+			"barbers": "바버 작업",
+			"atmosphere": "분위기"
+		},
+		"extras": {
+			"noteLabel": "안내",
+			"noteText": "갤러리의 모든 이미지는 매장 실제 작업 장면입니다.",
+			"noteTitle": "실제 사진, 실제 고객",
+			"stylesTitle": "요청 가능한 스타일",
+			"styleOne": "Skin Fade",
+			"styleTwo": "Textured Crop",
+			"styleThree": "Classic Taper",
+			"styleFour": "Beard Line Up"
+		}
+	},
+	"aboutSection": {
+		"eyebrow": "소개",
+		"title": "Usta는 클래식한 기본기와 현대적인 감각을 결합합니다",
+		"description": "정밀한 기술, 고객 신뢰, 팀워크를 중심으로 운영되는 바버샵입니다.",
+		"storyTitle": "우리 이야기",
+		"storyText": "지역의 작은 자리에서 시작해, 지금은 안정적인 퀄리티와 편안함으로 선택받는 바버샵이 되었습니다.",
+		"values": {
+			"precision": {
+				"title": "정밀함 우선",
+				"text": "모든 라인과 블렌딩, 컨투어를 디테일하게 완성합니다."
+			},
+			"hospitality": {
+				"title": "따뜻한 응대",
+				"text": "모든 고객이 편안함과 존중을 느끼는 환경을 만듭니다."
+			},
+			"hygiene": {
+				"title": "엄격한 위생",
+				"text": "도구 소독과 청결한 작업 환경을 철저히 유지합니다."
+			},
+			"craft": {
+				"title": "지속적인 성장",
+				"text": "트렌드 학습과 훈련으로 팀의 기술을 꾸준히 향상합니다."
+			}
+		},
+		"teamTitle": "팀 소개",
+		"team": {
+			"jamshid": {
+				"name": "잠시드",
+				"role": "시니어 바버",
+				"bio": "페이드 컷과 프리미엄 수염 디자인을 전문으로 합니다."
+			},
+			"sardor": {
+				"name": "사르도르",
+				"role": "스타일 전문가",
+				"bio": "텍스처 컷과 모던 스타일 마무리에 강점을 갖고 있습니다."
+			},
+			"aziz": {
+				"name": "아지즈",
+				"role": "그루밍 스페셜리스트",
+				"bio": "종합 그루밍 패키지와 고객 편안함에 집중합니다."
+			}
+		},
+		"extras": {
+			"timelineTwo": "이후 팀 확장과 프리미엄 패키지를 도입했습니다.",
+			"timelineOne": "Usta는 1인 의자 바버샵에서 시작했습니다.",
+			"timelineThree": "현재는 수천 명의 단골 고객이 선택하는 매장입니다."
+		}
+	},
+	"contactSection": {
+		"eyebrow": "문의",
+		"title": "다음 방문 예약 또는 메시지 보내기",
+		"description": "예약 및 문의는 아래 폼을 이용하세요. 운영 시간 내 빠르게 답변드립니다.",
+		"form": {
+			"nameLabel": "이름",
+			"namePlaceholder": "이름을 입력하세요",
+			"phoneLabel": "전화번호",
+			"phonePlaceholder": "+998 ...",
+			"serviceLabel": "희망 서비스",
+			"servicePlaceholder": "서비스 선택",
+			"serviceOptions": {
+				"classic": "클래식 헤어컷",
+				"beard": "수염 스타일링",
+				"premium": "디럭스 그루밍"
+			},
+			"messageLabel": "메시지",
+			"messagePlaceholder": "원하는 시간과 요청 사항을 작성해 주세요",
+			"submit": "요청 보내기",
+			"success": "요청이 접수되었습니다. 곧 연락드리겠습니다.",
+			"error": "이름, 전화번호, 메시지를 모두 입력해 주세요."
+		},
+		"info": {
+			"addressLabel": "주소",
+			"address": "타슈켄트 칠란자르 구 부뇨드코르 거리 12",
+			"phoneLabel": "전화",
+			"emailLabel": "이메일",
+			"hoursLabel": "운영 시간",
+			"weekdays": "월 - 토: 09:00 - 21:00",
+			"weekend": "일요일: 10:00 - 18:00",
+			"socialLabel": "소셜 미디어",
+			"mapLabel": "Usta 바버샵 지도"
+		},
+		"extras": {
+			"tipOne": "원하는 스타일이 있으면 참고 이미지를 준비해 주세요.",
+			"faqTitle": "자주 묻는 질문",
+			"faqOneA": "워킹 방문도 가능하지만, 예약 시 원하는 시간을 보장받을 수 있습니다.",
+			"faqTwoQ": "카드 결제가 가능한가요?",
+			"tipTwo": "상담을 위해 5-10분 일찍 도착해 주세요.",
+			"faqTwoA": "네, 현금 및 카드 결제를 모두 지원합니다.",
+			"tipThree": "홈케어 제품과 관리 방법을 바버에게 문의하세요.",
+			"faqOneQ": "사전 예약이 꼭 필요한가요?",
+			"tipsTitle": "방문 전 안내"
+		}
+	},
+	"footer": {
+		"text": "모든 권리 보유.",
+		"tagline": "현대적인 남성을 위한 프리미엄 바버 서비스.",
+		"quickLinks": "빠른 링크",
+		"contactTitle": "연락처 정보"
+	},
+	"pages": {
+		"home": {
+			"hero": "환영합니다"
+		},
+		"services": {
+			"title": "서비스"
+		},
+		"gallery": {
+			"title": "갤러리"
+		},
+		"about": {
+			"title": "소개"
+		},
+		"contact": {
+			"title": "문의"
+		}
+	},
+	"common": {
+		"more": "더보기"
+	},
+	"social": {
+		"telegram": "Telegram",
+		"instagram": "Instagram"
+	},
+	"auth": {
+		"signupCta": "회원가입",
+		"loginCta": "로그인",
+		"signupTitle": "계정 만들기",
+		"email": "이메일",
+		"switchToLogin": "로그인",
+		"loginTitle": "계정 로그인",
+		"switchToSignup": "회원가입",
+		"haveAccount": "이미 계정이 있으신가요?",
+		"password": "비밀번호",
+		"name": "이름",
+		"noAccount": "계정이 없으신가요?"
+	},
+	"userPage": {
+		"backHome": "홈으로",
+		"bookingsEmpty": "아직 예약이 없습니다. 서비스 페이지에서 첫 예약을 진행하세요.",
+		"subtitle": "기본 계정 정보와 예약 활동을 관리하세요.",
+		"guestDescription": "개인 프로필을 보려면 먼저 로그인하세요.",
+		"guestTitle": "로그인이 필요합니다",
+		"bookingsTitle": "최근 예약",
+		"title": "내 프로필"
+	}
 }

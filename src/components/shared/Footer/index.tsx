@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Instagram, Send, Phone, MapPin } from "lucide-react";
+import { Instagram, Send, Phone, MapPin, ExternalLink } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
@@ -11,7 +11,11 @@ const Footer = () => {
 		<footer className="w-full px-4 py-8 sm:px-8">
 			<div className="mx-auto grid w-full max-w-6xl gap-6 md:grid-cols-3">
 				<div className="space-y-3">
-					<Link to={`/${locale}`} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="inline-block text-lg font-black tracking-[0.12em]">
+					<Link
+						to={`/${locale}`}
+						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+						className="inline-block text-lg font-black tracking-[0.12em]"
+					>
 						USTA <span className="text-emerald-400">BARBER</span>
 					</Link>
 					<p className="max-w-xs text-sm text-slate-400">{t("footer.tagline")}</p>
@@ -32,6 +36,14 @@ const Footer = () => {
 						>
 							<Send className="h-4 w-4" />
 						</a>
+						<a
+							href="https://www.usta.best"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="rounded-lg border border-slate-700 p-2 hover:border-emerald-400 hover:text-emerald-300"
+						>
+							<ExternalLink className="w-5 h-5" />
+						</a>
 					</div>
 				</div>
 
@@ -44,6 +56,9 @@ const Footer = () => {
 						<Link to={`/${locale}/services`} className="hover:text-emerald-300">
 							{t("nav.services")}
 						</Link>
+						<Link to={`/${locale}/barbers`} className="hover:text-emerald-300">
+							{t("nav.barbers")}
+						</Link>
 						<Link to={`/${locale}/gallery`} className="hover:text-emerald-300">
 							{t("nav.gallery")}
 						</Link>
@@ -52,6 +67,9 @@ const Footer = () => {
 						</Link>
 						<Link to={`/${locale}/contact`} className="hover:text-emerald-300">
 							{t("nav.contact")}
+						</Link>
+						<Link to={`/${locale}/booking`} className="hover:text-emerald-300">
+							{t("nav.booking")}
 						</Link>
 					</div>
 				</div>

@@ -3,12 +3,13 @@ import { motion } from "framer-motion";
 import { Clock3, Instagram, Mail, MapPinned, Phone, Send, CheckCircle2, AlertTriangle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
+import { sendTelegramMessage } from "../../lib/telegram";
 
 interface ContactPageProps {
 	preview?: boolean;
 }
 
-type SubmitStatus = "idle" | "success" | "error";
+type SubmitStatus = "idle" | "sending" | "success" | "validationError" | "requestError" | "configError";
 
 const ContactPage = ({ preview = false }: ContactPageProps) => {
 	const { t } = useTranslation();
@@ -18,23 +19,36 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 	const [form, setForm] = useState({
 		name: "",
 		phone: "",
-		service: "",
 		message: "",
 	});
 
-	const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+	const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		if (!form.name.trim() || !form.phone.trim() || !form.message.trim()) {
-			setStatus("error");
+			setStatus("validationError");
 			return;
 		}
 
-		// Demo submit flow; replace with API request when backend endpoint is ready.
+		setStatus("sending");
+
+		// TODO(back-end): replace direct Telegram call with POST /api/contact when backend is ready.
+		const result = await sendTelegramMessage([
+			`📩 ${t("contactSection.telegramMessage.title")}`,
+			`👤 ${t("contactSection.form.nameLabel")}: ${form.name.trim()}`,
+			`📞 ${t("contactSection.form.phoneLabel")}: ${form.phone.trim()}`,
+			`💬 ${t("contactSection.form.messageLabel")}:`,
+			form.message.trim(),
+		]);
+
+		if (!result.ok) {
+			setStatus(result.reason === "missing_config" ? "configError" : "requestError");
+			return;
+		}
+
 		setStatus("success");
 		setForm({
 			name: "",
 			phone: "",
-			service: "",
 			message: "",
 		});
 	};
@@ -55,6 +69,10 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 					onSubmit={onSubmit}
 					className="space-y-4 rounded-2xl border border-slate-300/70 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
 				>
+					<p className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs leading-6 text-emerald-700 dark:text-emerald-300">
+						{t("contactSection.telegramMessage.description")}
+					</p>
+
 					<div className="grid gap-3 sm:grid-cols-2">
 						<label className="space-y-1">
 							<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">{t("contactSection.form.nameLabel")}</span>
@@ -79,20 +97,6 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 					</div>
 
 					<label className="space-y-1">
-						<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">{t("contactSection.form.serviceLabel")}</span>
-						<select
-							value={form.service}
-							onChange={(event) => setForm((prev) => ({ ...prev, service: event.target.value }))}
-							className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-						>
-							<option value="">{t("contactSection.form.servicePlaceholder")}</option>
-							<option value="classic">{t("contactSection.form.serviceOptions.classic")}</option>
-							<option value="beard">{t("contactSection.form.serviceOptions.beard")}</option>
-							<option value="premium">{t("contactSection.form.serviceOptions.premium")}</option>
-						</select>
-					</label>
-
-					<label className="space-y-1">
 						<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">{t("contactSection.form.messageLabel")}</span>
 						<textarea
 							value={form.message}
@@ -105,10 +109,11 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 
 					<button
 						type="submit"
-						className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
+						disabled={status === "sending"}
+						className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
 					>
 						<Send className="h-4 w-4" />
-						{t("contactSection.form.submit")}
+						{status === "sending" ? t("contactSection.form.sending") : t("contactSection.form.submit")}
 					</button>
 
 					{status === "success" && (
@@ -117,10 +122,22 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 							{t("contactSection.form.success")}
 						</p>
 					)}
-					{status === "error" && (
+					{status === "validationError" && (
 						<p className="inline-flex items-center gap-2 rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-700 dark:text-red-300">
 							<AlertTriangle className="h-4 w-4" />
 							{t("contactSection.form.error")}
+						</p>
+					)}
+					{status === "requestError" && (
+						<p className="inline-flex items-center gap-2 rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-700 dark:text-red-300">
+							<AlertTriangle className="h-4 w-4" />
+							{t("contactSection.form.sendFail")}
+						</p>
+					)}
+					{status === "configError" && (
+						<p className="inline-flex items-center gap-2 rounded-lg bg-amber-500/10 px-3 py-2 text-sm text-amber-700 dark:text-amber-300">
+							<AlertTriangle className="h-4 w-4" />
+							{t("contactSection.form.configError")}
 						</p>
 					)}
 				</motion.form>

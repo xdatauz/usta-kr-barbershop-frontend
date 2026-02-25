@@ -20,7 +20,9 @@ const HomeHero = ({ onExploreMore, hasRevealedSections = false }: HomeHeroProps)
 		}
 
 		window.scrollTo({ top: window.innerHeight * 0.9, behavior: "smooth" });
-	};
+  };
+  
+  // TODO: Ushbu qismda ma'lumotlar bilan ishlashim kerak
 
 	return (
 		<section className="relative isolate overflow-hidden rounded-3xl border border-slate-300/70 bg-gradient-to-br from-white to-slate-100 dark:border-slate-700/80 dark:from-slate-900 dark:to-slate-950">
@@ -66,7 +68,7 @@ const HomeHero = ({ onExploreMore, hasRevealedSections = false }: HomeHeroProps)
 						className="flex flex-col items-start gap-3 sm:flex-row"
 					>
 						<Link
-							to={`/${locale}/contact`}
+							to={`/${locale}/booking`}
 							className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-slate-700 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
 						>
 							<CalendarDays className="h-4 w-4" />

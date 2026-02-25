@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-const docs = () => {};
+export const docs = () => {};
 
 // Write your comments here....
 

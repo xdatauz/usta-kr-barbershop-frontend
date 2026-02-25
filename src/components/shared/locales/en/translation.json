@@ -1,272 +1,341 @@
 {
-  "meta": {
-    "title": "Usta | Premium Barber Shop",
-    "description": "Usta Premium Barber Shop offers modern haircuts, beard styling, and professional grooming services.",
-    "ogTitle": "Usta | Premium Barber Shop",
-    "ogDescription": "Modern cuts, beard trims, and premium grooming at Usta."
-  },
-  "nav": {
-    "home": "Home",
-    "services": "Services",
-    "gallery": "Gallery",
-    "about": "About",
-    "contact": "Contact",
-    "bookAppointment": "Book Appointment"
-  },
-  "language": {
-    "select": "Select language"
-  },
-  "profile": {
-    "toggleMenu": "Toggle user menu",
-    "imageAlt": "User profile",
-    "imageAltSuffix": "profile",
-    "signIn": "Sign In",
-    "myProfile": "My Profile",
-    "lastVisited": "Last Visited",
-    "dashboard": "Dashboard",
-    "myBarbers": "My Barbers",
-    "notifications": "Notifications",
-    "customerService": "Customer Service",
-    "logout": "Log Out"
-  },
-  "theme": {
-    "switchToDark": "Switch to dark mode",
-    "switchToLight": "Switch to light mode"
-  },
-  "homeHero": {
-    "badge": "Premium Grooming",
-    "title": "Sharp style, confident presence, and care in every detail.",
-    "subtitle": "From classic cuts to modern fades, Usta delivers a complete barbershop experience with expert barbers, precise tools, and warm hospitality.",
-    "primaryCta": "Book an appointment",
-    "secondaryCta": "Explore sections",
-    "revealDone": "Sections revealed",
-    "stats": {
-      "years": "Years Experience",
-      "clients": "Happy Clients",
-      "rating": "Average Rating"
-    },
-    "imageAltOne": "Barber styling client hair",
-    "imageAltTwo": "Beard trim and detailing"
-  },
-  "homeReveal": {
-    "description": "Start with the hero, then reveal each section one by one for a cleaner and smoother experience.",
-    "showMoreButton": "Reveal section {{count}}",
-    "resetButton": "Hide sections"
-  },
-  "servicesSection": {
-    "eyebrow": "Services",
-    "title": "Premium services designed for every style",
-    "description": "Choose your service and let our team shape your look with precision, hygiene, and consistency.",
-    "bookNow": "Book now",
-    "items": {
-      "classicCut": {
-        "name": "Classic Haircut",
-        "description": "Clean scissor and clipper work with styling finish for an everyday sharp look.",
-        "price": "$12",
-        "duration": "35 min"
-      },
-      "beardStyling": {
-        "name": "Beard Styling",
-        "description": "Shape, define, and line up your beard to match your face structure.",
-        "price": "$10",
-        "duration": "30 min"
-      },
-      "skinFade": {
-        "name": "Skin Fade",
-        "description": "High-detail fade blending from skin to top length with clean contours.",
-        "price": "$15",
-        "duration": "45 min"
-      },
-      "fatherSon": {
-        "name": "Father + Son Combo",
-        "description": "A convenient two-person package with matching quality and comfort.",
-        "price": "$20",
-        "duration": "60 min"
-      },
-      "deluxePackage": {
-        "name": "Deluxe Grooming",
-        "description": "Haircut, beard detail, wash, and hot towel refresh in one premium package.",
-        "price": "$25",
-        "duration": "70 min"
-      },
-      "hairColor": {
-        "name": "Hair Color Refresh",
-        "description": "Natural tone adjustment and grey blending with professional products.",
-        "price": "$18",
-        "duration": "50 min"
-      }
-    },
-    "extras": {
-      "processTwo": "Precision cut and blend execution",
-      "processThree": "Beard/details finishing and final check",
-      "popularText": "Skin Fade + Beard Styling is our top requested combo for a modern sharp look.",
-      "processTitle": "How Your Visit Works",
-      "processOne": "Quick consultation and style selection",
-      "popularTitle": "Most Popular",
-      "memberText": "Join monthly membership to get priority slots and discounted package grooming.",
-      "memberTitle": "Member Benefits"
-    }
-  },
-  "gallerySection": {
-    "eyebrow": "Gallery",
-    "title": "Style moments from our daily craft",
-    "description": "Before and after transformations, interior atmosphere, and real moments from our barbers at work.",
-    "categories": {
-      "cuts": "Before / After",
-      "interior": "Interior",
-      "barbers": "Barbers at Work",
-      "atmosphere": "Atmosphere"
-    },
-    "extras": {
-      "stylesTitle": "Styles You Can Request",
-      "noteLabel": "Note",
-      "noteText": "All shots are from our own shop and daily workflow. No stock photos are used in this section.",
-      "noteTitle": "Real Photos, Real Clients"
-    }
-  },
-  "aboutSection": {
-    "eyebrow": "About Us",
-    "title": "Usta blends classic discipline with modern style",
-    "description": "We are a team-focused barbershop built around precision service, client trust, and strong grooming culture.",
-    "storyTitle": "Our Story",
-    "storyText": "What started as a local chair has grown into a trusted destination where people come for consistency, comfort, and confidence. Every appointment is treated with care.",
-    "values": {
-      "precision": {
-        "title": "Precision First",
-        "text": "Every line, blend, and contour is finished with attention to detail."
-      },
-      "hospitality": {
-        "title": "Warm Hospitality",
-        "text": "A friendly environment where every guest feels welcome and respected."
-      },
-      "hygiene": {
-        "title": "Strict Hygiene",
-        "text": "Sanitized tools and clean stations are non-negotiable in every session."
-      },
-      "craft": {
-        "title": "Continuous Craft",
-        "text": "Our team improves constantly through training and trend awareness."
-      }
-    },
-    "teamTitle": "Meet The Team",
-    "team": {
-      "jamshid": {
-        "name": "Jamshid",
-        "role": "Senior Barber",
-        "bio": "Specializes in fades and premium beard shaping."
-      },
-      "sardor": {
-        "name": "Sardor",
-        "role": "Style Expert",
-        "bio": "Known for textured cuts and modern styling finish."
-      },
-      "aziz": {
-        "name": "Aziz",
-        "role": "Grooming Specialist",
-        "bio": "Focuses on complete grooming packages and comfort."
-      }
-    },
-    "extras": {
-      "timelineOne": "Usta started as a single-chair local barbershop.",
-      "timelineTwo": "Expanded to a full team and premium grooming packages.",
-      "timelineThree": "Trusted by thousands of returning clients across the city."
-    }
-  },
-  "contactSection": {
-    "eyebrow": "Contact",
-    "title": "Book your next visit or send us a message",
-    "description": "Use the form for appointments and questions. We usually respond quickly during working hours.",
-    "form": {
-      "nameLabel": "Full name",
-      "namePlaceholder": "Your name",
-      "phoneLabel": "Phone",
-      "phonePlaceholder": "+998 ...",
-      "serviceLabel": "Preferred service",
-      "servicePlaceholder": "Select service",
-      "serviceOptions": {
-        "classic": "Classic haircut",
-        "beard": "Beard styling",
-        "premium": "Deluxe grooming"
-      },
-      "messageLabel": "Message",
-      "messagePlaceholder": "Tell us your preferred time and request",
-      "submit": "Send request",
-      "success": "Your request has been sent. We will contact you soon.",
-      "error": "Please fill name, phone, and message fields."
-    },
-    "info": {
-      "addressLabel": "Address",
-      "address": "12 Bunyodkor Street, Chilanzar District, Tashkent",
-      "phoneLabel": "Phone",
-      "emailLabel": "Email",
-      "hoursLabel": "Working Hours",
-      "weekdays": "Mon - Sat: 09:00 - 21:00",
-      "weekend": "Sunday: 10:00 - 18:00",
-      "socialLabel": "Social media",
-      "mapLabel": "Usta barbershop map"
-    },
-    "extras": {
-      "faqTwoQ": "Do you accept card payments?",
-      "tipThree": "Ask your barber about home maintenance products.",
-      "faqOneQ": "Do I need to book in advance?",
-      "tipTwo": "Arrive 5-10 minutes early for consultation.",
-      "faqTwoA": "Yes, we accept cash and card payments.",
-      "tipsTitle": "Before Your Appointment",
-      "faqOneA": "Walk-ins are welcome, but booking guarantees your preferred time slot.",
-      "tipOne": "Bring a reference photo if you have a specific style in mind.",
-      "faqTitle": "Frequently Asked Questions"
-    }
-  },
-  "footer": {
-    "text": "All rights reserved.",
-    "tagline": "Premium barber service for modern gentlemen.",
-    "quickLinks": "Quick links",
-    "contactTitle": "Contact info"
-  },
-  "pages": {
-    "home": {
-      "hero": "Welcome"
-    },
-    "services": {
-      "title": "Services"
-    },
-    "gallery": {
-      "title": "Gallery"
-    },
-    "about": {
-      "title": "About"
-    },
-    "contact": {
-      "title": "Contact"
-    }
-  },
-  "common": {
-    "more": "More"
-  },
-  "social": {
-    "instagram": "Instagram",
-    "telegram": "Telegram"
-  },
-  "auth": {
-    "name": "Full name",
-    "haveAccount": "Already have an account?",
-    "noAccount": "No account yet?",
-    "email": "Email",
-    "switchToLogin": "Login",
-    "loginTitle": "Login to your account",
-    "signupCta": "Sign up",
-    "signupTitle": "Create your account",
-    "password": "Password",
-    "loginCta": "Login",
-    "switchToSignup": "Sign up"
-  },
-  "userPage": {
-    "guestDescription": "Please login to access your personal profile.",
-    "bookingsEmpty": "No bookings yet. Book your first appointment from Services.",
-    "guestTitle": "Login required",
-    "title": "My Profile",
-    "subtitle": "Manage your basic account details and booking activity.",
-    "bookingsTitle": "Recent bookings",
-    "backHome": "Back to Home"
-  }
+	"meta": {
+		"title": "Usta | Premium Barber Shop",
+		"description": "Usta Premium Barber Shop offers modern haircuts, beard styling, and professional grooming services.",
+		"ogTitle": "Usta | Premium Barber Shop",
+		"ogDescription": "Modern cuts, beard trims, and premium grooming at Usta."
+	},
+	"nav": {
+		"home": "Home",
+		"services": "Services",
+		"booking": "Booking",
+		"barbers": "Barbers",
+		"gallery": "Gallery",
+		"about": "About",
+		"contact": "Contact",
+		"bookAppointment": "Book Appointment"
+	},
+	"language": {
+		"select": "Select language"
+	},
+	"profile": {
+		"toggleMenu": "Toggle user menu",
+		"imageAlt": "User profile",
+		"imageAltSuffix": "profile",
+		"signIn": "Sign In",
+		"myProfile": "My Profile",
+		"lastVisited": "Last Visited",
+		"dashboard": "Dashboard",
+		"myBarbers": "My Barbers",
+		"notifications": "Notifications",
+		"customerService": "Customer Service",
+		"logout": "Log Out"
+	},
+	"theme": {
+		"switchToDark": "Switch to dark mode",
+		"switchToLight": "Switch to light mode"
+	},
+	"homeHero": {
+		"badge": "Premium Grooming",
+		"title": "Sharp style, confident presence, and care in every detail.",
+		"subtitle": "From classic cuts to modern fades, Usta delivers a complete barbershop experience with expert barbers, precise tools, and warm hospitality.",
+		"primaryCta": "Book an appointment",
+		"secondaryCta": "Explore sections",
+		"revealDone": "Sections revealed",
+		"stats": {
+			"years": "Years Experience",
+			"clients": "Happy Clients",
+			"rating": "Average Rating"
+		},
+		"imageAltOne": "Barber styling client hair",
+		"imageAltTwo": "Beard trim and detailing"
+	},
+	"homeReveal": {
+		"description": "Start with the hero, then reveal each section one by one for a cleaner and smoother experience.",
+		"showMoreButton": "Reveal section {{count}}",
+		"resetButton": "Hide sections"
+	},
+	"servicesSection": {
+		"eyebrow": "Services",
+		"title": "Premium services designed for every style",
+		"description": "Choose your service and let our team shape your look with precision, hygiene, and consistency.",
+		"bookNow": "Book now",
+		"items": {
+			"classicCut": {
+				"name": "Classic Haircut",
+				"description": "Clean scissor and clipper work with styling finish for an everyday sharp look.",
+				"price": "$12",
+				"duration": "35 min"
+			},
+			"beardStyling": {
+				"name": "Beard Styling",
+				"description": "Shape, define, and line up your beard to match your face structure.",
+				"price": "$10",
+				"duration": "30 min"
+			},
+			"skinFade": {
+				"name": "Skin Fade",
+				"description": "High-detail fade blending from skin to top length with clean contours.",
+				"price": "$15",
+				"duration": "45 min"
+			},
+			"fatherSon": {
+				"name": "Father + Son Combo",
+				"description": "A convenient two-person package with matching quality and comfort.",
+				"price": "$20",
+				"duration": "60 min"
+			},
+			"deluxePackage": {
+				"name": "Deluxe Grooming",
+				"description": "Haircut, beard detail, wash, and hot towel refresh in one premium package.",
+				"price": "$25",
+				"duration": "70 min"
+			},
+			"hairColor": {
+				"name": "Hair Color Refresh",
+				"description": "Natural tone adjustment and grey blending with professional products.",
+				"price": "$18",
+				"duration": "50 min"
+			}
+		},
+		"extras": {
+			"processTwo": "Precision cut and blend execution",
+			"processThree": "Beard/details finishing and final check",
+			"popularText": "Skin Fade + Beard Styling is our top requested combo for a modern sharp look.",
+			"processTitle": "How Your Visit Works",
+			"processOne": "Quick consultation and style selection",
+			"popularTitle": "Most Popular",
+			"memberText": "Join monthly membership to get priority slots and discounted package grooming.",
+			"memberTitle": "Member Benefits"
+		}
+	},
+	"gallerySection": {
+		"eyebrow": "Gallery",
+		"title": "Style moments from our daily craft",
+		"description": "Before and after transformations, interior atmosphere, and real moments from our barbers at work.",
+		"categories": {
+			"cuts": "Before / After",
+			"interior": "Interior",
+			"barbers": "Barbers at Work",
+			"atmosphere": "Atmosphere"
+		},
+		"extras": {
+			"stylesTitle": "Styles You Can Request",
+			"styleOne": "Skin Fade",
+			"styleTwo": "Textured Crop",
+			"styleThree": "Classic Taper",
+			"styleFour": "Beard Line Up",
+			"noteLabel": "Note",
+			"noteText": "All shots are from our own shop and daily workflow. No stock photos are used in this section.",
+			"noteTitle": "Real Photos, Real Clients"
+		}
+	},
+	"aboutSection": {
+		"eyebrow": "About Us",
+		"title": "Usta blends classic discipline with modern style",
+		"description": "We are a team-focused barbershop built around precision service, client trust, and strong grooming culture.",
+		"storyTitle": "Our Story",
+		"storyText": "What started as a local chair has grown into a trusted destination where people come for consistency, comfort, and confidence. Every appointment is treated with care.",
+		"values": {
+			"precision": {
+				"title": "Precision First",
+				"text": "Every line, blend, and contour is finished with attention to detail."
+			},
+			"hospitality": {
+				"title": "Warm Hospitality",
+				"text": "A friendly environment where every guest feels welcome and respected."
+			},
+			"hygiene": {
+				"title": "Strict Hygiene",
+				"text": "Sanitized tools and clean stations are non-negotiable in every session."
+			},
+			"craft": {
+				"title": "Continuous Craft",
+				"text": "Our team improves constantly through training and trend awareness."
+			}
+		},
+		"teamTitle": "Meet The Team",
+		"team": {
+			"jamshid": {
+				"name": "Jamshid",
+				"role": "Senior Barber",
+				"bio": "Specializes in fades and premium beard shaping."
+			},
+			"sardor": {
+				"name": "Sardor",
+				"role": "Style Expert",
+				"bio": "Known for textured cuts and modern styling finish."
+			},
+			"aziz": {
+				"name": "Aziz",
+				"role": "Grooming Specialist",
+				"bio": "Focuses on complete grooming packages and comfort."
+			}
+		},
+		"extras": {
+			"timelineOne": "Usta started as a single-chair local barbershop.",
+			"timelineTwo": "Expanded to a full team and premium grooming packages.",
+			"timelineThree": "Trusted by thousands of returning clients across the city."
+		}
+	},
+	"contactSection": {
+		"eyebrow": "Contact",
+		"title": "Book your next visit or send us a message",
+		"description": "Use the form for appointments and questions. We usually respond quickly during working hours.",
+		"form": {
+			"nameLabel": "Full name",
+			"namePlaceholder": "Your name",
+			"phoneLabel": "Phone",
+			"phonePlaceholder": "+998 ...",
+			"serviceLabel": "Preferred service",
+			"servicePlaceholder": "Select service",
+			"serviceOptions": {
+				"classic": "Classic haircut",
+				"beard": "Beard styling",
+				"premium": "Deluxe grooming"
+			},
+			"messageLabel": "Message",
+			"messagePlaceholder": "Tell us your preferred time and request",
+			"submit": "Send request",
+			"success": "Your request has been sent. We will contact you soon.",
+			"error": "Please fill name, phone, and message fields."
+		},
+		"info": {
+			"addressLabel": "Address",
+			"address": "12 Bunyodkor Street, Chilanzar District, Tashkent",
+			"phoneLabel": "Phone",
+			"emailLabel": "Email",
+			"hoursLabel": "Working Hours",
+			"weekdays": "Mon - Sat: 09:00 - 21:00",
+			"weekend": "Sunday: 10:00 - 18:00",
+			"socialLabel": "Social media",
+			"mapLabel": "Usta barbershop map"
+		},
+		"extras": {
+			"faqTwoQ": "Do you accept card payments?",
+			"tipThree": "Ask your barber about home maintenance products.",
+			"faqOneQ": "Do I need to book in advance?",
+			"tipTwo": "Arrive 5-10 minutes early for consultation.",
+			"faqTwoA": "Yes, we accept cash and card payments.",
+			"tipsTitle": "Before Your Appointment",
+			"faqOneA": "Walk-ins are welcome, but booking guarantees your preferred time slot.",
+			"tipOne": "Bring a reference photo if you have a specific style in mind.",
+			"faqTitle": "Frequently Asked Questions"
+		}
+	},
+	"footer": {
+		"text": "All rights reserved.",
+		"tagline": "Premium barber service for modern gentlemen.",
+		"quickLinks": "Quick links",
+		"contactTitle": "Contact info"
+	},
+	"pages": {
+		"home": {
+			"hero": "Welcome"
+		},
+		"services": {
+			"title": "Services"
+		},
+		"gallery": {
+			"title": "Gallery"
+		},
+		"about": {
+			"title": "About"
+		},
+		"contact": {
+			"title": "Contact"
+		}
+	},
+	"common": {
+		"more": "More"
+	},
+	"social": {
+		"instagram": "Instagram",
+		"telegram": "Telegram"
+	},
+	"auth": {
+		"name": "Full name",
+		"haveAccount": "Already have an account?",
+		"noAccount": "No account yet?",
+		"email": "Email",
+		"switchToLogin": "Login",
+		"loginTitle": "Login to your account",
+		"signupCta": "Sign up",
+		"signupTitle": "Create your account",
+		"password": "Password",
+		"loginCta": "Login",
+		"switchToSignup": "Sign up"
+	},
+	"userPage": {
+		"guestDescription": "Please login to access your personal profile.",
+		"bookingsEmpty": "No bookings yet. Book your first appointment from Services.",
+		"guestTitle": "Login required",
+		"title": "My Profile",
+		"subtitle": "Manage your basic account details and booking activity.",
+		"bookingsTitle": "Recent bookings",
+		"backHome": "Back to Home"
+	},
+
+	"bookingPage": {
+		"eyebrow": "Online Booking",
+		"title": "Book an Appointment",
+		"description": "Choose your preferred time and enjoy professional barber service.",
+		"badges": {
+			"fast": "Instant confirmation",
+			"time": "Flexible schedule",
+			"style": "All styles available"
+		},
+		"telegram": {
+			"title": "New Booking Request",
+			"description": "Your request will be sent via Telegram.",
+			"subDescription": "Our administrator will contact you shortly."
+		},
+		"form": {
+			"labels": {
+				"name": "Name",
+				"phone": "Phone",
+				"barber": "Barber",
+				"hairstyle": "Hairstyle",
+				"date": "Date",
+				"time": "Time",
+				"note": "Note"
+			},
+			"placeholders": {
+				"name": "Enter your name",
+				"phone": "+1 234 567 890",
+				"barber": "Select barber",
+				"hairstyle": "Select hairstyle",
+				"time": "Select time",
+				"note": "Additional notes (optional)"
+			},
+			"actions": {
+				"submit": "Book Now",
+				"sending": "Sending..."
+			},
+			"messages": {
+				"success": "Your booking has been sent successfully!",
+				"validationError": "Please fill in all required fields.",
+				"sendFail": "Failed to send booking. Please try again.",
+				"configError": "Server configuration error."
+			}
+		},
+		"hairstyles": {
+			"classic": "Classic Cut",
+			"fade": "Fade",
+			"beard": "Beard Trim",
+			"deluxe": "Deluxe Package",
+			"color": "Hair Coloring",
+			"fatherSon": "Father & Son"
+		},
+		"summary": {
+			"title": "Booking Summary",
+			"noNote": "No note provided"
+		},
+		"help": {
+			"title": "Need Help?",
+			"description": "If you're unsure which barber or service to choose, explore the options below.",
+			"barbersCta": "View Barbers",
+			"servicesCta": "View Services"
+		}
+	}
 }

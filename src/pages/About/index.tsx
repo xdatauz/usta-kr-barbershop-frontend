@@ -7,6 +7,8 @@ interface AboutPageProps {
 	preview?: boolean;
 }
 
+// TODO: Ushbu qismda ma'lumotlar bilan ishlashim kerak
+
 const AboutPage = ({ preview = false }: AboutPageProps) => {
 	const { t } = useTranslation();
 	const location = useLocation();

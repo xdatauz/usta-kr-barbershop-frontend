@@ -136,7 +136,7 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
 						</Link>
 					)}
 					<Link
-						to={buildPath("/services")}
+						to={buildPath("/barbers")}
 						className="block rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 md:text-base dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white"
 						onClick={closeDropdown}
 					>

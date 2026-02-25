@@ -27,9 +27,11 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 	const navItems = [
 		{ key: "nav.home", path: "" },
 		{ key: "nav.services", path: "services" },
+		{ key: "nav.barbers", path: "barbers" },
 		{ key: "nav.gallery", path: "gallery" },
 		{ key: "nav.about", path: "about" },
 		{ key: "nav.contact", path: "contact" },
+		{ key: "nav.booking", path: "booking" },
 	];
 
 	return (
@@ -63,7 +65,9 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 								key={item.key}
 								to={`/${locale}${item.path ? `/${item.path}` : ""}`}
 								className={`relative font-medium transition duration-300 ${
-									isActive ? "text-emerald-600 dark:text-emerald-400" : "text-slate-700 hover:text-emerald-600 dark:text-slate-200 dark:hover:text-emerald-400"
+									isActive
+										? "text-emerald-600 dark:text-emerald-400"
+										: "text-slate-700 hover:text-emerald-600 dark:text-slate-200 dark:hover:text-emerald-400"
 								}`}
 							>
 								{t(item.key)}
@@ -140,7 +144,9 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 									to={targetPath}
 									onClick={() => setIsOpen(false)}
 									className={`text-lg font-medium transition ${
-										isActive ? "text-emerald-600 dark:text-emerald-400" : "text-slate-700 hover:text-emerald-600 dark:text-slate-200 dark:hover:text-emerald-400"
+										isActive
+											? "text-emerald-600 dark:text-emerald-400"
+											: "text-slate-700 hover:text-emerald-600 dark:text-slate-200 dark:hover:text-emerald-400"
 									}`}
 								>
 									{t(item.key)}
@@ -149,13 +155,17 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 						})}
 
 						{/* Mobile CTA */}
-						<a
-							href="tel:+998901234567"
+						<Link
+							to={`/${locale}/booking`}
+							onClick={() => {
+								setIsOpen(false);
+								window.scrollTo({ top: 0, behavior: "smooth" });
+							}}
 							className="mt-4 flex items-center justify-center gap-2 rounded-md bg-emerald-600 py-3 text-white transition hover:bg-emerald-700"
 						>
 							<Phone className="w-4 h-4" />
 							{t("nav.bookAppointment")}
-						</a>
+						</Link>
 
 						{/* Socials */}
 						<div className="flex justify-center gap-8 border-t border-slate-300 pt-6 dark:border-slate-700">
@@ -176,15 +186,20 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 							>
 								<Send className="w-6 h-6" />
 							</a>
+							<a
+								href="https://www.usta.best"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-slate-700 transition hover:text-emerald-600 dark:text-slate-200 dark:hover:text-emerald-400"
+							>
+								<ExternalLink className="w-5 h-5" />
+							</a>
 						</div>
 					</div>
 				</div>
 			)}
 
-			<AuthModal
-				isOpen={isAuthModalOpen}
-				onClose={() => setIsAuthModalOpen(false)}
-			/>
+			<AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
 		</header>
 	);
 };
