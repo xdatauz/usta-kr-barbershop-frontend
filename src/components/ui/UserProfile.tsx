@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaCrown } from "react-icons/fa";
-import { ChevronDown, LogOut } from "lucide-react";
+import { ChevronDown, Crown, LogOut } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 interface UserProfileMenuProps {
 	currentUser?: {
 		id: string;
-		userType: "ADMIN" | "USER";
+		userType: "ADMIN" | "USER" | "BARBER";
 		image?: string | null;
 		avatar?: string | null;
 		profileImage?: string | null;
@@ -132,7 +131,7 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
 							onClick={closeDropdown}
 						>
 							<p className="mr-1">{t("profile.dashboard")}</p>
-							<FaCrown className="text-yellow-500 text-lg" />
+							<Crown className="h-4 w-4 text-yellow-500" />
 						</Link>
 					)}
 					<Link

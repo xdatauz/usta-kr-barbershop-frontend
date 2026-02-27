@@ -2,7 +2,8 @@ import { useEffect, useState, type FormEvent, type MouseEvent } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../context/auth/auth-provider";
+import { toast } from "react-toastify";
+import { useAuth, type UserType } from "../../context/auth/auth-provider";
 
 interface AuthModalProps {
 	isOpen: boolean;
@@ -11,12 +12,13 @@ interface AuthModalProps {
 
 export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 	const { t } = useTranslation();
-	const { login, signup } = useAuth();
+	const { login, signup, isAuthLoading } = useAuth();
 	const [mode, setMode] = useState<"login" | "signup">("login");
 	const [form, setForm] = useState({
 		name: "",
 		email: "",
 		password: "",
+		userType: "USER" as UserType,
 	});
 
 	useEffect(() => {
@@ -45,24 +47,38 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 		return null;
 	}
 
-	const submitHandler = (event: FormEvent) => {
+	const submitHandler = async (event: FormEvent) => {
 		event.preventDefault();
 		if (!form.email.trim() || !form.password.trim()) {
+			toast.warning(t("toast.validation.requiredFields"));
 			return;
 		}
 
 		if (mode === "login") {
-			login({ email: form.email.trim(), password: form.password.trim() });
-		} else {
-			if (!form.name.trim()) {
+			const result = await login({ email: form.email.trim(), password: form.password.trim() });
+			if (!result.ok) {
+				toast.error(result.error || t("toast.auth.loginFailed"));
 				return;
 			}
-			signup({
+			toast.success(t("toast.auth.loginSuccess"));
+		} else {
+			if (!form.name.trim()) {
+				toast.warning(t("toast.validation.requiredFields"));
+				return;
+			}
+			const result = await signup({
 				name: form.name.trim(),
 				email: form.email.trim(),
 				password: form.password.trim(),
+				userType: form.userType,
 			});
+			if (!result.ok) {
+				toast.error(result.error || t("toast.auth.signupFailed"));
+				return;
+			}
+			toast.success(t("toast.auth.signupSuccess"));
 		}
+
 		onClose();
 	};
 
@@ -91,13 +107,24 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
 					<form onSubmit={submitHandler} className="space-y-3">
 						{mode === "signup" && (
-							<input
-								type="text"
-								value={form.name}
-								onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
-								placeholder={t("auth.name")}
-								className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-							/>
+							<>
+								<input
+									type="text"
+									value={form.name}
+									onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
+									placeholder={t("auth.name")}
+									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
+								/>
+								<select
+									value={form.userType}
+									onChange={(event) => setForm((prev) => ({ ...prev, userType: event.target.value as UserType }))}
+									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
+								>
+									<option value="USER">{t("auth.roles.user")}</option>
+									<option value="BARBER">{t("auth.roles.barber")}</option>
+									<option value="ADMIN">{t("auth.roles.admin")}</option>
+								</select>
+							</>
 						)}
 
 						<input
@@ -117,9 +144,10 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
 						<button
 							type="submit"
+							disabled={isAuthLoading}
 							className="w-full rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-700 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
 						>
-							{mode === "login" ? t("auth.loginCta") : t("auth.signupCta")}
+							{isAuthLoading ? t("common.loading") : mode === "login" ? t("auth.loginCta") : t("auth.signupCta")}
 						</button>
 					</form>
 

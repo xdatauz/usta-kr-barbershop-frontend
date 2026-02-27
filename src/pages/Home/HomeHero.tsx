@@ -91,15 +91,15 @@ const HomeHero = ({ onExploreMore, hasRevealedSections = false }: HomeHeroProps)
 						className="grid max-w-xl grid-cols-3 gap-3 pt-2"
 					>
 						<div className="rounded-xl border border-slate-300/70 bg-white/60 p-3 backdrop-blur dark:border-slate-700 dark:bg-slate-900/60">
-							<p className="text-lg font-bold text-slate-900 dark:text-white">12+</p>
+							<p className="text-lg font-bold text-slate-900 dark:text-white">{t("homeHero.stats.yearsValue")}</p>
 							<p className="text-[11px] uppercase tracking-[0.14em] text-slate-600 dark:text-slate-400">{t("homeHero.stats.years")}</p>
 						</div>
 						<div className="rounded-xl border border-slate-300/70 bg-white/60 p-3 backdrop-blur dark:border-slate-700 dark:bg-slate-900/60">
-							<p className="text-lg font-bold text-slate-900 dark:text-white">8k+</p>
+							<p className="text-lg font-bold text-slate-900 dark:text-white">{t("homeHero.stats.clientsValue")}</p>
 							<p className="text-[11px] uppercase tracking-[0.14em] text-slate-600 dark:text-slate-400">{t("homeHero.stats.clients")}</p>
 						</div>
 						<div className="rounded-xl border border-slate-300/70 bg-white/60 p-3 backdrop-blur dark:border-slate-700 dark:bg-slate-900/60">
-							<p className="text-lg font-bold text-slate-900 dark:text-white">4.9</p>
+							<p className="text-lg font-bold text-slate-900 dark:text-white">{t("homeHero.stats.ratingValue")}</p>
 							<p className="text-[11px] uppercase tracking-[0.14em] text-slate-600 dark:text-slate-400">{t("homeHero.stats.rating")}</p>
 						</div>
 					</motion.div>

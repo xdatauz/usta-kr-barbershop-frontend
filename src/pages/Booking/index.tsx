@@ -1,14 +1,16 @@
-import { useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { CalendarDays, CheckCircle2, Clock3, Scissors, Send, ShieldAlert } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 import { BARBER_MEDIA } from "../../lib/barbers";
-import { sendTelegramMessage } from "../../lib/telegram";
+import { createBookingApi, getBookingSlotsApi } from "../../lib/api/bookings";
+import { isApiError } from "../../lib/api/client";
 
 type SubmitStatus = "idle" | "sending" | "success" | "validationError" | "requestError" | "configError";
 
-const timeSlots = ["09:00", "10:00", "11:00", "12:00", "13:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
+const fallbackSlots = ["09:00", "10:00", "11:00", "12:00", "13:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
 
 const BookingPage = () => {
 	const { t } = useTranslation();
@@ -24,10 +26,32 @@ const BookingPage = () => {
 		style: "",
 		note: "",
 	});
+	const [availableSlots, setAvailableSlots] = useState<string[]>(fallbackSlots);
 
 	const hairstyleOptions = useMemo(() => ["classic", "fade", "beard", "deluxe", "color", "fatherSon"] as const, []);
 
 	const today = new Date().toISOString().split("T")[0];
+
+	useEffect(() => {
+		const loadSlots = async () => {
+			if (!form.barberId || !form.date) {
+				setAvailableSlots(fallbackSlots);
+				return;
+			}
+
+			try {
+				const slots = await getBookingSlotsApi(form.barberId, form.date);
+				const onlyAvailable = slots.filter((slot) => slot.available).map((slot) => slot.time);
+				setAvailableSlots(onlyAvailable.length ? onlyAvailable : fallbackSlots);
+			} catch (error) {
+				const message = isApiError(error) && error.message ? error.message : t("toast.booking.slotLoadFailed");
+				toast.error(message);
+				setAvailableSlots(fallbackSlots);
+			}
+		};
+
+		void loadSlots();
+	}, [form.barberId, form.date, t]);
 
 	const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -39,26 +63,24 @@ const BookingPage = () => {
 
 		setStatus("sending");
 
-		const barberName = t(`barbersPage.barbers.${form.barberId}.name`, form.barberId);
-		const styleName = t(`bookingPage.hairstyles.${form.style}`);
-		// TODO(back-end): replace direct Telegram call with POST /api/bookings and server-side availability checks.
-		const result = await sendTelegramMessage([
-			`📅 ${t("bookingPage.telegramMessage.title")}`,
-			`👤 ${t("bookingPage.form.name")}: ${form.name.trim()}`,
-			`📞 ${t("bookingPage.form.phone")}: ${form.phone.trim()}`,
-			`💈 ${t("bookingPage.form.barber")}: ${barberName}`,
-			`✂️ ${t("bookingPage.form.hairstyle")}: ${styleName}`,
-			`📆 ${t("bookingPage.form.date")}: ${form.date}`,
-			`🕒 ${t("bookingPage.form.time")}: ${form.time}`,
-			`📝 ${t("bookingPage.form.note")}: ${form.note.trim() || t("bookingPage.summary.noNote")}`,
-		]);
-
-		if (!result.ok) {
-			setStatus(result.reason === "missing_config" ? "configError" : "requestError");
+		try {
+			await createBookingApi({
+				name: form.name.trim(),
+				phone: form.phone.trim(),
+				barberId: form.barberId,
+				date: form.date,
+				time: form.time,
+				style: form.style,
+				note: form.note.trim() || undefined,
+			});
+		} catch (error) {
+			setStatus("requestError");
+			toast.error(isApiError(error) && error.message ? error.message : t("toast.booking.submitFailed"));
 			return;
 		}
 
 		setStatus("success");
+		toast.success(t("toast.booking.submitSuccess"));
 		setForm({
 			name: "",
 			phone: "",
@@ -203,7 +225,7 @@ const BookingPage = () => {
 									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
 								>
 									<option value="">{t("bookingPage.form.placeholders.time")}</option>
-									{timeSlots.map((slot) => (
+									{availableSlots.map((slot) => (
 										<option key={slot} value={slot}>
 											{slot}
 										</option>
@@ -231,7 +253,7 @@ const BookingPage = () => {
 							className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
 						>
 							<Send className="h-4 w-4" />
-							{status === "sending" ? t("bookingPage.form.sending") : t("bookingPage.form.submit")}
+							{status === "sending" ? t("bookingPage.form.actions.sending") : t("bookingPage.form.actions.submit")}
 						</button>
 
 						{status === "success" && (
@@ -243,7 +265,7 @@ const BookingPage = () => {
 						{status === "validationError" && (
 							<p className="inline-flex items-center gap-2 rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-700 dark:text-red-300">
 								<ShieldAlert className="h-4 w-4" />
-								{t("bookingPage.form.messages.error")}
+								{t("bookingPage.form.messages.validationError")}
 							</p>
 						)}
 						{status === "requestError" && (

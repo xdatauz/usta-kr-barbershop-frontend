@@ -8,12 +8,17 @@
 	"nav": {
 		"home": "Bosh sahifa",
 		"services": "Xizmatlar",
+		"articles": "Maqolalar",
 		"gallery": "Galereya",
 		"booking": "Bron",
 		"barbers": "Sartaroshlar",
 		"about": "Biz haqimizda",
 		"contact": "Aloqa",
 		"bookAppointment": "Band qilish"
+	},
+	"brand": {
+		"primary": "USTA",
+		"secondary": "BARBER"
 	},
 	"language": {
 		"select": "Tilni tanlang"
@@ -43,6 +48,9 @@
 		"secondaryCta": "Bo'limlarni ochish",
 		"revealDone": "Bo'limlar ochildi",
 		"stats": {
+			"yearsValue": "12+",
+			"clientsValue": "8k+",
+			"ratingValue": "4.9",
 			"years": "Yillik tajriba",
 			"clients": "Mamnun mijozlar",
 			"rating": "O'rtacha reyting"
@@ -247,7 +255,48 @@
 		}
 	},
 	"common": {
-		"more": "Batafsil"
+		"more": "Batafsil",
+		"loading": "Yuklanmoqda...",
+		"today": "Bugun"
+	},
+	"toast": {
+		"auth": {
+			"required": "Davom etish uchun tizimga kiring.",
+			"loginSuccess": "Muvaffaqiyatli kirildi.",
+			"loginFailed": "Kirish amalga oshmadi. Ma'lumotlarni tekshiring.",
+			"signupSuccess": "Hisob muvaffaqiyatli yaratildi.",
+			"signupFailed": "Ro'yxatdan o'tishda xatolik yuz berdi."
+		},
+		"validation": {
+			"requiredFields": "Iltimos, barcha majburiy maydonlarni to'ldiring.",
+			"commentRequired": "Avval izoh yozing.",
+			"reportReasonRequired": "Iltimos, shikoyat sababini tanlang."
+		},
+		"barbers": {
+			"loadListFailed": "Sartaroshlar ro'yxatini yuklab bo'lmadi.",
+			"loadProfileFailed": "Sartarosh profilini yuklab bo'lmadi.",
+			"loadCommentsFailed": "Izohlarni yuklab bo'lmadi.",
+			"likeSuccess": "Layk uchun rahmat.",
+			"likeFailed": "Layk yuborilmadi.",
+			"dislikeSuccess": "Fikringiz saqlandi.",
+			"dislikeFailed": "Dislayk yuborilmadi.",
+			"followSuccess": "Endi ushbu sartaroshga obuna bo'ldingiz.",
+			"unfollowSuccess": "Obuna bekor qilindi.",
+			"followFailed": "Obuna holatini yangilab bo'lmadi.",
+			"commentSuccess": "Izoh muvaffaqiyatli joylandi.",
+			"commentFailed": "Izoh yuborilmadi.",
+			"reportSuccess": "Shikoyat muvaffaqiyatli yuborildi.",
+			"reportFailed": "Shikoyat yuborilmadi."
+		},
+		"contact": {
+			"submitSuccess": "Xabar muvaffaqiyatli yuborildi.",
+			"submitFailed": "Xabar yuborilmadi."
+		},
+		"booking": {
+			"slotLoadFailed": "Bo'sh vaqtlarni yuklab bo'lmadi.",
+			"submitSuccess": "Bron so'rovi muvaffaqiyatli yuborildi.",
+			"submitFailed": "Bron so'rovini yuborib bo'lmadi."
+		}
 	},
 	"social": {
 		"telegram": "Telegram",
@@ -264,7 +313,12 @@
 		"email": "Email",
 		"password": "Parol",
 		"switchToSignup": "Ro'yxatdan o'tish",
-		"noAccount": "Hisobingiz yo'qmi?"
+		"noAccount": "Hisobingiz yo'qmi?",
+		"roles": {
+			"user": "Foydalanuvchi",
+			"barber": "Sartarosh",
+			"admin": "Admin"
+		}
 	},
 	"userPage": {
 		"bookingsTitle": "So'nggi bronlar",
@@ -274,5 +328,176 @@
 		"title": "Mening profilim",
 		"subtitle": "Asosiy hisob ma'lumotlari va band qilish tarixini boshqaring.",
 		"guestTitle": "Kirish talab qilinadi"
+	},
+
+	"bookingPage": {
+		"eyebrow": "Onlayn Bron",
+		"title": "Qabulga Yozilish",
+		"description": "Qulay vaqtni tanlang va professional barber xizmatidan foydalaning.",
+		"badges": {
+			"fast": "Tez tasdiqlash",
+			"time": "Moslashuvchan vaqt",
+			"style": "Barcha uslublar"
+		},
+		"telegram": {
+			"title": "Yangi Bron So‘rovi",
+			"description": "So‘rovingiz Telegram orqali yuboriladi.",
+			"subDescription": "Administrator tez orada siz bilan bog‘lanadi."
+		},
+		"form": {
+			"labels": {
+				"name": "Ism",
+				"phone": "Telefon",
+				"barber": "Barber",
+				"hairstyle": "Soch turi",
+				"date": "Sana",
+				"time": "Vaqt",
+				"note": "Izoh"
+			},
+			"placeholders": {
+				"name": "Ismingizni kiriting",
+				"phone": "+998 90 123 45 67",
+				"barber": "Barberni tanlang",
+				"hairstyle": "Soch turini tanlang",
+				"time": "Vaqtni tanlang",
+				"note": "Qo‘shimcha izoh (ixtiyoriy)"
+			},
+			"actions": {
+				"submit": "Bron qilish",
+				"sending": "Yuborilmoqda..."
+			},
+			"messages": {
+				"success": "Bron muvaffaqiyatli yuborildi!",
+				"validationError": "Iltimos, barcha majburiy maydonlarni to‘ldiring.",
+				"sendFail": "Bron yuborishda xatolik yuz berdi.",
+				"configError": "Server sozlamalarida xatolik."
+			}
+		},
+		"hairstyles": {
+			"classic": "Klassik",
+			"fade": "Fade",
+			"beard": "Soqol olish",
+			"deluxe": "Deluxe paket",
+			"color": "Soch bo‘yash",
+			"fatherSon": "Ota va o‘g‘il"
+		},
+		"summary": {
+			"title": "Bron Tafsilotlari",
+			"noNote": "Izoh yo‘q"
+		},
+		"help": {
+			"title": "Yordam kerakmi?",
+			"description": "Qaysi barber yoki xizmatni tanlashni bilmasangiz, quyidagilarni ko‘rib chiqing.",
+			"barbersCta": "Barberlar",
+			"servicesCta": "Xizmatlar"
+		}
+	},
+	"barbersPage": {
+		"title": "Bizning Professional Sartaroshlarimiz",
+		"description": "Aniqlik, uslub va sifatli xizmatga bag‘ishlangan tajribali jamoamiz bilan tanishing.",
+		"loadingList": "Sartaroshlar yuklanmoqda...",
+		"loadingProfile": "Sartarosh profili yuklanmoqda...",
+		"notFound": "Sartarosh topilmadi.",
+		"viewProfile": "Profilni ko‘rish",
+		"backToList": "Sartaroshlarga qaytish",
+		"bookWithBarber": "Shu sartaroshga yozilish",
+		"profileEyebrow": "Sartarosh Profili",
+
+		"follow": "Obuna bo‘lish",
+		"following": "Obuna bo‘lgansiz",
+		"like": "Yoqdi",
+		"dislike": "Yoqmadi",
+
+		"followers": "Obunachilar",
+		"likes": "Layklar",
+		"dislikes": "Dislayklar",
+
+		"commentsTitle": "Mijozlar Fikrlari",
+		"noComments": "Hali fikrlar yo‘q. Birinchi bo‘lib fikr bildiring.",
+		"guestName": "Mehmon",
+
+		"commentForm": {
+			"author": "Ismingiz (ixtiyoriy)",
+			"message": "Fikringizni yozing...",
+			"submit": "Fikr qoldirish"
+		},
+
+		"reportTitle": "Shikoyat yuborish",
+		"reportDescription": "Nomaqbul holatni sezsangiz, bizga xabar bering.",
+		"reportCount": "Shikoyatlar",
+
+		"reportForm": {
+			"placeholder": "Sababni tanlang",
+			"submit": "Yuborish",
+			"success": "Shikoyatingiz muvaffaqiyatli yuborildi.",
+			"error": "Iltimos, sababni tanlang.",
+			"reasons": {
+				"spam": "Spam yoki soxta profil",
+				"offensive": "Haqoratli xatti-harakat",
+				"other": "Boshqa sabab"
+			}
+		},
+
+		"barbers": {
+			"jamshid": {
+				"name": "Jamshid",
+				"role": "Katta Sartarosh",
+				"bio": "8 yildan ortiq tajribaga ega, zamonaviy va klassik uslublar ustasi."
+			},
+			"sardor": {
+				"name": "Sardor",
+				"role": "Uslub Mutaxassisi",
+				"bio": "Soqol dizayni va zamonaviy turmaklarda mohir."
+			},
+			"aziz": {
+				"name": "Aziz",
+				"role": "Ijodkor Sartarosh",
+				"bio": "Jasur va individual uslublarni yaratishga ixtisoslashgan."
+			},
+			"doston": {
+				"name": "Doston",
+				"role": "Klassik Uslub Ustasi",
+				"bio": "An’anaviy kesimlar va toza ishlov berishda tajribali."
+			},
+			"islom": {
+				"name": "Islom",
+				"role": "Yosh Sartarosh",
+				"bio": "Zamonaviy ko‘rinishlar yaratishda e’tiborli va puxta ishlaydi."
+			}
+		}
+	},
+	"articlePage": {
+		"eyebrow": "Bilim Markazi",
+		"title": "Maqolalar",
+		"description": "Jamoamizdan yangi parvarish materiallari. Admin va sartaroshlar chop etadi, hamma o‘qiy oladi.",
+		"refresh": "Yangilash",
+		"loading": "Maqolalar yuklanmoqda...",
+		"loadError": "Maqolalarni yuklashda xatolik yuz berdi. Qayta urinib ko‘ring.",
+		"empty": "Hozircha chop etilgan maqolalar yo‘q.",
+		"author": "Muallif",
+		"unknownAuthor": "Noma'lum muallif",
+		"publishedAt": "Chop etilgan vaqt",
+		"roles": {
+			"USER": "Foydalanuvchi",
+			"ADMIN": "Admin",
+			"BARBER": "Sartarosh"
+		},
+		"actions": {
+			"retry": "Qayta urinish"
+		},
+		"form": {
+			"title": "Maqola yozish",
+			"submit": "Maqolani chop etish",
+			"submitting": "Chop etilmoqda...",
+			"validation": "Iltimos, barcha maydonlarni to‘ldiring.",
+			"restricted": "Faqat ADMIN yoki BARBER roliga ega foydalanuvchilar maqola chop eta oladi. Oddiy foydalanuvchilar barcha maqolalarni o‘qiy oladi.",
+			"success": "Maqola muvaffaqiyatli chop etildi.",
+			"error": "Maqolani chop etib bo‘lmadi. Qayta urinib ko‘ring.",
+			"fields": {
+				"title": "Maqola sarlavhasi",
+				"summary": "Qisqa tavsif",
+				"content": "To‘liq maqolani yozing..."
+			}
+		}
 	}
 }

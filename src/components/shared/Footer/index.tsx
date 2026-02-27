@@ -16,7 +16,7 @@ const Footer = () => {
 						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 						className="inline-block text-lg font-black tracking-[0.12em]"
 					>
-						USTA <span className="text-emerald-400">BARBER</span>
+						{t("brand.primary")} <span className="text-emerald-400">{t("brand.secondary")}</span>
 					</Link>
 					<p className="max-w-xs text-sm text-slate-400">{t("footer.tagline")}</p>
 					<div className="flex gap-2">

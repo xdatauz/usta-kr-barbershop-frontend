@@ -8,12 +8,17 @@
 	"nav": {
 		"home": "홈",
 		"services": "서비스",
+		"articles": "아티클",
 		"gallery": "갤러리",
 		"about": "소개",
 		"booking": "예약",
 		"barbers": "이발사",
 		"contact": "문의",
 		"bookAppointment": "예약하기"
+	},
+	"brand": {
+		"primary": "USTA",
+		"secondary": "BARBER"
 	},
 	"language": {
 		"select": "언어 선택"
@@ -43,6 +48,9 @@
 		"secondaryCta": "섹션 펼치기",
 		"revealDone": "섹션이 열렸습니다",
 		"stats": {
+			"yearsValue": "12+",
+			"clientsValue": "8k+",
+			"ratingValue": "4.9",
 			"years": "경력 연수",
 			"clients": "만족 고객",
 			"rating": "평균 평점"
@@ -247,7 +255,48 @@
 		}
 	},
 	"common": {
-		"more": "더보기"
+		"more": "더보기",
+		"loading": "로딩 중...",
+		"today": "오늘"
+	},
+	"toast": {
+		"auth": {
+			"required": "계속하려면 로그인해 주세요.",
+			"loginSuccess": "로그인되었습니다.",
+			"loginFailed": "로그인에 실패했습니다. 정보를 확인해 주세요.",
+			"signupSuccess": "계정이 생성되었습니다.",
+			"signupFailed": "회원가입에 실패했습니다."
+		},
+		"validation": {
+			"requiredFields": "필수 항목을 모두 입력해 주세요.",
+			"commentRequired": "먼저 댓글을 작성해 주세요.",
+			"reportReasonRequired": "신고 사유를 선택해 주세요."
+		},
+		"barbers": {
+			"loadListFailed": "바버 목록을 불러오지 못했습니다.",
+			"loadProfileFailed": "바버 프로필을 불러오지 못했습니다.",
+			"loadCommentsFailed": "댓글을 불러오지 못했습니다.",
+			"likeSuccess": "좋아요가 반영되었습니다.",
+			"likeFailed": "좋아요 전송에 실패했습니다.",
+			"dislikeSuccess": "피드백이 저장되었습니다.",
+			"dislikeFailed": "싫어요 전송에 실패했습니다.",
+			"followSuccess": "이 바버를 팔로우했습니다.",
+			"unfollowSuccess": "팔로우를 취소했습니다.",
+			"followFailed": "팔로우 상태를 변경하지 못했습니다.",
+			"commentSuccess": "댓글이 등록되었습니다.",
+			"commentFailed": "댓글 등록에 실패했습니다.",
+			"reportSuccess": "신고가 접수되었습니다.",
+			"reportFailed": "신고 전송에 실패했습니다."
+		},
+		"contact": {
+			"submitSuccess": "메시지가 전송되었습니다.",
+			"submitFailed": "메시지 전송에 실패했습니다."
+		},
+		"booking": {
+			"slotLoadFailed": "예약 가능 시간을 불러오지 못했습니다.",
+			"submitSuccess": "예약 요청이 전송되었습니다.",
+			"submitFailed": "예약 요청 전송에 실패했습니다."
+		}
 	},
 	"social": {
 		"telegram": "Telegram",
@@ -264,7 +313,12 @@
 		"haveAccount": "이미 계정이 있으신가요?",
 		"password": "비밀번호",
 		"name": "이름",
-		"noAccount": "계정이 없으신가요?"
+		"noAccount": "계정이 없으신가요?",
+		"roles": {
+			"user": "사용자",
+			"barber": "바버",
+			"admin": "관리자"
+		}
 	},
 	"userPage": {
 		"backHome": "홈으로",
@@ -274,5 +328,178 @@
 		"guestTitle": "로그인이 필요합니다",
 		"bookingsTitle": "최근 예약",
 		"title": "내 프로필"
+	},
+
+	"bookingPage": {
+		"eyebrow": "온라인 예약",
+		"title": "예약하기",
+		"description": "원하는 시간을 선택하고 전문 바버 서비스를 경험하세요.",
+		"badges": {
+			"fast": "즉시 확인",
+			"time": "유연한 일정",
+			"style": "모든 스타일 가능"
+		},
+		"telegram": {
+			"title": "새 예약 요청",
+			"description": "요청이 텔레그램으로 전송됩니다.",
+			"subDescription": "관리자가 곧 연락드릴 예정입니다."
+		},
+		"form": {
+			"labels": {
+				"name": "이름",
+				"phone": "전화번호",
+				"barber": "바버",
+				"hairstyle": "헤어스타일",
+				"date": "날짜",
+				"time": "시간",
+				"note": "메모"
+			},
+			"placeholders": {
+				"name": "이름을 입력하세요",
+				"phone": "010-1234-5678",
+				"barber": "바버 선택",
+				"hairstyle": "헤어스타일 선택",
+				"time": "시간 선택",
+				"note": "추가 메모 (선택사항)"
+			},
+			"actions": {
+				"submit": "예약하기",
+				"sending": "전송 중..."
+			},
+			"messages": {
+				"success": "예약이 성공적으로 전송되었습니다!",
+				"validationError": "필수 항목을 모두 입력해주세요.",
+				"sendFail": "예약 전송에 실패했습니다.",
+				"configError": "서버 설정 오류입니다."
+			}
+		},
+		"hairstyles": {
+			"classic": "클래식 컷",
+			"fade": "페이드",
+			"beard": "수염 정리",
+			"deluxe": "디럭스 패키지",
+			"color": "염색",
+			"fatherSon": "아버지와 아들"
+		},
+		"summary": {
+			"title": "예약 요약",
+			"noNote": "메모 없음"
+		},
+		"help": {
+			"title": "도움이 필요하신가요?",
+			"description": "어떤 바버나 서비스를 선택해야 할지 모르겠다면 아래 옵션을 확인하세요.",
+			"barbersCta": "바버 보기",
+			"servicesCta": "서비스 보기"
+		}
+	},
+	"barbersPage": {
+		"title": "우리의 전문 바버 팀",
+		"description": "정밀함과 스타일, 프리미엄 서비스를 제공하는 숙련된 바버들을 만나보세요.",
+		"loadingList": "바버 목록 불러오는 중...",
+		"loadingProfile": "바버 프로필 불러오는 중...",
+		"notFound": "바버를 찾을 수 없습니다.",
+		"viewProfile": "프로필 보기",
+		"backToList": "바버 목록으로 돌아가기",
+		"bookWithBarber": "이 바버 예약하기",
+		"profileEyebrow": "바버 프로필",
+
+		"follow": "팔로우",
+		"following": "팔로잉 중",
+		"like": "좋아요",
+		"dislike": "싫어요",
+
+		"followers": "팔로워",
+		"likes": "좋아요 수",
+		"dislikes": "싫어요 수",
+
+		"commentsTitle": "고객 리뷰",
+		"noComments": "아직 리뷰가 없습니다. 첫 번째 리뷰를 남겨보세요.",
+		"guestName": "방문자",
+
+		"commentForm": {
+			"author": "이름 (선택 사항)",
+			"message": "리뷰를 작성하세요...",
+			"submit": "리뷰 등록"
+		},
+
+		"reportTitle": "바버 신고",
+		"reportDescription": "부적절한 행동이나 내용을 발견하셨다면 알려주세요.",
+		"reportCount": "신고 수",
+
+		"reportForm": {
+			"placeholder": "사유 선택",
+			"submit": "신고하기",
+			"success": "신고가 성공적으로 접수되었습니다.",
+			"error": "신고 사유를 선택해주세요.",
+			"reasons": {
+				"spam": "스팸 또는 가짜 계정",
+				"offensive": "부적절한 행동",
+				"other": "기타 사유"
+			}
+		},
+
+		"barbers": {
+			"jamshid": {
+				"name": "잠시드",
+				"role": "시니어 바버",
+				"bio": "8년 이상의 경력을 가진 모던 페이드와 클래식 컷 전문 바버입니다."
+			},
+			"sardor": {
+				"name": "사르도르",
+				"role": "스타일 전문가",
+				"bio": "정교한 수염 디자인과 현대적인 헤어스타일로 잘 알려져 있습니다."
+			},
+			"aziz": {
+				"name": "아지즈",
+				"role": "크리에이티브 바버",
+				"bio": "대담한 스타일과 컬러 변화, 맞춤형 그루밍에 집중합니다."
+			},
+			"doston": {
+				"name": "도스톤",
+				"role": "클래식 전문 바버",
+				"bio": "전통적인 커트와 깔끔한 마무리에 강점을 가지고 있습니다."
+			},
+			"islom": {
+				"name": "이슬롬",
+				"role": "주니어 바버",
+				"bio": "디테일에 집중하며 트렌디한 스타일을 제공합니다."
+			}
+		}
+	},
+	"articlePage": {
+		"eyebrow": "지식 허브",
+		"title": "게시글",
+		"description": "팀이 작성한 최신 그루밍 콘텐츠입니다. 관리자와 바버는 게시하고, 모든 사용자는 읽을 수 있습니다.",
+		"refresh": "새로고침",
+		"loading": "게시글을 불러오는 중...",
+		"loadError": "게시글을 불러오지 못했습니다. 다시 시도해 주세요.",
+		"empty": "아직 게시된 글이 없습니다.",
+		"author": "작성자",
+		"unknownAuthor": "알 수 없는 작성자",
+		"publishedAt": "게시일",
+		"roles": {
+			"USER": "사용자",
+			"ADMIN": "관리자",
+			"BARBER": "바버"
+		},
+		"actions": {
+			"retry": "다시 시도"
+		},
+		"form": {
+			"title": "게시글 작성",
+			"submit": "게시하기",
+			"submitting": "게시 중...",
+			"validation": "모든 항목을 입력해 주세요.",
+			"restricted": "ADMIN 또는 BARBER 역할을 가진 사용자만 게시할 수 있습니다. 일반 사용자는 모든 게시글을 읽을 수 있습니다.",
+			"success": "게시글이 성공적으로 등록되었습니다.",
+			"error": "게시글 등록에 실패했습니다. 다시 시도해 주세요.",
+			"fields": {
+				"title": "게시글 제목",
+				"summary": "간단한 요약",
+				"content": "전체 내용을 작성하세요..."
+			}
+		}
 	}
 }
+
+

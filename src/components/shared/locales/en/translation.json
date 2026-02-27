@@ -8,12 +8,17 @@
 	"nav": {
 		"home": "Home",
 		"services": "Services",
+		"articles": "Articles",
 		"booking": "Booking",
 		"barbers": "Barbers",
 		"gallery": "Gallery",
 		"about": "About",
 		"contact": "Contact",
 		"bookAppointment": "Book Appointment"
+	},
+	"brand": {
+		"primary": "USTA",
+		"secondary": "BARBER"
 	},
 	"language": {
 		"select": "Select language"
@@ -43,6 +48,9 @@
 		"secondaryCta": "Explore sections",
 		"revealDone": "Sections revealed",
 		"stats": {
+			"yearsValue": "12+",
+			"clientsValue": "8k+",
+			"ratingValue": "4.9",
 			"years": "Years Experience",
 			"clients": "Happy Clients",
 			"rating": "Average Rating"
@@ -247,7 +255,48 @@
 		}
 	},
 	"common": {
-		"more": "More"
+		"more": "More",
+		"loading": "Loading...",
+		"today": "Today"
+	},
+	"toast": {
+		"auth": {
+			"required": "Please sign in to continue.",
+			"loginSuccess": "Logged in successfully.",
+			"loginFailed": "Login failed. Please check your credentials.",
+			"signupSuccess": "Account created successfully.",
+			"signupFailed": "Signup failed. Please try again."
+		},
+		"validation": {
+			"requiredFields": "Please fill all required fields.",
+			"commentRequired": "Please write a comment first.",
+			"reportReasonRequired": "Please select a report reason."
+		},
+		"barbers": {
+			"loadListFailed": "Failed to load barbers list.",
+			"loadProfileFailed": "Failed to load barber profile.",
+			"loadCommentsFailed": "Failed to load comments.",
+			"likeSuccess": "Thanks for your like.",
+			"likeFailed": "Unable to send like.",
+			"dislikeSuccess": "Your feedback was recorded.",
+			"dislikeFailed": "Unable to send dislike.",
+			"followSuccess": "You are now following this barber.",
+			"unfollowSuccess": "You unfollowed this barber.",
+			"followFailed": "Unable to update follow status.",
+			"commentSuccess": "Comment posted successfully.",
+			"commentFailed": "Failed to post comment.",
+			"reportSuccess": "Report submitted successfully.",
+			"reportFailed": "Failed to submit report."
+		},
+		"contact": {
+			"submitSuccess": "Message sent successfully.",
+			"submitFailed": "Failed to send message."
+		},
+		"booking": {
+			"slotLoadFailed": "Failed to load available slots.",
+			"submitSuccess": "Booking request sent successfully.",
+			"submitFailed": "Failed to send booking request."
+		}
 	},
 	"social": {
 		"instagram": "Instagram",
@@ -264,7 +313,12 @@
 		"signupTitle": "Create your account",
 		"password": "Password",
 		"loginCta": "Login",
-		"switchToSignup": "Sign up"
+		"switchToSignup": "Sign up",
+		"roles": {
+			"user": "User",
+			"barber": "Barber",
+			"admin": "Admin"
+		}
 	},
 	"userPage": {
 		"guestDescription": "Please login to access your personal profile.",
@@ -336,6 +390,114 @@
 			"description": "If you're unsure which barber or service to choose, explore the options below.",
 			"barbersCta": "View Barbers",
 			"servicesCta": "View Services"
+		}
+	},
+	"barbersPage": {
+		"title": "Our Professional Barbers",
+		"description": "Meet our experienced team of barbers dedicated to precision, style, and premium grooming.",
+		"loadingList": "Loading barbers...",
+		"loadingProfile": "Loading barber profile...",
+		"notFound": "Barber not found.",
+		"viewProfile": "View Profile",
+		"backToList": "Back to Barbers",
+		"bookWithBarber": "Book with this Barber",
+		"profileEyebrow": "Barber Profile",
+
+		"follow": "Follow",
+		"following": "Following",
+		"like": "Like",
+		"dislike": "Dislike",
+
+		"followers": "Followers",
+		"likes": "Likes",
+		"dislikes": "Dislikes",
+
+		"commentsTitle": "Client Reviews",
+		"noComments": "No reviews yet. Be the first to share your experience.",
+		"guestName": "Guest",
+
+		"commentForm": {
+			"author": "Your name (optional)",
+			"message": "Write your review...",
+			"submit": "Post Review"
+		},
+
+		"reportTitle": "Report Barber",
+		"reportDescription": "If you notice inappropriate behavior or content, please inform us.",
+		"reportCount": "Reports",
+
+		"reportForm": {
+			"placeholder": "Select a reason",
+			"submit": "Submit Report",
+			"success": "Your report has been sent successfully.",
+			"error": "Please select a reason before submitting.",
+			"reasons": {
+				"spam": "Spam or fake account",
+				"offensive": "Offensive behavior",
+				"other": "Other reason"
+			}
+		},
+
+		"barbers": {
+			"jamshid": {
+				"name": "Jamshid",
+				"role": "Senior Barber",
+				"bio": "Specialist in modern fades and classic gentlemen’s cuts with over 8 years of experience."
+			},
+			"sardor": {
+				"name": "Sardor",
+				"role": "Style Expert",
+				"bio": "Known for precise beard shaping and modern hair design."
+			},
+			"aziz": {
+				"name": "Aziz",
+				"role": "Creative Barber",
+				"bio": "Focused on bold styles, color transformations, and personalized grooming."
+			},
+			"doston": {
+				"name": "Doston",
+				"role": "Classic Specialist",
+				"bio": "Expert in traditional cuts and clean, sharp finishes."
+			},
+			"islom": {
+				"name": "Islom",
+				"role": "Junior Barber",
+				"bio": "Energetic barber delivering fresh looks with attention to detail."
+			}
+		}
+	},
+	"articlePage": {
+		"eyebrow": "Knowledge Hub",
+		"title": "Articles",
+		"description": "Fresh grooming content from our team. Admins and barbers can publish, everyone can read.",
+		"refresh": "Refresh",
+		"loading": "Loading articles...",
+		"loadError": "Failed to load articles. Please try again.",
+		"empty": "No articles published yet.",
+		"author": "Author",
+		"unknownAuthor": "Unknown author",
+		"publishedAt": "Published",
+		"roles": {
+			"USER": "User",
+			"ADMIN": "Admin",
+			"BARBER": "Barber"
+		},
+		"actions": {
+			"retry": "Retry"
+		},
+		"form": {
+			"title": "Write Article",
+			"submit": "Publish Article",
+			"submitting": "Publishing...",
+			"validation": "Please fill in all article fields.",
+			"restricted": "Only users with ADMIN or BARBER role can publish. Regular users can read all articles.",
+			"success": "Article published successfully.",
+			"error": "Failed to publish article. Please try again.",
+			"fields": {
+				"title": "Article title",
+				"summary": "Short summary",
+				"content": "Write the full article..."
+			}
 		}
 	}
 }

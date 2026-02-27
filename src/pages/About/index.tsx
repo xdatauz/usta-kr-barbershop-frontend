@@ -92,13 +92,13 @@ const AboutPage = ({ preview = false }: AboutPageProps) => {
 								transition={{ duration: 0.35, delay: index * 0.06 }}
 								className="overflow-hidden rounded-2xl border border-slate-300/70 bg-white dark:border-slate-700 dark:bg-slate-900"
 							>
-								<div className="bg-slate-100 p-2 dark:bg-slate-950/60">
+								<Link to={`/${locale}/barbers/${member.key}`} className="block bg-slate-100 p-2 dark:bg-slate-950/60">
 									<img
 										src={member.image}
 										alt={t(`aboutSection.team.${member.key}.name`)}
 										className="h-72 w-full rounded-xl object-contain sm:h-80"
 									/>
-								</div>
+								</Link>
 								<div className="space-y-1 p-3">
 									<h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100">{t(`aboutSection.team.${member.key}.name`)}</h4>
 									<p className="text-xs uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">{t(`aboutSection.team.${member.key}.role`)}</p>
@@ -133,7 +133,7 @@ const AboutPage = ({ preview = false }: AboutPageProps) => {
 						<p className="mt-2 text-sm text-slate-700 dark:text-slate-300">{t("aboutSection.extras.timelineTwo")}</p>
 					</div>
 					<div className="rounded-2xl border border-slate-300/70 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950/60">
-						<p className="text-2xl font-black text-slate-900 dark:text-slate-100">Today</p>
+						<p className="text-2xl font-black text-slate-900 dark:text-slate-100">{t("common.today")}</p>
 						<p className="mt-2 text-sm text-slate-700 dark:text-slate-300">{t("aboutSection.extras.timelineThree")}</p>
 					</div>
 				</div>

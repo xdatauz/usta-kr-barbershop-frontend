@@ -1,6 +1,7 @@
-const Card = () => {
-  return (
-    <div>Card</div>
-  )
-}
-export default Card
+import type { PropsWithChildren } from "react";
+
+const Card = ({ children }: PropsWithChildren) => {
+	return <div>{children}</div>;
+};
+
+export default Card;

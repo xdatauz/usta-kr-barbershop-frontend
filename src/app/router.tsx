@@ -7,6 +7,7 @@ import ContactPage from "../pages/Contact";
 import UserPage from "../pages/User";
 import BookingPage from "../pages/Booking";
 import BarbersPage from "../pages/Barbers";
+import ArticlePage from "../pages/Article";
 
 const supportedLocales = ["uz", "kr", "en", "ru"] as const;
 
@@ -33,6 +34,7 @@ const AppRouter = () => {
 				<Route path="about" element={<AboutPage />} />
 				<Route path="contact" element={<ContactPage />} />
 				<Route path="booking" element={<BookingPage />} />
+				<Route path="articles" element={<ArticlePage />} />
 				<Route path="barbers" element={<BarbersPage />} />
 				<Route path="barbers/:barberId" element={<BarbersPage />} />
 				<Route path="profile" element={<UserPage />} />

@@ -27,6 +27,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 	const navItems = [
 		{ key: "nav.home", path: "" },
 		{ key: "nav.services", path: "services" },
+		{ key: "nav.articles", path: "articles" },
 		{ key: "nav.barbers", path: "barbers" },
 		{ key: "nav.gallery", path: "gallery" },
 		{ key: "nav.about", path: "about" },
@@ -49,7 +50,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 					onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 					className="text-xl font-black tracking-[0.14em] text-slate-900 sm:text-2xl dark:text-slate-100"
 				>
-					USTA <span className="text-emerald-600 dark:text-emerald-400">BARBER</span>
+					{t("brand.primary")} <span className="text-emerald-600 dark:text-emerald-400">{t("brand.secondary")}</span>
 				</Link>
 
 				{/* DESKTOP NAV */}

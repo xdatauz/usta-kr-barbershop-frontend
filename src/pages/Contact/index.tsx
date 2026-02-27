@@ -3,7 +3,9 @@ import { motion } from "framer-motion";
 import { Clock3, Instagram, Mail, MapPinned, Phone, Send, CheckCircle2, AlertTriangle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
-import { sendTelegramMessage } from "../../lib/telegram";
+import { toast } from "react-toastify";
+import { submitContactApi } from "../../lib/api/contact";
+import { isApiError } from "../../lib/api/client";
 
 interface ContactPageProps {
 	preview?: boolean;
@@ -31,21 +33,20 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 
 		setStatus("sending");
 
-		// TODO(back-end): replace direct Telegram call with POST /api/contact when backend is ready.
-		const result = await sendTelegramMessage([
-			`📩 ${t("contactSection.telegramMessage.title")}`,
-			`👤 ${t("contactSection.form.nameLabel")}: ${form.name.trim()}`,
-			`📞 ${t("contactSection.form.phoneLabel")}: ${form.phone.trim()}`,
-			`💬 ${t("contactSection.form.messageLabel")}:`,
-			form.message.trim(),
-		]);
-
-		if (!result.ok) {
-			setStatus(result.reason === "missing_config" ? "configError" : "requestError");
+		try {
+			await submitContactApi({
+				name: form.name.trim(),
+				phone: form.phone.trim(),
+				message: form.message.trim(),
+			});
+		} catch (error) {
+			setStatus("requestError");
+			toast.error(isApiError(error) && error.message ? error.message : t("toast.contact.submitFailed"));
 			return;
 		}
 
 		setStatus("success");
+		toast.success(t("toast.contact.submitSuccess"));
 		setForm({
 			name: "",
 			phone: "",
@@ -56,9 +57,15 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 	const sectionContent = (
 		<section className="rounded-3xl border border-slate-300/70 bg-white/80 p-4 shadow-sm backdrop-blur sm:p-6 lg:p-8 dark:border-slate-700 dark:bg-slate-900/70">
 			<div className="max-w-2xl space-y-2">
-				<p className="text-xs font-semibold uppercase tracking-[0.17em] text-emerald-700 dark:text-emerald-300">{t("contactSection.eyebrow")}</p>
-				<h2 className="text-2xl font-black text-slate-900 sm:text-3xl dark:text-slate-50">{t("contactSection.title")}</h2>
-				<p className="text-sm leading-7 text-slate-700 sm:text-base dark:text-slate-300">{t("contactSection.description")}</p>
+				<p className="text-xs font-semibold uppercase tracking-[0.17em] text-emerald-700 dark:text-emerald-300">
+					{t("contactSection.eyebrow")}
+				</p>
+				<h2 className="text-2xl font-black text-slate-900 sm:text-3xl dark:text-slate-50">
+					{t("contactSection.title")}
+				</h2>
+				<p className="text-sm leading-7 text-slate-700 sm:text-base dark:text-slate-300">
+					{t("contactSection.description")}
+				</p>
 			</div>
 
 			<div className="mt-6 grid gap-5 lg:grid-cols-[1.1fr_1fr]">
@@ -70,12 +77,14 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 					className="space-y-4 rounded-2xl border border-slate-300/70 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
 				>
 					<p className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs leading-6 text-emerald-700 dark:text-emerald-300">
-						{t("contactSection.telegramMessage.description")}
+						{t("contactSection.description")}
 					</p>
 
 					<div className="grid gap-3 sm:grid-cols-2">
 						<label className="space-y-1">
-							<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">{t("contactSection.form.nameLabel")}</span>
+							<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">
+								{t("contactSection.form.nameLabel")}
+							</span>
 							<input
 								type="text"
 								value={form.name}
@@ -85,7 +94,9 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 							/>
 						</label>
 						<label className="space-y-1">
-							<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">{t("contactSection.form.phoneLabel")}</span>
+							<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">
+								{t("contactSection.form.phoneLabel")}
+							</span>
 							<input
 								type="tel"
 								value={form.phone}
@@ -97,7 +108,9 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 					</div>
 
 					<label className="space-y-1">
-						<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">{t("contactSection.form.messageLabel")}</span>
+						<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">
+							{t("contactSection.form.messageLabel")}
+						</span>
 						<textarea
 							value={form.message}
 							onChange={(event) => setForm((prev) => ({ ...prev, message: event.target.value }))}
@@ -180,7 +193,9 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 							<p>{t("contactSection.info.weekend")}</p>
 
 							<div className="pt-1">
-								<p className="mb-2 font-semibold text-slate-900 dark:text-slate-100">{t("contactSection.info.socialLabel")}</p>
+								<p className="mb-2 font-semibold text-slate-900 dark:text-slate-100">
+									{t("contactSection.info.socialLabel")}
+								</p>
 								<div className="flex items-center gap-3">
 									<a
 										href="https://www.instagram.com/usta_2019"
@@ -232,14 +247,26 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 			{!preview && (
 				<div className="mt-8 grid gap-4 lg:grid-cols-2">
 					<div className="rounded-2xl border border-slate-300/70 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950/60">
-						<h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{t("contactSection.extras.faqTitle")}</h3>
+						<h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
+							{t("contactSection.extras.faqTitle")}
+						</h3>
 						<div className="mt-3 space-y-3 text-sm text-slate-700 dark:text-slate-300">
-							<p><strong>{t("contactSection.extras.faqOneQ")}</strong><br />{t("contactSection.extras.faqOneA")}</p>
-							<p><strong>{t("contactSection.extras.faqTwoQ")}</strong><br />{t("contactSection.extras.faqTwoA")}</p>
+							<p>
+								<strong>{t("contactSection.extras.faqOneQ")}</strong>
+								<br />
+								{t("contactSection.extras.faqOneA")}
+							</p>
+							<p>
+								<strong>{t("contactSection.extras.faqTwoQ")}</strong>
+								<br />
+								{t("contactSection.extras.faqTwoA")}
+							</p>
 						</div>
 					</div>
 					<div className="rounded-2xl border border-slate-300/70 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950/60">
-						<h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{t("contactSection.extras.tipsTitle")}</h3>
+						<h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
+							{t("contactSection.extras.tipsTitle")}
+						</h3>
 						<ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
 							<li>{t("contactSection.extras.tipOne")}</li>
 							<li>{t("contactSection.extras.tipTwo")}</li>
