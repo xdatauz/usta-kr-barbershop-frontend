@@ -68,6 +68,7 @@
 		"title": "Har bir uslub uchun premium xizmatlar",
 		"description": "Xizmatni tanlang va jamoamiz uslubingizni aniqlik, gigiyena va barqaror sifat bilan yakunlasin.",
 		"bookNow": "Hozir band qilish",
+		"noServices": "Hozircha xizmatlar mavjud emas.",
 		"items": {
 			"classicCut": {
 				"name": "Klassik soch olish",
@@ -257,7 +258,8 @@
 	"common": {
 		"more": "Batafsil",
 		"loading": "Yuklanmoqda...",
-		"today": "Bugun"
+		"today": "Bugun",
+		"min": "daq"
 	},
 	"toast": {
 		"auth": {
@@ -304,12 +306,17 @@
 	},
 	"auth": {
 		"name": "To'liq ism",
+		"phone": "Telefon raqam",
+		"phoneInvalid": "Iltimos, to'g'ri Koreya telefon raqamini kiriting (masalan, 010-1234-5678).",
+		"telegramChatId": "Telegram Chat ID (ixtiyoriy)",
+		"loginHint": "Davom etish uchun telefon raqamingizni kiriting.",
+		"signupHint": "Ism va telefon raqam bilan ro'yxatdan o'ting.",
 		"switchToLogin": "Kirish",
 		"haveAccount": "Hisobingiz bormi?",
 		"signupCta": "Ro'yxatdan o'tish",
 		"signupTitle": "Hisob yaratish",
-		"loginCta": "Kirish",
-		"loginTitle": "Hisobga kirish",
+		"loginCta": "Davom etish",
+		"loginTitle": "Xush kelibsiz",
 		"email": "Email",
 		"password": "Parol",
 		"switchToSignup": "Ro'yxatdan o'tish",
@@ -349,7 +356,7 @@
 				"name": "Ism",
 				"phone": "Telefon",
 				"barber": "Barber",
-				"hairstyle": "Soch turi",
+				"service": "Xizmat",
 				"date": "Sana",
 				"time": "Vaqt",
 				"note": "Izoh"
@@ -358,9 +365,9 @@
 				"name": "Ismingizni kiriting",
 				"phone": "+998 90 123 45 67",
 				"barber": "Barberni tanlang",
-				"hairstyle": "Soch turini tanlang",
+				"service": "Xizmatni tanlang",
 				"time": "Vaqtni tanlang",
-				"note": "Qo‘shimcha izoh (ixtiyoriy)"
+				"note": "Qo’shimcha izoh (ixtiyoriy)"
 			},
 			"actions": {
 				"submit": "Bron qilish",

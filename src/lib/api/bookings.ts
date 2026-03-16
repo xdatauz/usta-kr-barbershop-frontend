@@ -1,12 +1,23 @@
 import { apiRequest } from "./client";
 
+export interface MyBooking {
+	id: string;
+	barberId: string | null;
+	date: string;
+	time: string;
+	style: string;
+	status: string;
+}
+
+export type BookingStyle = 'classic' | 'fade' | 'beard' | 'deluxe' | 'color' | 'fatherSon';
+
 export interface BookingPayload {
 	name: string;
 	phone: string;
 	barberId: string;
 	date: string;
 	time: string;
-	style: string;
+	style: BookingStyle;
 	note?: string;
 }
 
@@ -14,6 +25,27 @@ export interface BookingSlot {
 	time: string;
 	available: boolean;
 }
+
+export const getMyBookingsApi = async (): Promise<MyBooking[]> => {
+	const response = await apiRequest<unknown>("/bookings/me", { method: "GET", auth: true });
+	const list = Array.isArray(response) ? response : [];
+	return list
+		.map((item) => {
+			if (!item || typeof item !== "object") return null;
+			const src = item as Record<string, unknown>;
+			const id = typeof src.id === "string" ? src.id : typeof src.id === "number" ? String(src.id) : null;
+			if (!id) return null;
+			return {
+				id,
+				barberId: typeof src.barberId === "string" ? src.barberId : null,
+				date: typeof src.date === "string" ? src.date : "",
+				time: typeof src.time === "string" ? src.time : "",
+				style: typeof src.style === "string" ? src.style : "",
+				status: typeof src.status === "string" ? src.status : "pending",
+			};
+		})
+		.filter((b): b is MyBooking => b !== null);
+};
 
 export const createBookingApi = async (payload: BookingPayload) => {
 	return apiRequest("/bookings", {
@@ -36,6 +68,10 @@ export const getBookingSlotsApi = async (barberId: string, date: string): Promis
 
 	return slotsRaw
 		.map((item) => {
+			// Backend may return plain time strings like ["09:00", "09:30"]
+			if (typeof item === "string") {
+				return { time: item, available: true };
+			}
 			if (!item || typeof item !== "object") {
 				return null;
 			}

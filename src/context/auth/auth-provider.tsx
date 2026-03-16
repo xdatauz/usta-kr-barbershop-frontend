@@ -1,14 +1,13 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { getMeApi, loginApi, logoutApi, signupApi } from "../../lib/api/auth";
+import { clientLogout, getClientMeApi, loginClientApi, registerClientApi } from "../../lib/api/client-auth";
 import { clearStoredTokens, isApiError } from "../../lib/api/client";
 
-export const USER_TYPES = ["USER", "ADMIN", "BARBER"] as const;
-export type UserType = (typeof USER_TYPES)[number];
+export type UserType = "USER";
 
 export interface AuthUser {
 	id: string;
 	name: string;
-	email: string;
+	phone: string;
 	userType: UserType;
 	image?: string | null;
 }
@@ -16,70 +15,69 @@ export interface AuthUser {
 interface AuthContextValue {
 	currentUser: AuthUser | null;
 	isAuthLoading: boolean;
-	login: (payload: { email: string; password: string }) => Promise<{ ok: boolean; error?: string }>;
-	signup: (payload: { name: string; email: string; password: string; userType?: UserType }) => Promise<{ ok: boolean; error?: string }>;
-	logout: () => Promise<void>;
+	login: (payload: { phone: string }) => Promise<{ ok: boolean; error?: string }>;
+	signup: (payload: { name: string; phone: string }) => Promise<{ ok: boolean; error?: string }>;
+	logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 const CURRENT_USER_STORAGE_KEY = "usta_auth_user";
 
-const isUserType = (value: unknown): value is UserType => typeof value === "string" && USER_TYPES.includes(value as UserType);
+const clientToAuthUser = (client: { id: string; name: string; phone: string }): AuthUser => ({
+	id: client.id,
+	name: client.name,
+	phone: client.phone,
+	userType: "USER",
+	image: null,
+});
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
 	const [isAuthLoading, setIsAuthLoading] = useState(false);
 
+	// restore cached user on mount
 	useEffect(() => {
 		const raw = localStorage.getItem(CURRENT_USER_STORAGE_KEY);
-		if (!raw) {
-			return;
-		}
-
+		if (!raw) return;
 		try {
 			const parsed = JSON.parse(raw) as Partial<AuthUser>;
-			if (!parsed || typeof parsed !== "object") {
+			if (
+				!parsed ||
+				typeof parsed !== "object" ||
+				typeof parsed.id !== "string" ||
+				typeof parsed.name !== "string" ||
+				typeof parsed.phone !== "string"
+			) {
 				localStorage.removeItem(CURRENT_USER_STORAGE_KEY);
 				return;
 			}
-
-			if (typeof parsed.id !== "string" || typeof parsed.name !== "string" || typeof parsed.email !== "string") {
-				localStorage.removeItem(CURRENT_USER_STORAGE_KEY);
-				return;
-			}
-
-			const safeUser: AuthUser = {
-				id: parsed.id,
-				name: parsed.name,
-				email: parsed.email,
-				userType: isUserType(parsed.userType) ? parsed.userType : "USER",
-				image: parsed.image ?? null,
-			};
-
-			setCurrentUser(safeUser);
+			setCurrentUser({ id: parsed.id, name: parsed.name, phone: parsed.phone, userType: "USER", image: parsed.image ?? null });
 		} catch {
 			localStorage.removeItem(CURRENT_USER_STORAGE_KEY);
 		}
 	}, []);
 
+	// verify token on mount
 	useEffect(() => {
-		const bootstrapAuth = async () => {
+		const bootstrap = async () => {
 			setIsAuthLoading(true);
 			try {
-				const user = await getMeApi();
+				const client = await getClientMeApi();
+				const user = clientToAuthUser(client);
 				setCurrentUser(user);
 				persistUser(user);
-			} catch {
-				clearStoredTokens();
-				setCurrentUser(null);
-				persistUser(null);
+			} catch (error) {
+				if (isApiError(error) && (error.status === 401 || error.status === 403)) {
+					clearStoredTokens();
+					setCurrentUser(null);
+					persistUser(null);
+				}
 			} finally {
 				setIsAuthLoading(false);
 			}
 		};
-
-		void bootstrapAuth();
+		void bootstrap();
 	}, []);
 
 	const persistUser = (user: AuthUser | null) => {
@@ -87,19 +85,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			localStorage.removeItem(CURRENT_USER_STORAGE_KEY);
 			return;
 		}
-
 		localStorage.setItem(CURRENT_USER_STORAGE_KEY, JSON.stringify(user));
 	};
 
-	const login = async ({ email, password }: { email: string; password: string }) => {
+	const login = async ({ phone }: { phone: string }) => {
 		setIsAuthLoading(true);
 		try {
-			const result = await loginApi({
-				email: email.trim(),
-				password: password.trim(),
-			});
-			setCurrentUser(result.user);
-			persistUser(result.user);
+			const result = await loginClientApi({ phone: phone.trim() });
+			const user = clientToAuthUser(result.client);
+			setCurrentUser(user);
+			persistUser(user);
 			return { ok: true };
 		} catch (error) {
 			const errorMessage = isApiError(error) ? error.message : undefined;
@@ -109,27 +104,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		}
 	};
 
-	const signup = async ({
-		name,
-		email,
-		password,
-		userType = "USER",
-	}: {
-		name: string;
-		email: string;
-		password: string;
-		userType?: UserType;
-	}) => {
+	const signup = async ({ name, phone }: { name: string; phone: string }) => {
 		setIsAuthLoading(true);
 		try {
-			const result = await signupApi({
-				name: name.trim(),
-				email: email.trim(),
-				password: password.trim(),
-				userType: isUserType(userType) ? userType : "USER",
-			});
-			setCurrentUser(result.user);
-			persistUser(result.user);
+			const result = await registerClientApi({ fullName: name.trim(), phone: phone.trim() });
+			const user = clientToAuthUser(result.client);
+			setCurrentUser(user);
+			persistUser(user);
 			return { ok: true };
 		} catch (error) {
 			const errorMessage = isApiError(error) ? error.message : undefined;
@@ -139,26 +120,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		}
 	};
 
-	const logout = async () => {
-		setIsAuthLoading(true);
-		try {
-			await logoutApi();
-		} catch {
-			clearStoredTokens();
-		}
+	const logout = () => {
+		clientLogout();
 		setCurrentUser(null);
 		persistUser(null);
-		setIsAuthLoading(false);
 	};
 
 	const value = useMemo(
-		() => ({
-			currentUser,
-			isAuthLoading,
-			login,
-			signup,
-			logout,
-		}),
+		() => ({ currentUser, isAuthLoading, login, signup, logout }),
 		[currentUser, isAuthLoading],
 	);
 
@@ -167,8 +136,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAuth = () => {
 	const context = useContext(AuthContext);
-	if (!context) {
-		throw new Error("useAuth must be used within AuthProvider");
-	}
+	if (!context) throw new Error("useAuth must be used within AuthProvider");
 	return context;
 };

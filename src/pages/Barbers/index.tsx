@@ -75,7 +75,6 @@ const BarbersPage = () => {
 	const [barbers, setBarbers] = useState<BarberProfile[]>([]);
 	const [activeBarber, setActiveBarber] = useState<BarberProfile | null>(null);
 	const [comments, setComments] = useState<BarberComment[]>([]);
-	const [commentAuthor, setCommentAuthor] = useState("");
 	const [commentText, setCommentText] = useState("");
 	const [reportReason, setReportReason] = useState("");
 	const [reportStatus, setReportStatus] = useState<"idle" | "sent" | "error">("idle");
@@ -261,7 +260,6 @@ const BarbersPage = () => {
 		setIsActionLoading(true);
 		try {
 			const created = await postBarberCommentApi(id, {
-				author: commentAuthor.trim() || undefined,
 				text: commentText.trim(),
 			});
 
@@ -273,7 +271,6 @@ const BarbersPage = () => {
 			}
 
 			setCommentText("");
-			setCommentAuthor("");
 			toast.success(t("toast.barbers.commentSuccess"));
 		} catch (error) {
 			const message = isApiError(error) && error.message ? error.message : t("toast.barbers.commentFailed");
@@ -480,14 +477,7 @@ const BarbersPage = () => {
 						</h2>
 
 						<form onSubmit={(event) => void submitComment(event, activeId)} className="mt-4 space-y-3">
-							<input
-								type="text"
-								value={commentAuthor}
-								onChange={(event) => setCommentAuthor(event.target.value)}
-								placeholder={t("barbersPage.commentForm.author")}
-								className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-							/>
-							<textarea
+														<textarea
 								value={commentText}
 								onChange={(event) => setCommentText(event.target.value)}
 								placeholder={t("barbersPage.commentForm.message")}

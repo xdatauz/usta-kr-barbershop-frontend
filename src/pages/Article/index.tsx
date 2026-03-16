@@ -4,18 +4,8 @@ import { AlertTriangle, CalendarDays, PenSquare, RefreshCw, ShieldCheck, UserRou
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { useAuth, type UserType } from "../../context/auth/auth-provider";
-
-interface ArticleItem {
-	id: string;
-	title: string;
-	summary: string;
-	content: string;
-	authorId: string;
-	authorName: string;
-	authorRole: UserType;
-	createdAt: string;
-	updatedAt?: string;
-}
+import { getArticlesApi, createArticleApi, type ArticleItem } from "../../lib/api/articles";
+import { isApiError } from "../../lib/api/client";
 
 interface ArticleFormState {
 	title: string;
@@ -23,122 +13,8 @@ interface ArticleFormState {
 	content: string;
 }
 
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, "") ?? "";
-const API_PREFIX = `${API_BASE_URL}/api/v1`;
-
 const canWriteArticles = (role: UserType | undefined): role is "ADMIN" | "BARBER" => {
 	return role === "ADMIN" || role === "BARBER";
-};
-
-const getAuthHeaders = (): Record<string, string> => {
-	const token = localStorage.getItem("usta_access_token") || localStorage.getItem("access_token");
-	if (!token) {
-		return {};
-	}
-
-	return {
-		Authorization: `Bearer ${token}`,
-	};
-};
-
-const readJsonSafe = async (response: Response): Promise<unknown> => {
-	try {
-		return await response.json();
-	} catch {
-		return null;
-	}
-};
-
-const resolveErrorMessage = (payload: unknown, fallback: string) => {
-	if (!payload || typeof payload !== "object") {
-		return fallback;
-	}
-	const source = payload as { error?: { message?: string }; message?: string };
-	if (typeof source.error?.message === "string" && source.error.message.trim()) {
-		return source.error.message;
-	}
-	if (typeof source.message === "string" && source.message.trim()) {
-		return source.message;
-	}
-	return fallback;
-};
-
-const normalizeRole = (value: unknown): UserType => {
-	if (value === "ADMIN" || value === "BARBER" || value === "USER") {
-		return value;
-	}
-	return "USER";
-};
-
-const normalizeArticle = (raw: unknown): ArticleItem | null => {
-	if (!raw || typeof raw !== "object") {
-		return null;
-	}
-
-	const source = raw as {
-		id?: unknown;
-		title?: unknown;
-		summary?: unknown;
-		content?: unknown;
-		authorId?: unknown;
-		authorName?: unknown;
-		authorRole?: unknown;
-		author?: { id?: unknown; name?: unknown; userType?: unknown } | null;
-		createdAt?: unknown;
-		updatedAt?: unknown;
-	};
-
-	if (typeof source.id !== "string" || typeof source.title !== "string" || typeof source.summary !== "string" || typeof source.content !== "string") {
-		return null;
-	}
-
-	const createdAt = typeof source.createdAt === "string" ? source.createdAt : new Date().toISOString();
-	const authorName =
-		typeof source.authorName === "string"
-			? source.authorName
-			: typeof source.author?.name === "string"
-				? source.author.name
-				: "";
-	const authorId =
-		typeof source.authorId === "string"
-			? source.authorId
-			: typeof source.author?.id === "string"
-				? source.author.id
-				: "unknown";
-	const authorRole = normalizeRole(source.authorRole ?? source.author?.userType);
-	const updatedAt = typeof source.updatedAt === "string" ? source.updatedAt : undefined;
-
-	return {
-		id: source.id,
-		title: source.title,
-		summary: source.summary,
-		content: source.content,
-		authorId,
-		authorName,
-		authorRole,
-		createdAt,
-		updatedAt,
-	};
-};
-
-const extractArticles = (payload: unknown): ArticleItem[] => {
-	if (!payload || typeof payload !== "object") {
-		return [];
-	}
-
-	const source = payload as { data?: unknown; items?: unknown };
-	const list = Array.isArray(source.data)
-		? source.data
-		: source.data && typeof source.data === "object" && Array.isArray((source.data as { items?: unknown }).items)
-			? ((source.data as { items: unknown[] }).items ?? [])
-			: Array.isArray(source.items)
-				? source.items
-				: [];
-
-	return list
-		.map((item) => normalizeArticle(item))
-		.filter((item): item is ArticleItem => item !== null)
-		.sort((first, second) => new Date(second.createdAt).getTime() - new Date(first.createdAt).getTime());
 };
 
 const ArticlePage = () => {
@@ -172,22 +48,11 @@ const ArticlePage = () => {
 		setLoadError("");
 
 		try {
-			const response = await fetch(`${API_PREFIX}/articles?page=1&pageSize=20`, {
-				method: "GET",
-				headers: {
-					Accept: "application/json",
-				},
-				credentials: "include",
-			});
-			const payload = await readJsonSafe(response);
-
-			if (!response.ok) {
-				throw new Error(resolveErrorMessage(payload, t("articlePage.loadError")));
-			}
-
-			setArticles(extractArticles(payload));
+			const data = await getArticlesApi({ page: 1, pageSize: 20 });
+			const sorted = [...data].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+			setArticles(sorted);
 		} catch (error) {
-			const message = error instanceof Error && error.message ? error.message : t("articlePage.loadError");
+			const message = isApiError(error) && error.message ? error.message : t("articlePage.loadError");
 			setLoadError(message);
 			toast.error(message);
 		} finally {
@@ -203,11 +68,6 @@ const ArticlePage = () => {
 		event.preventDefault();
 
 		if (!canPublish || !currentUser) {
-			return;
-		}
-
-		const authorRole = currentUser.userType;
-		if (authorRole !== "ADMIN" && authorRole !== "BARBER") {
 			return;
 		}
 
@@ -227,44 +87,22 @@ const ArticlePage = () => {
 
 		void (async () => {
 			try {
-				const response = await fetch(`${API_PREFIX}/articles`, {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Accept: "application/json",
-						...getAuthHeaders(),
-					},
-					credentials: "include",
-					body: JSON.stringify({
-						title: nextTitle,
-						summary: nextSummary,
-						content: nextContent,
-					}),
+				const created = await createArticleApi({
+					title: nextTitle,
+					summary: nextSummary,
+					content: nextContent,
 				});
-				const payload = await readJsonSafe(response);
 
-				if (!response.ok) {
-					throw new Error(resolveErrorMessage(payload, t("articlePage.form.error")));
-				}
-
-				const createdArticle = normalizeArticle(
-					payload && typeof payload === "object" ? (payload as { data?: unknown }).data : null,
-				);
-
-				if (createdArticle) {
-					setArticles((prev) => [createdArticle, ...prev]);
+				if (created) {
+					setArticles((prev) => [created, ...prev]);
 				} else {
 					await fetchArticles();
 				}
 
-				setForm({
-					title: "",
-					summary: "",
-					content: "",
-				});
+				setForm({ title: "", summary: "", content: "" });
 				setFormSuccess(t("articlePage.form.success"));
 			} catch (error) {
-				const message = error instanceof Error && error.message ? error.message : t("articlePage.form.error");
+				const message = isApiError(error) && error.message ? error.message : t("articlePage.form.error");
 				setFormError(message);
 				toast.error(message);
 			} finally {
@@ -281,7 +119,9 @@ const ArticlePage = () => {
 						{t("articlePage.eyebrow")}
 					</p>
 					<div className="mt-2 flex flex-wrap items-center justify-between gap-3">
-						<h1 className="text-2xl font-black text-slate-900 dark:text-slate-50 sm:text-3xl">{t("articlePage.title")}</h1>
+						<h1 className="text-2xl font-black text-slate-900 dark:text-slate-50 sm:text-3xl">
+							{t("articlePage.title")}
+						</h1>
 						<button
 							type="button"
 							onClick={() => void fetchArticles()}
@@ -374,31 +214,35 @@ const ArticlePage = () => {
 							</div>
 						)}
 
-						{!isLoading && !loadError && articles.map((article, index) => (
-							<motion.article
-								key={article.id}
-								initial={{ opacity: 0, y: 12 }}
-								whileInView={{ opacity: 1, y: 0 }}
-								viewport={{ once: true, amount: 0.25 }}
-								transition={{ duration: 0.3, delay: index * 0.04 }}
-								className="rounded-3xl border border-slate-300/70 bg-white p-4 dark:border-slate-700 dark:bg-slate-900 sm:p-5"
-							>
-								<h3 className="text-xl font-bold text-slate-900 dark:text-slate-50">{article.title}</h3>
-								<p className="mt-2 text-sm text-slate-700 dark:text-slate-300">{article.summary}</p>
-								<p className="mt-3 whitespace-pre-line text-sm leading-7 text-slate-700 dark:text-slate-300">{article.content}</p>
+						{!isLoading &&
+							!loadError &&
+							articles.map((article, index) => (
+								<motion.article
+									key={article.id}
+									initial={{ opacity: 0, y: 12 }}
+									whileInView={{ opacity: 1, y: 0 }}
+									viewport={{ once: true, amount: 0.25 }}
+									transition={{ duration: 0.3, delay: index * 0.04 }}
+									className="rounded-3xl border border-slate-300/70 bg-white p-4 dark:border-slate-700 dark:bg-slate-900 sm:p-5"
+								>
+									<h3 className="text-xl font-bold text-slate-900 dark:text-slate-50">{article.title}</h3>
+									<p className="mt-2 text-sm text-slate-700 dark:text-slate-300">{article.summary}</p>
+									<p className="mt-3 whitespace-pre-line text-sm leading-7 text-slate-700 dark:text-slate-300">
+										{article.content}
+									</p>
 
-								<div className="mt-4 flex flex-wrap items-center gap-3 border-t border-slate-200 pt-3 text-xs text-slate-600 dark:border-slate-700 dark:text-slate-400">
-									<span className="inline-flex items-center gap-1">
-										<UserRound className="h-4 w-4" />
-										{t("articlePage.author")}: {article.authorName || t("articlePage.unknownAuthor")} ({t(`articlePage.roles.${article.authorRole}`)})
-									</span>
-									<span className="inline-flex items-center gap-1">
-										<CalendarDays className="h-4 w-4" />
-										{t("articlePage.publishedAt")}: {dateFormatter.format(new Date(article.createdAt))}
-									</span>
-								</div>
-							</motion.article>
-						))}
+									<div className="mt-4 flex flex-wrap items-center gap-3 border-t border-slate-200 pt-3 text-xs text-slate-600 dark:border-slate-700 dark:text-slate-400">
+										<span className="inline-flex items-center gap-1">
+											<UserRound className="h-4 w-4" />
+											{t("articlePage.author")}: {article.authorName || t("articlePage.unknownAuthor")}
+										</span>
+										<span className="inline-flex items-center gap-1">
+											<CalendarDays className="h-4 w-4" />
+											{t("articlePage.publishedAt")}: {dateFormatter.format(new Date(article.createdAt))}
+										</span>
+									</div>
+								</motion.article>
+							))}
 					</div>
 				</section>
 			</div>

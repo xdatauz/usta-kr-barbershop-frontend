@@ -4,11 +4,13 @@ import { CalendarDays, CheckCircle2, Clock3, Scissors, Send, ShieldAlert } from 
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import { BARBER_MEDIA } from "../../lib/barbers";
-import { createBookingApi, getBookingSlotsApi } from "../../lib/api/bookings";
+import { createBookingApi, getBookingSlotsApi, type BookingStyle } from "../../lib/api/bookings";
+import { getBarbersApi, type BarberProfile } from "../../lib/api/barbers";
+import { getPublicServicesApi, type Service } from "../../lib/api/services";
 import { isApiError } from "../../lib/api/client";
 
 type SubmitStatus = "idle" | "sending" | "success" | "validationError" | "requestError" | "configError";
+
 
 const fallbackSlots = ["09:00", "10:00", "11:00", "12:00", "13:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
 
@@ -21,20 +23,40 @@ const BookingPage = () => {
 		name: "",
 		phone: "",
 		barberId: "",
+		style: "",
 		date: "",
 		time: "",
-		style: "",
-		note: "",
 	});
 	const [availableSlots, setAvailableSlots] = useState<string[]>(fallbackSlots);
-
-	const hairstyleOptions = useMemo(() => ["classic", "fade", "beard", "deluxe", "color", "fatherSon"] as const, []);
+	const [barbers, setBarbers] = useState<BarberProfile[]>([]);
+	const [services, setServices] = useState<Service[]>([]);
 
 	const today = new Date().toISOString().split("T")[0];
 
 	useEffect(() => {
+		const loadBarbers = async () => {
+			try {
+				const list = await getBarbersApi();
+				setBarbers(list);
+			} catch {
+				setBarbers([]);
+			}
+		};
+		const loadServices = async () => {
+			try {
+				const list = await getPublicServicesApi();
+				setServices(list);
+			} catch {
+				setServices([]);
+			}
+		};
+		void loadBarbers();
+		void loadServices();
+	}, []);
+
+	useEffect(() => {
 		const loadSlots = async () => {
-			if (!form.barberId || !form.date) {
+			if (!form.date || !form.barberId) {
 				setAvailableSlots(fallbackSlots);
 				return;
 			}
@@ -48,15 +70,32 @@ const BookingPage = () => {
 				toast.error(message);
 				setAvailableSlots(fallbackSlots);
 			}
+
+			// Reset selected time whenever date changes
+			setForm((prev) => ({ ...prev, time: "" }));
 		};
 
 		void loadSlots();
-	}, [form.barberId, form.date, t]);
+	}, [form.date, form.barberId, t]);
+
+	// Reset time when barber changes
+	useEffect(() => {
+		setForm((prev) => ({ ...prev, time: "" }));
+	}, [form.barberId]);
+
+	const selectedBarberName = useMemo(() => {
+		const found = barbers.find((b) => b.id === form.barberId);
+		return found ? found.name : "-";
+	}, [barbers, form.barberId]);
+
+	const selectedServiceName = useMemo(() => {
+		return form.style ? t(`bookingPage.styles.${form.style}`) : "-";
+	}, [form.style, t]);
 
 	const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		if (!form.name.trim() || !form.phone.trim() || !form.barberId || !form.date || !form.time || !form.style) {
+		if (!form.name.trim() || !form.phone.trim() || !form.barberId || !form.style || !form.date || !form.time) {
 			setStatus("validationError");
 			return;
 		}
@@ -70,8 +109,7 @@ const BookingPage = () => {
 				barberId: form.barberId,
 				date: form.date,
 				time: form.time,
-				style: form.style,
-				note: form.note.trim() || undefined,
+				style: form.style as BookingStyle,
 			});
 		} catch (error) {
 			setStatus("requestError");
@@ -85,10 +123,9 @@ const BookingPage = () => {
 			name: "",
 			phone: "",
 			barberId: "",
+			style: "",
 			date: "",
 			time: "",
-			style: "",
-			note: "",
 		});
 	};
 
@@ -176,26 +213,26 @@ const BookingPage = () => {
 									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
 								>
 									<option value="">{t("bookingPage.form.placeholders.barber")}</option>
-									{BARBER_MEDIA.map((barber) => (
+									{barbers.map((barber) => (
 										<option key={barber.id} value={barber.id}>
-											{t(`barbersPage.barbers.${barber.id}.name`)}
+											{barber.name}
 										</option>
 									))}
 								</select>
 							</label>
 							<label className="space-y-1">
 								<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">
-									{t("bookingPage.form.labels.hairstyle")}
+									{t("bookingPage.form.labels.service")}
 								</span>
 								<select
 									value={form.style}
 									onChange={(event) => setForm((prev) => ({ ...prev, style: event.target.value }))}
 									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
 								>
-									<option value="">{t("bookingPage.form.placeholders.hairstyle")}</option>
-									{hairstyleOptions.map((styleKey) => (
-										<option key={styleKey} value={styleKey}>
-											{t(`bookingPage.hairstyles.${styleKey}`)}
+									<option value="">{t("bookingPage.form.placeholders.service")}</option>
+									{services.map((service) => (
+										<option key={service.id} value={service.id}>
+											{service.name}{service.price ? ` — ${Number(service.price).toLocaleString()}` : ""}
 										</option>
 									))}
 								</select>
@@ -233,19 +270,6 @@ const BookingPage = () => {
 								</select>
 							</label>
 						</div>
-
-						<label className="space-y-1">
-							<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">
-								{t("bookingPage.form.labels.note")}
-							</span>
-							<textarea
-								value={form.note}
-								onChange={(event) => setForm((prev) => ({ ...prev, note: event.target.value }))}
-								placeholder={t("bookingPage.form.placeholders.note")}
-								rows={4}
-								className="w-full resize-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-							/>
-						</label>
 
 						<button
 							type="submit"
@@ -294,20 +318,17 @@ const BookingPage = () => {
 								</p>
 								<p>
 									<strong>{t("bookingPage.form.labels.barber")}:</strong>{" "}
-									{form.barberId ? t(`barbersPage.barbers.${form.barberId}.name`) : "-"}
+									{form.barberId ? selectedBarberName : "-"}
 								</p>
 								<p>
-									<strong>{t("bookingPage.form.labels.hairstyle")}:</strong>{" "}
-									{form.style ? t(`bookingPage.hairstyles.${form.style}`) : "-"}
+									<strong>{t("bookingPage.form.labels.service")}:</strong>{" "}
+									{form.style ? selectedServiceName : "-"}
 								</p>
 								<p>
 									<strong>{t("bookingPage.form.labels.date")}:</strong> {form.date || "-"}
 								</p>
 								<p>
 									<strong>{t("bookingPage.form.labels.time")}:</strong> {form.time || "-"}
-								</p>
-								<p>
-									<strong>{t("bookingPage.form.labels.note")}:</strong> {form.note || t("bookingPage.summary.noNote")}
 								</p>
 							</div>
 						</div>

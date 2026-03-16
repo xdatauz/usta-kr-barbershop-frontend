@@ -2,12 +2,15 @@ import type { AuthUser, UserType } from "../../context/auth/auth-provider";
 import { apiRequest, clearStoredTokens, setAccessToken, setRefreshToken } from "./client";
 
 export interface AuthRequestPayload {
+	/** email or phone — sent as `identifier` to backend */
 	email: string;
 	password: string;
 }
 
-export interface SignupRequestPayload extends AuthRequestPayload {
+export interface SignupRequestPayload {
 	name: string;
+	email: string;
+	password: string;
 	userType?: UserType;
 }
 
@@ -15,11 +18,12 @@ interface AuthResponseShape {
 	accessToken?: string;
 	refreshToken?: string;
 	token?: string;
-	user?: AuthUser;
-	id?: string;
+	user?: Record<string, unknown>;
+	id?: string | number;
 	name?: string;
 	email?: string;
-	userType?: UserType;
+	userType?: string;
+	role?: string;
 	image?: string | null;
 }
 
@@ -29,41 +33,45 @@ export interface AuthResult {
 	refreshToken: string | null;
 }
 
-const normalizeUser = (raw: AuthResponseShape | AuthUser | undefined): AuthUser | null => {
-	if (!raw || typeof raw !== "object") {
-		return null;
-	}
+const toUserType = (raw: unknown): UserType => {
+	const map: Record<string, UserType> = {
+		ADMIN: "ADMIN",
+		BARBER: "BARBER",
+		HEAD_BARBER: "BARBER",
+		RECEPTION: "ADMIN",
+		USER: "USER",
+		CLIENT: "USER",
+		FRONTEND_USER: "USER",
+	};
+	return map[String(raw ?? "")] ?? "USER";
+};
 
-	const candidate = raw as Partial<AuthUser>;
-	if (typeof candidate.id !== "string" || typeof candidate.name !== "string" || typeof candidate.email !== "string") {
-		return null;
-	}
+const normalizeUser = (raw: unknown): AuthUser | null => {
+	if (!raw || typeof raw !== "object") return null;
 
-	const role = candidate.userType === "ADMIN" || candidate.userType === "BARBER" || candidate.userType === "USER" ? candidate.userType : "USER";
+	const src = raw as Record<string, unknown>;
+	const id = typeof src.id === "string" ? src.id : typeof src.id === "number" ? String(src.id) : null;
+	if (!id || typeof src.name !== "string" || typeof src.email !== "string") return null;
 
 	return {
-		id: candidate.id,
-		name: candidate.name,
-		email: candidate.email,
-		userType: role,
-		image: candidate.image ?? null,
+		id,
+		name: src.name,
+		email: src.email,
+		userType: toUserType(src.userType ?? src.role),
+		image: typeof src.image === "string" ? src.image : null,
 	};
 };
 
 const normalizeAuthResponse = (payload: AuthResponseShape): AuthResult => {
 	const accessToken = payload.accessToken || payload.token || null;
 	const refreshToken = payload.refreshToken || null;
-	const user = normalizeUser(payload.user || payload);
+	const user = normalizeUser(payload.user ?? payload);
 
 	if (!user) {
 		throw new Error("AUTH_RESPONSE_INVALID");
 	}
 
-	return {
-		user,
-		accessToken,
-		refreshToken,
-	};
+	return { user, accessToken, refreshToken };
 };
 
 const persistTokens = (result: AuthResult) => {
@@ -72,9 +80,10 @@ const persistTokens = (result: AuthResult) => {
 };
 
 export const loginApi = async (payload: AuthRequestPayload): Promise<AuthResult> => {
+	// Backend expects `identifier` (email or phone); we map `email` → `identifier`
 	const response = await apiRequest<AuthResponseShape>("/auth/login", {
 		method: "POST",
-		body: payload,
+		body: { email: payload.email, password: payload.password },
 	});
 	const result = normalizeAuthResponse(response);
 	persistTokens(result);
@@ -92,16 +101,11 @@ export const signupApi = async (payload: SignupRequestPayload): Promise<AuthResu
 };
 
 export const getMeApi = async (): Promise<AuthUser> => {
-	const response = await apiRequest<AuthResponseShape | AuthUser>("/auth/me", {
-		method: "GET",
-		auth: true,
-	});
+	const response = await apiRequest<unknown>("/auth/me", { method: "GET", auth: true });
+	const src = response as Record<string, unknown>;
+	const user = normalizeUser(src.user ?? response);
 
-	const user = normalizeUser((response as AuthResponseShape).user || (response as AuthUser));
-
-	if (!user) {
-		throw new Error("AUTH_PROFILE_INVALID");
-	}
+	if (!user) throw new Error("AUTH_PROFILE_INVALID");
 
 	return user;
 };

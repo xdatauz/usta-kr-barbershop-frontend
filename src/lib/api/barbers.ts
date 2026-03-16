@@ -155,11 +155,14 @@ export const getBarberCommentsApi = async (id: string): Promise<CommentListRespo
 	};
 };
 
-export const postBarberCommentApi = async (id: string, payload: { author?: string; text: string }): Promise<BarberComment | null> => {
+export const postBarberCommentApi = async (id: string, payload: { text: string; rating?: number }): Promise<BarberComment | null> => {
 	const response = await apiRequest<unknown>(`/barbers/${id}/comments`, {
 		method: "POST",
 		auth: true,
-		body: payload,
+		body: {
+			comment: payload.text,
+			rating: payload.rating ?? 5,
+		},
 	});
 	return normalizeComment(response);
 };

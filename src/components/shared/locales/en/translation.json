@@ -68,6 +68,7 @@
 		"title": "Premium services designed for every style",
 		"description": "Choose your service and let our team shape your look with precision, hygiene, and consistency.",
 		"bookNow": "Book now",
+		"noServices": "No services available at the moment.",
 		"items": {
 			"classicCut": {
 				"name": "Classic Haircut",
@@ -257,7 +258,8 @@
 	"common": {
 		"more": "More",
 		"loading": "Loading...",
-		"today": "Today"
+		"today": "Today",
+		"min": "min"
 	},
 	"toast": {
 		"auth": {
@@ -304,15 +306,20 @@
 	},
 	"auth": {
 		"name": "Full name",
+		"phone": "Phone number",
+		"phoneInvalid": "Please enter a valid Korean phone number (e.g. 010-1234-5678).",
+		"telegramChatId": "Telegram Chat ID (optional)",
+		"loginHint": "Enter your phone number to continue.",
+		"signupHint": "Register with your name and phone number.",
 		"haveAccount": "Already have an account?",
 		"noAccount": "No account yet?",
 		"email": "Email",
 		"switchToLogin": "Login",
-		"loginTitle": "Login to your account",
+		"loginTitle": "Welcome back",
 		"signupCta": "Sign up",
 		"signupTitle": "Create your account",
 		"password": "Password",
-		"loginCta": "Login",
+		"loginCta": "Continue",
 		"switchToSignup": "Sign up",
 		"roles": {
 			"user": "User",
@@ -349,7 +356,7 @@
 				"name": "Name",
 				"phone": "Phone",
 				"barber": "Barber",
-				"hairstyle": "Hairstyle",
+				"service": "Service",
 				"date": "Date",
 				"time": "Time",
 				"note": "Note"
@@ -358,7 +365,7 @@
 				"name": "Enter your name",
 				"phone": "+1 234 567 890",
 				"barber": "Select barber",
-				"hairstyle": "Select hairstyle",
+				"service": "Select service",
 				"time": "Select time",
 				"note": "Additional notes (optional)"
 			},

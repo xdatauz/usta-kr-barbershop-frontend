@@ -1,165 +1,191 @@
-import { useEffect, useState, type FormEvent, type MouseEvent } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { createPortal } from "react-dom";
-import { X } from "lucide-react";
+import { X, Phone, User, Send } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { useAuth, type UserType } from "../../context/auth/auth-provider";
+import { useAuth } from "../../context/auth/auth-provider";
 
 interface AuthModalProps {
 	isOpen: boolean;
 	onClose: () => void;
 }
 
+// Format digits into 010-XXXX-XXXX as user types
+const formatKoreanPhone = (raw: string): string => {
+	const digits = raw.replace(/\D/g, "").slice(0, 11);
+	if (digits.length <= 3) return digits;
+	if (digits.length <= 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+	return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+};
+
+// Valid Korean mobile: 010-XXXX-XXXX
+const isValidKoreanPhone = (phone: string): boolean =>
+	/^010-\d{4}-\d{4}$/.test(phone);
+
 export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 	const { t } = useTranslation();
 	const { login, signup, isAuthLoading } = useAuth();
 	const [mode, setMode] = useState<"login" | "signup">("login");
-	const [form, setForm] = useState({
-		name: "",
-		email: "",
-		password: "",
-		userType: "USER" as UserType,
-	});
+	const [form, setForm] = useState({ name: "", phone: "", telegramChatId: "" });
+	const [phoneError, setPhoneError] = useState("");
 
 	useEffect(() => {
-		if (!isOpen) {
-			return;
-		}
-
-		const previousOverflow = document.body.style.overflow;
+		if (!isOpen) return;
+		const prev = document.body.style.overflow;
 		document.body.style.overflow = "hidden";
-
-		const onEscape = (event: KeyboardEvent) => {
-			if (event.key === "Escape") {
-				onClose();
-			}
-		};
-
-		window.addEventListener("keydown", onEscape);
-
+		const onEsc = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+		window.addEventListener("keydown", onEsc);
 		return () => {
-			document.body.style.overflow = previousOverflow;
-			window.removeEventListener("keydown", onEscape);
+			document.body.style.overflow = prev;
+			window.removeEventListener("keydown", onEsc);
 		};
 	}, [isOpen, onClose]);
 
-	if (!isOpen) {
-		return null;
-	}
+	if (!isOpen) return null;
 
-	const submitHandler = async (event: FormEvent) => {
-		event.preventDefault();
-		if (!form.email.trim() || !form.password.trim()) {
+	const set = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
+		setForm((prev) => ({ ...prev, [field]: e.target.value }));
+
+	const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const formatted = formatKoreanPhone(e.target.value);
+		setForm((prev) => ({ ...prev, phone: formatted }));
+		if (phoneError) setPhoneError("");
+	};
+
+	const resetForm = () => {
+		setForm({ name: "", phone: "", telegramChatId: "" });
+		setPhoneError("");
+	};
+
+	const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		if (!form.phone.trim()) {
 			toast.warning(t("toast.validation.requiredFields"));
 			return;
 		}
 
+		if (!isValidKoreanPhone(form.phone)) {
+			setPhoneError(t("auth.phoneInvalid"));
+			return;
+		}
+
 		if (mode === "login") {
-			const result = await login({ email: form.email.trim(), password: form.password.trim() });
-			if (!result.ok) {
-				toast.error(result.error || t("toast.auth.loginFailed"));
-				return;
-			}
+			const result = await login({ phone: form.phone.trim() });
+			if (!result.ok) { toast.error(result.error || t("toast.auth.loginFailed")); return; }
 			toast.success(t("toast.auth.loginSuccess"));
 		} else {
-			if (!form.name.trim()) {
-				toast.warning(t("toast.validation.requiredFields"));
-				return;
-			}
+			if (!form.name.trim()) { toast.warning(t("toast.validation.requiredFields")); return; }
 			const result = await signup({
 				name: form.name.trim(),
-				email: form.email.trim(),
-				password: form.password.trim(),
-				userType: form.userType,
+				phone: form.phone.trim(),
+				...(form.telegramChatId.trim() ? { telegramChatId: form.telegramChatId.trim() } : {}),
 			});
-			if (!result.ok) {
-				toast.error(result.error || t("toast.auth.signupFailed"));
-				return;
-			}
+			if (!result.ok) { toast.error(result.error || t("toast.auth.signupFailed")); return; }
 			toast.success(t("toast.auth.signupSuccess"));
 		}
 
 		onClose();
 	};
 
-	const onOverlayClick = (event: MouseEvent<HTMLDivElement>) => {
-		if (event.target === event.currentTarget) {
-			onClose();
-		}
+	const onOverlay = (e: MouseEvent<HTMLDivElement>) => {
+		if (e.target === e.currentTarget) onClose();
 	};
 
+	const inputClass = "w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 pl-9 text-sm text-slate-800 placeholder:text-slate-400 focus:border-slate-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 dark:placeholder:text-slate-500";
+	const inputErrorClass = "w-full rounded-xl border border-red-400 bg-white px-3 py-2.5 pl-9 text-sm text-slate-800 placeholder:text-slate-400 focus:border-red-500 focus:outline-none dark:border-red-500 dark:bg-slate-950 dark:text-slate-200 dark:placeholder:text-slate-500";
+
 	return createPortal(
-		<div className="fixed inset-0 z-[9999] bg-black/60 p-4" onMouseDown={onOverlayClick}>
+		<div className="fixed inset-0 z-[9999] bg-black/60 p-4" onMouseDown={onOverlay}>
 			<div className="flex h-full items-start justify-center overflow-y-auto py-6 sm:items-center">
-				<div className="w-full max-w-md rounded-2xl border border-slate-300 bg-white p-5 shadow-2xl dark:border-slate-700 dark:bg-slate-900">
-					<div className="mb-4 flex items-center justify-between">
-						<h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-							{mode === "login" ? t("auth.loginTitle") : t("auth.signupTitle")}
-						</h3>
-						<button
-							type="button"
-							onClick={onClose}
-							className="rounded-lg p-1 text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
-						>
-							<X className="h-4 w-4" />
-						</button>
-					</div>
+				<div className="w-full max-w-sm overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-slate-700 dark:bg-slate-900">
+					{/* color bar */}
+					<div className="h-1.5 bg-gradient-to-r from-slate-900 to-slate-600 dark:from-emerald-500 dark:to-emerald-700" />
 
-					<form onSubmit={submitHandler} className="space-y-3">
-						{mode === "signup" && (
-							<>
-								<input
-									type="text"
-									value={form.name}
-									onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
-									placeholder={t("auth.name")}
-									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-								/>
-								<select
-									value={form.userType}
-									onChange={(event) => setForm((prev) => ({ ...prev, userType: event.target.value as UserType }))}
-									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-								>
-									<option value="USER">{t("auth.roles.user")}</option>
-									<option value="BARBER">{t("auth.roles.barber")}</option>
-									<option value="ADMIN">{t("auth.roles.admin")}</option>
-								</select>
-							</>
-						)}
+					<div className="p-5">
+						{/* header */}
+						<div className="mb-5 flex items-center justify-between">
+							<div>
+								<h3 className="text-base font-black text-slate-900 dark:text-slate-100">
+									{mode === "login" ? t("auth.loginTitle") : t("auth.signupTitle")}
+								</h3>
+								<p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+									{mode === "login" ? t("auth.loginHint") : t("auth.signupHint")}
+								</p>
+							</div>
+							<button
+								type="button"
+								onClick={onClose}
+								className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+							>
+								<X className="h-4 w-4" />
+							</button>
+						</div>
 
-						<input
-							type="email"
-							value={form.email}
-							onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
-							placeholder={t("auth.email")}
-							className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-						/>
-						<input
-							type="password"
-							value={form.password}
-							onChange={(event) => setForm((prev) => ({ ...prev, password: event.target.value }))}
-							placeholder={t("auth.password")}
-							className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-						/>
+						<form onSubmit={submitHandler} className="space-y-3">
+							{mode === "signup" && (
+								<div className="relative">
+									<User className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+									<input
+										type="text"
+										value={form.name}
+										onChange={set("name")}
+										placeholder={t("auth.name")}
+										className={inputClass}
+									/>
+								</div>
+							)}
 
-						<button
-							type="submit"
-							disabled={isAuthLoading}
-							className="w-full rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-700 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
-						>
-							{isAuthLoading ? t("common.loading") : mode === "login" ? t("auth.loginCta") : t("auth.signupCta")}
-						</button>
-					</form>
+							<div>
+								<div className="relative">
+									<Phone className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+									<input
+										type="tel"
+										value={form.phone}
+										onChange={handlePhoneChange}
+										placeholder="010-7699-6622"
+										maxLength={13}
+										inputMode="numeric"
+										className={phoneError ? inputErrorClass : inputClass}
+									/>
+								</div>
+								{phoneError && (
+									<p className="mt-1 pl-1 text-xs text-red-500">{phoneError}</p>
+								)}
+							</div>
 
-					<div className="mt-4 text-center text-sm text-slate-600 dark:text-slate-300">
-						{mode === "login" ? t("auth.noAccount") : t("auth.haveAccount")}{" "}
-						<button
-							type="button"
-							onClick={() => setMode((prev) => (prev === "login" ? "signup" : "login"))}
-							className="font-semibold text-emerald-700 hover:underline dark:text-emerald-300"
-						>
-							{mode === "login" ? t("auth.switchToSignup") : t("auth.switchToLogin")}
-						</button>
+							{mode === "signup" && (
+								<div className="relative">
+									<Send className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+									<input
+										type="text"
+										value={form.telegramChatId}
+										onChange={set("telegramChatId")}
+										placeholder={t("auth.telegramChatId")}
+										className={inputClass}
+									/>
+								</div>
+							)}
+
+							<button
+								type="submit"
+								disabled={isAuthLoading}
+								className="mt-1 w-full rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-slate-700 active:scale-[.98] disabled:opacity-60 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
+							>
+								{isAuthLoading ? t("common.loading") : mode === "login" ? t("auth.loginCta") : t("auth.signupCta")}
+							</button>
+						</form>
+
+						<div className="mt-4 text-center text-sm text-slate-500 dark:text-slate-400">
+							{mode === "login" ? t("auth.noAccount") : t("auth.haveAccount")}{" "}
+							<button
+								type="button"
+								onClick={() => { setMode((p) => (p === "login" ? "signup" : "login")); resetForm(); }}
+								className="font-semibold text-emerald-700 hover:underline dark:text-emerald-400"
+							>
+								{mode === "login" ? t("auth.switchToSignup") : t("auth.switchToLogin")}
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
