@@ -9,6 +9,15 @@ import { getBarbersApi, type BarberProfile } from "../../lib/api/barbers";
 import { getPublicServicesApi, type Service } from "../../lib/api/services";
 import { isApiError } from "../../lib/api/client";
 
+const BOOKING_STYLES: { value: BookingStyle; labelKey: string }[] = [
+	{ value: "classic", labelKey: "bookingPage.styles.classic" },
+	{ value: "fade", labelKey: "bookingPage.styles.fade" },
+	{ value: "beard", labelKey: "bookingPage.styles.beard" },
+	{ value: "deluxe", labelKey: "bookingPage.styles.deluxe" },
+	{ value: "color", labelKey: "bookingPage.styles.color" },
+	{ value: "fatherSon", labelKey: "bookingPage.styles.fatherSon" },
+];
+
 type SubmitStatus = "idle" | "sending" | "success" | "validationError" | "requestError" | "configError";
 
 
@@ -230,9 +239,9 @@ const BookingPage = () => {
 									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
 								>
 									<option value="">{t("bookingPage.form.placeholders.service")}</option>
-									{services.map((service) => (
-										<option key={service.id} value={service.id}>
-											{service.name}{service.price ? ` — ${Number(service.price).toLocaleString()}` : ""}
+									{BOOKING_STYLES.map((style) => (
+										<option key={style.value} value={style.value}>
+											{t(style.labelKey)}
 										</option>
 									))}
 								</select>
@@ -351,6 +360,26 @@ const BookingPage = () => {
 								</Link>
 							</div>
 						</div>
+
+						{services.length > 0 && (
+							<div className="rounded-3xl border border-slate-300/70 bg-white p-4 dark:border-slate-700 dark:bg-slate-900 sm:p-5">
+								<h2 className="text-lg font-bold text-slate-900 dark:text-slate-50">
+									<Scissors className="inline h-5 w-5 text-emerald-600 dark:text-emerald-300 mr-2" />
+									{t("servicesSection.title")}
+								</h2>
+								<div className="mt-3 divide-y divide-slate-100 dark:divide-slate-800">
+									{services.map((service) => (
+										<div key={service.id} className="flex items-center justify-between py-2 text-sm">
+											<span className="font-medium text-slate-800 dark:text-slate-200">{service.name}</span>
+											<span className="text-emerald-700 dark:text-emerald-300 font-semibold">
+												{Number(service.price).toLocaleString()}
+												{service.durationMinutes ? <span className="ml-2 text-xs text-slate-500 dark:text-slate-400 font-normal">{service.durationMinutes} {t("common.min")}</span> : null}
+											</span>
+										</div>
+									))}
+								</div>
+							</div>
+						)}
 					</div>
 				</section>
 			</div>

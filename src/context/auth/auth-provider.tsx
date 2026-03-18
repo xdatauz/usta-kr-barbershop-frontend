@@ -124,6 +124,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		clientLogout();
 		setCurrentUser(null);
 		persistUser(null);
+		window.location.reload();
 	};
 
 	const value = useMemo(

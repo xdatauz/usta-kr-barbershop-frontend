@@ -73,24 +73,48 @@ const normalizeBarberProfile = (raw: unknown): BarberProfile | null => {
 	const source = raw as {
 		id?: unknown;
 		name?: unknown;
+		fullName?: unknown;
 		role?: unknown;
+		displayRole?: unknown;
 		bio?: unknown;
 		image?: unknown;
 		stats?: unknown;
+		likes?: unknown;
+		dislikes?: unknown;
+		followersCount?: unknown;
 		viewer?: unknown;
 	};
 
-	if (typeof source.id !== "string") {
+	const id =
+		typeof source.id === "string"
+			? source.id
+			: typeof source.id === "number"
+				? String(source.id)
+				: null;
+
+	if (!id) {
 		return null;
 	}
 
+	const name = typeof source.name === "string" ? source.name
+		: typeof source.fullName === "string" ? source.fullName
+		: id;
+
+	// Backend may return flat stats (likes, dislikes, followersCount) instead of nested stats object
+	const flatStats: Partial<BarberStats> = {};
+	if (typeof source.likes === "number") flatStats.likes = source.likes;
+	if (typeof source.dislikes === "number") flatStats.dislikes = source.dislikes;
+	if (typeof source.followersCount === "number") flatStats.followers = source.followersCount;
+
 	return {
-		id: source.id,
-		name: typeof source.name === "string" ? source.name : source.id,
-		role: typeof source.role === "string" ? source.role : "",
+		id,
+		name,
+		role: typeof source.role === "string" ? source.role
+			: typeof source.displayRole === "string" ? source.displayRole
+			: "",
 		bio: typeof source.bio === "string" ? source.bio : "",
 		image: typeof source.image === "string" ? source.image : "",
-		stats: normalizeStats(source.stats),
+		stats: normalizeStats(Object.keys(flatStats).length > 0 ? { ...flatStats, ...source.stats } : source.stats),
 		viewer: normalizeViewer(source.viewer),
 	};
 };
