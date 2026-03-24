@@ -126,8 +126,11 @@
 			"cuts": "Before / After",
 			"interior": "Interior",
 			"barbers": "Barbers at Work",
-			"atmosphere": "Atmosphere"
+			"atmosphere": "Atmosphere",
+			"instagram": "Instagram"
 		},
+		"loadingInstagram": "Loading Instagram content...",
+		"instagramError": "Could not load Instagram content. Showing gallery only.",
 		"extras": {
 			"stylesTitle": "Styles You Can Request",
 			"styleOne": "Skin Fade",
@@ -145,6 +148,7 @@
 		"description": "We are a team-focused barbershop built around precision service, client trust, and strong grooming culture.",
 		"storyTitle": "Our Story",
 		"storyText": "What started as a local chair has grown into a trusted destination where people come for consistency, comfort, and confidence. Every appointment is treated with care.",
+		"valuesTitle": "Our Core Values",
 		"values": {
 			"precision": {
 				"title": "Precision First",
@@ -163,24 +167,40 @@
 				"text": "Our team improves constantly through training and trend awareness."
 			}
 		},
+		"stats": {
+			"happy_clients": "Happy Clients",
+			"haircuts": "Haircuts Given",
+			"experience": "Of Excellence",
+			"satisfaction": "Satisfaction Rate"
+		},
+		"timelineTitle": "Our Journey",
+		"timeline": {
+			"founded": "Founded",
+			"expanded": "Expanded",
+			"modernized": "Modernized",
+			"leading": "Leading"
+		},
 		"teamTitle": "Meet The Team",
 		"team": {
 			"jamshid": {
 				"name": "Jamshid",
 				"role": "Senior Barber",
-				"bio": "Specializes in fades and premium beard shaping."
+				"bio": "12+ years specializing in fades and premium beard shaping."
 			},
 			"sardor": {
 				"name": "Sardor",
 				"role": "Style Expert",
-				"bio": "Known for textured cuts and modern styling finish."
+				"bio": "Master of textured cuts and modern styling finishing techniques."
 			},
 			"aziz": {
 				"name": "Aziz",
 				"role": "Grooming Specialist",
-				"bio": "Focuses on complete grooming packages and comfort."
+				"bio": "Expert in complete grooming packages and client comfort."
 			}
 		},
+		"ctaTitle": "Ready For Your Next Transformation?",
+		"ctaDescription": "Book an appointment with one of our expert barbers today and experience the Usta difference.",
+		"ctaButton": "Book Now",
 		"extras": {
 			"timelineOne": "Usta started as a single-chair local barbershop.",
 			"timelineTwo": "Expanded to a full team and premium grooming packages.",
@@ -189,8 +209,8 @@
 	},
 	"contactSection": {
 		"eyebrow": "Contact",
-		"title": "Book your next visit or send us a message",
-		"description": "Use the form for appointments and questions. We usually respond quickly during working hours.",
+		"title": "Get in touch with us",
+		"description": "Have a question or want to reach out? Fill in the form and we'll get back to you during working hours.",
 		"form": {
 			"nameLabel": "Full name",
 			"namePlaceholder": "Your name",

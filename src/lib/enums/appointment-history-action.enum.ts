@@ -1,0 +1,6 @@
+export enum AppointmentHistoryAction {
+  CREATED = 'CREATED',
+  RESCHEDULED = 'RESCHEDULED',
+  CANCELLED = 'CANCELLED',
+  STATUS_CHANGED = 'STATUS_CHANGED',
+}

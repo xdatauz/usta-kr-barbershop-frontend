@@ -4,6 +4,7 @@ import ContactPage from "../Contact";
 import GalleryPage from "../Gallery";
 import ServicePage from "../Services";
 import HomeHero from "./HomeHero";
+import ArticlePage from "../Article";
 
 const HomePage = () => {
 	return (
@@ -19,6 +20,14 @@ const HomePage = () => {
 				>
 					<ServicePage preview />
 				</motion.div>
+				{/* <motion.div
+					initial={{ opacity: 0, y: 14 }}
+					whileInView={{ opacity: 1, y: 0 }}
+					viewport={{ once: true, amount: 0.2 }}
+					transition={{ duration: 0.35 }}
+				>
+					<ArticlePage preview />
+				</motion.div> */}
 				<motion.div
 					initial={{ opacity: 0, y: 14 }}
 					whileInView={{ opacity: 1, y: 0 }}

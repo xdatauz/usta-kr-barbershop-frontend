@@ -126,8 +126,11 @@
 			"cuts": "전 / 후",
 			"interior": "인테리어",
 			"barbers": "바버 작업",
-			"atmosphere": "분위기"
+			"atmosphere": "분위기",
+			"instagram": "Instagram"
 		},
+		"loadingInstagram": "Instagram 콘텐츠 로딩 중...",
+		"instagramError": "Instagram 콘텐츠를 로드할 수 없습니다. 갤러리만 표시 중입니다.",
 		"extras": {
 			"noteLabel": "안내",
 			"noteText": "갤러리의 모든 이미지는 매장 실제 작업 장면입니다.",
@@ -145,6 +148,7 @@
 		"description": "정밀한 기술, 고객 신뢰, 팀워크를 중심으로 운영되는 바버샵입니다.",
 		"storyTitle": "우리 이야기",
 		"storyText": "지역의 작은 자리에서 시작해, 지금은 안정적인 퀄리티와 편안함으로 선택받는 바버샵이 되었습니다.",
+		"valuesTitle": "핵심 가치",
 		"values": {
 			"precision": {
 				"title": "정밀함 우선",
@@ -163,24 +167,40 @@
 				"text": "트렌드 학습과 훈련으로 팀의 기술을 꾸준히 향상합니다."
 			}
 		},
+		"stats": {
+			"happy_clients": "행복한 고객",
+			"haircuts": "시술 건수",
+			"experience": "년의 경험",
+			"satisfaction": "만족도"
+		},
+		"timelineTitle": "성장 과정",
+		"timeline": {
+			"founded": "창립",
+			"expanded": "확장",
+			"modernized": "현대화",
+			"leading": "리더"
+		},
 		"teamTitle": "팀 소개",
 		"team": {
 			"jamshid": {
 				"name": "잠시드",
 				"role": "시니어 바버",
-				"bio": "페이드 컷과 프리미엄 수염 디자인을 전문으로 합니다."
+				"bio": "12년 이상 페이드 컷과 프리미엄 수염 디자인 전문."
 			},
 			"sardor": {
 				"name": "사르도르",
 				"role": "스타일 전문가",
-				"bio": "텍스처 컷과 모던 스타일 마무리에 강점을 갖고 있습니다."
+				"bio": "텍스처 컷과 모던 스타일 마무리 기술의 마스터."
 			},
 			"aziz": {
 				"name": "아지즈",
 				"role": "그루밍 스페셜리스트",
-				"bio": "종합 그루밍 패키지와 고객 편안함에 집중합니다."
+				"bio": "종합 그루밍 패키지와 고객 편안함에 집중."
 			}
 		},
+		"ctaTitle": "당신의 변신을 시작하시겠어요?",
+		"ctaDescription": "오늘 바로 우리 전문 바버와 상담하시고 Usta의 차이를 경험해 보세요.",
+		"ctaButton": "예약 하기",
 		"extras": {
 			"timelineTwo": "이후 팀 확장과 프리미엄 패키지를 도입했습니다.",
 			"timelineOne": "Usta는 1인 의자 바버샵에서 시작했습니다.",
@@ -189,8 +209,8 @@
 	},
 	"contactSection": {
 		"eyebrow": "문의",
-		"title": "다음 방문 예약 또는 메시지 보내기",
-		"description": "예약 및 문의는 아래 폼을 이용하세요. 운영 시간 내 빠르게 답변드립니다.",
+		"title": "문의하기",
+		"description": "궁금한 점이 있으신가요? 아래 폼을 작성해 주시면 운영 시간 내에 답변드리겠습니다.",
 		"form": {
 			"nameLabel": "이름",
 			"namePlaceholder": "이름을 입력하세요",

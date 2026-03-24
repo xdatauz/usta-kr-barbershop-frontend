@@ -126,8 +126,11 @@
 			"cuts": "Oldin / Keyin",
 			"interior": "Interyer",
 			"barbers": "Barberlar ishda",
-			"atmosphere": "Muhit"
+			"atmosphere": "Muhit",
+			"instagram": "Instagram"
 		},
+		"loadingInstagram": "Instagram kontenti yuklanmoqda...",
+		"instagramError": "Instagram kontentini yuklash uchun ishlamadi. Faqat galereyani ko'rsatmoqda.",
 		"extras": {
 			"styleTwo": "Textured Crop",
 			"styleOne": "Skin Fade",
@@ -145,6 +148,7 @@
 		"description": "Biz aniqlik, mijoz ishonchi va kuchli grooming madaniyatiga tayangan jamoaviy sartaroshxonamiz.",
 		"storyTitle": "Bizning hikoyamiz",
 		"storyText": "Mahalliy kichik joydan boshlangan yo'limiz bugun barqaror sifat, qulay muhit va ishonchli natija uchun tanlanadigan maskanga aylandi.",
+		"valuesTitle": "Asosiy qadriyatlar",
 		"values": {
 			"precision": {
 				"title": "Aniqlik birinchi",
@@ -163,17 +167,30 @@
 				"text": "Jamoamiz trendlar va treninglar orqali doim o'z ustida ishlaydi."
 			}
 		},
+		"stats": {
+			"happy_clients": "Baxtli mijozlar",
+			"haircuts": "Kesim amalga oshirildi",
+			"experience": "Yil tajribasi",
+			"satisfaction": "Qanoatlantirish darajasi"
+		},
+		"timelineTitle": "Bizning yo'limiz",
+		"timeline": {
+			"founded": "Asos solingan",
+			"expanded": "Kengaytirildi",
+			"modernized": "Modernlashtirildi",
+			"leading": "Yetakchi"
+		},
 		"teamTitle": "Jamoamiz bilan tanishing",
 		"team": {
 			"jamshid": {
 				"name": "Jamshid",
 				"role": "Senior barber",
-				"bio": "Fade uslublari va premium soqol shakllantirish bo'yicha mutaxassis."
+				"bio": "12+ yildan beri fade uslublari va premium soqol shakllantirish."
 			},
 			"sardor": {
 				"name": "Sardor",
 				"role": "Style expert",
-				"bio": "Tekstural kesimlar va zamonaviy styling yakuni bilan mashhur."
+				"bio": "Tekstural kesimlar va zamonaviy styling ustasi."
 			},
 			"aziz": {
 				"name": "Aziz",
@@ -181,6 +198,9 @@
 				"bio": "Kompleks parvarish paketlari va mijoz qulayligiga ixtisoslashgan."
 			}
 		},
+		"ctaTitle": "Almashuvga tayyormisiz?",
+		"ctaDescription": "Bugundan barcha sartarosh bilan uchrashing va Usta farqini sezib oling.",
+		"ctaButton": "Yozilish",
 		"extras": {
 			"timelineTwo": "Jamoa kengaydi va premium paketlar joriy qilindi.",
 			"timelineThree": "Bugun minglab doimiy mijozlar ishonchini qozonganmiz.",
@@ -189,8 +209,8 @@
 	},
 	"contactSection": {
 		"eyebrow": "Aloqa",
-		"title": "Navbatga yoziling yoki bizga xabar qoldiring",
-		"description": "Uchrashuv va savollar uchun formani to'ldiring. Ish vaqtida tez javob beramiz.",
+		"title": "Biz bilan bog'laning",
+		"description": "Savolingiz bormi yoki murojaat qilmoqchimisiz? Formani to'ldiring, ish vaqtida javob beramiz.",
 		"form": {
 			"nameLabel": "To'liq ism",
 			"namePlaceholder": "Ismingiz",

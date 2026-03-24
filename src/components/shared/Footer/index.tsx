@@ -59,9 +59,9 @@ const Footer = () => {
 						<Link to={`/${locale}/gallery`} className="hover:text-emerald-300">
 							{t("nav.gallery")}
 						</Link>
-						<Link to={`/${locale}/articles`} className="hover:text-emerald-300">
+						{/* <Link to={`/${locale}/articles`} className="hover:text-emerald-300">
 							{t("nav.articles")}
-						</Link>
+						</Link> */}
 						<Link to={`/${locale}/about`} className="hover:text-emerald-300">
 							{t("nav.about")}
 						</Link>

@@ -9,6 +9,8 @@ export interface BarberStats {
 
 export interface BarberViewer {
 	isFollowing: boolean;
+	liked: boolean;
+	disliked: boolean;
 }
 
 export interface BarberProfile {
@@ -56,12 +58,14 @@ const normalizeStats = (raw: unknown): BarberStats => {
 
 const normalizeViewer = (raw: unknown): BarberViewer => {
 	if (!raw || typeof raw !== "object") {
-		return { isFollowing: false };
+		return { isFollowing: false, liked: false, disliked: false };
 	}
 
 	const source = raw as Partial<BarberViewer>;
 	return {
 		isFollowing: Boolean(source.isFollowing),
+		liked: Boolean(source.liked),
+		disliked: Boolean(source.disliked),
 	};
 };
 
@@ -149,7 +153,7 @@ export const getBarbersApi = async (): Promise<BarberProfile[]> => {
 };
 
 export const getBarberApi = async (id: string): Promise<BarberProfile> => {
-	const response = await apiRequest<unknown>(`/barbers/${id}`, { method: "GET" });
+	const response = await apiRequest<unknown>(`/barbers/${id}`, { method: "GET", auth: true });
 	const profile = normalizeBarberProfile(response);
 
 	if (!profile) {
@@ -179,19 +183,25 @@ export const getBarberCommentsApi = async (id: string): Promise<CommentListRespo
 	};
 };
 
-export const postBarberCommentApi = async (id: string, payload: { text: string; rating?: number }): Promise<BarberComment | null> => {
+export const postBarberCommentApi = async (id: string, payload: { text: string; author?: string }): Promise<BarberComment | null> => {
+	const body: Record<string, string> = { text: payload.text };
+	if (payload.author) body.author = payload.author;
+
 	const response = await apiRequest<unknown>(`/barbers/${id}/comments`, {
 		method: "POST",
 		auth: true,
-		body: {
-			comment: payload.text,
-			rating: payload.rating ?? 5,
-		},
+		body,
 	});
 	return normalizeComment(response);
 };
 
-export const likeBarberApi = async (id: string): Promise<BarberStats | null> => {
+export interface ReactionResult {
+	stats: BarberStats;
+	liked: boolean;
+	disliked: boolean;
+}
+
+export const likeBarberApi = async (id: string): Promise<ReactionResult | null> => {
 	const response = await apiRequest<unknown>(`/barbers/${id}/like`, {
 		method: "POST",
 		auth: true,
@@ -199,11 +209,15 @@ export const likeBarberApi = async (id: string): Promise<BarberStats | null> => 
 	if (!response || typeof response !== "object") {
 		return null;
 	}
-	const source = response as { stats?: unknown };
-	return normalizeStats(source.stats || response);
+	const source = response as { liked?: unknown; disliked?: unknown };
+	return {
+		stats: normalizeStats(response),
+		liked: Boolean(source.liked),
+		disliked: Boolean(source.disliked),
+	};
 };
 
-export const dislikeBarberApi = async (id: string): Promise<BarberStats | null> => {
+export const dislikeBarberApi = async (id: string): Promise<ReactionResult | null> => {
 	const response = await apiRequest<unknown>(`/barbers/${id}/dislike`, {
 		method: "POST",
 		auth: true,
@@ -211,49 +225,35 @@ export const dislikeBarberApi = async (id: string): Promise<BarberStats | null> 
 	if (!response || typeof response !== "object") {
 		return null;
 	}
-	const source = response as { stats?: unknown };
-	return normalizeStats(source.stats || response);
+	const source = response as { liked?: unknown; disliked?: unknown };
+	return {
+		stats: normalizeStats(response),
+		liked: Boolean(source.liked),
+		disliked: Boolean(source.disliked),
+	};
 };
 
-export const followBarberApi = async (id: string): Promise<BarberViewer & { followers?: number }> => {
+export const followBarberApi = async (id: string): Promise<{ isFollowing: boolean; followers: number }> => {
 	const response = await apiRequest<unknown>(`/barbers/${id}/follow`, {
 		method: "POST",
 		auth: true,
 	});
-
-	const source =
-		response && typeof response === "object"
-			? (response as {
-					isFollowing?: unknown;
-					followers?: unknown;
-					viewer?: { isFollowing?: unknown };
-					stats?: { followers?: unknown };
-				})
-			: {};
+	const source = response && typeof response === "object" ? (response as { isFollowing?: unknown; followers?: unknown }) : {};
 	return {
-		isFollowing: Boolean(source.isFollowing ?? source.viewer?.isFollowing),
-		followers: toNumber(source.followers ?? source.stats?.followers),
+		isFollowing: Boolean(source.isFollowing),
+		followers: toNumber(source.followers),
 	};
 };
 
-export const unfollowBarberApi = async (id: string): Promise<BarberViewer & { followers?: number }> => {
+export const unfollowBarberApi = async (id: string): Promise<{ isFollowing: boolean; followers: number }> => {
 	const response = await apiRequest<unknown>(`/barbers/${id}/follow`, {
 		method: "DELETE",
 		auth: true,
 	});
-
-	const source =
-		response && typeof response === "object"
-			? (response as {
-					isFollowing?: unknown;
-					followers?: unknown;
-					viewer?: { isFollowing?: unknown };
-					stats?: { followers?: unknown };
-				})
-			: {};
+	const source = response && typeof response === "object" ? (response as { isFollowing?: unknown; followers?: unknown }) : {};
 	return {
-		isFollowing: Boolean(source.isFollowing ?? source.viewer?.isFollowing),
-		followers: toNumber(source.followers ?? source.stats?.followers),
+		isFollowing: Boolean(source.isFollowing),
+		followers: toNumber(source.followers),
 	};
 };
 

@@ -17,6 +17,38 @@ interface UserProfileMenuProps {
 	logoutHandler: () => void;
 }
 
+const AVATAR_COLORS = [
+	"#10B981",
+	"#3B82F6",
+	"#F59E0B",
+	"#EF4444",
+	"#8B5CF6",
+	"#EC4899",
+	"#06B6D4",
+	"#6366F1",
+	"#14B8A6",
+	"#F97316",
+];
+
+const generateInitials = (name?: string): string => {
+	if (!name) return "?";
+	return name
+		.split(" ")
+		.map((word) => word[0])
+		.join("")
+		.toUpperCase()
+		.slice(0, 3);
+};
+
+const getColorFromName = (name?: string): string => {
+	if (!name) return AVATAR_COLORS[0];
+	let hash = 0;
+	for (let i = 0; i < name.length; i++) {
+		hash = name.charCodeAt(i) + ((hash << 5) - hash);
+	}
+	return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length];
+};
+
 export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
 	currentUser,
 	locale,
@@ -30,13 +62,16 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
 		return locale.startsWith("/") ? locale : `/${locale}`;
 	}, [locale]);
 
-	const defaultAvatar = `data:image/svg+xml;utf8,${encodeURIComponent(
-		`<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
-			<rect width="100%" height="100%" fill="#111827"/>
-			<circle cx="32" cy="24" r="12" fill="#9CA3AF"/>
-			<path d="M12 56c3-10 11-16 20-16s17 6 20 16" fill="#9CA3AF"/>
-		</svg>`,
-	)}`;
+	const defaultAvatar = useMemo(() => {
+		const initials = generateInitials(currentUser?.name);
+		const bgColor = getColorFromName(currentUser?.name);
+		return `data:image/svg+xml;utf8,${encodeURIComponent(
+			`<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+				<rect width="100%" height="100%" fill="${bgColor}"/>
+				<text x="32" y="38" font-size="28" font-weight="bold" fill="white" text-anchor="middle" font-family="system-ui, sans-serif">${initials}</text>
+			</svg>`,
+		)}`;
+	}, [currentUser?.name]);
 
 	const userImage = currentUser?.profileImage || currentUser?.avatar || currentUser?.image || defaultAvatar;
 
@@ -63,7 +98,9 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
 				src={userImage}
 				alt={currentUser.name ?? t("profile.imageAlt")}
 				className="h-9 w-9 rounded-full border border-slate-300 object-cover dark:border-slate-600"
-				onError={(e) => { e.currentTarget.src = defaultAvatar; }}
+				onError={(e) => {
+					e.currentTarget.src = defaultAvatar;
+				}}
 			/>
 		</Link>
 	);

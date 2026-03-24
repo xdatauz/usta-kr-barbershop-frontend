@@ -22,8 +22,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 
 	const navItems = [
 		{ key: "nav.home", path: "" },
-		{ key: "nav.services", path: "services" },
-		{ key: "nav.articles", path: "articles" },
+		{ key: "nav.services", path: "services" },		
 		{ key: "nav.gallery", path: "gallery" },
 		{ key: "nav.about", path: "about" },
 		{ key: "nav.contact", path: "contact" },
