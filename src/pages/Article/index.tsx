@@ -112,8 +112,8 @@ const ArticlePage = () => {
 	};
 
 	return (
-		<main className="w-full px-3 pb-14 pt-24 sm:px-5 lg:px-8">
-			<div className="mx-auto max-w-6xl space-y-6">
+		<main className="w-full px-3 pb-14 p-32 sm:px-5 lg:px-8">
+			<div className="mx-auto max-w-7xl space-y-6">
 				<section className="rounded-3xl border border-slate-300/70 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:p-8">
 					<p className="text-xs font-semibold uppercase tracking-[0.17em] text-emerald-700 dark:text-emerald-300">
 						{t("articlePage.eyebrow")}

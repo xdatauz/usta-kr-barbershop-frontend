@@ -10,7 +10,16 @@ interface ServicePageProps {
 	preview?: boolean;
 }
 
-const SERVICE_ICONS: ComponentType<{ className?: string }>[] = [Scissors, ShieldCheck, Sparkles, Scissors, Sparkles, ShieldCheck, Scissors, Sparkles];
+const SERVICE_ICONS: ComponentType<{ className?: string }>[] = [
+	Scissors,
+	ShieldCheck,
+	Sparkles,
+	Scissors,
+	Sparkles,
+	ShieldCheck,
+	Scissors,
+	Sparkles,
+];
 const SERVICE_IMAGES = [
 	"/images/services/1.webp",
 	"/images/services/2.webp",
@@ -98,7 +107,9 @@ const ServicePage = ({ preview = false }: ServicePageProps) => {
 									<div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-black/70 to-transparent p-3">
 										<div className="inline-flex items-center gap-1 rounded-full border border-white/30 bg-black/30 px-2 py-1 text-xs text-white">
 											<Clock3 className="h-3.5 w-3.5" />
-											<span>{service.durationMinutes} {t("common.min")}</span>
+											<span>
+												{service.durationMinutes} {t("common.min")}
+											</span>
 										</div>
 										<p className="rounded-full bg-emerald-500 px-2.5 py-1 text-xs font-semibold text-slate-950">
 											{Number(service.price).toLocaleString()}
@@ -108,14 +119,10 @@ const ServicePage = ({ preview = false }: ServicePageProps) => {
 								<div className="space-y-2 p-4">
 									<div className="flex items-center gap-2">
 										<Icon className="h-4 w-4 text-emerald-600 dark:text-emerald-300" />
-										<h3 className="text-base font-bold text-slate-900 dark:text-slate-50">
-											{service.name}
-										</h3>
+										<h3 className="text-base font-bold text-slate-900 dark:text-slate-50">{service.name}</h3>
 									</div>
 									{service.description && (
-										<p className="text-sm leading-6 text-slate-700 dark:text-slate-300">
-											{service.description}
-										</p>
+										<p className="text-sm leading-6 text-slate-700 dark:text-slate-300">{service.description}</p>
 									)}
 								</div>
 							</motion.article>
@@ -189,8 +196,8 @@ const ServicePage = ({ preview = false }: ServicePageProps) => {
 	}
 
 	return (
-		<main className="w-full px-3 pb-14 pt-24 sm:px-5 lg:px-8">
-			<div className="mx-auto max-w-6xl">{sectionContent}</div>
+		<main className="w-full px-3 pb-14 p-32 sm:px-5 lg:px-8">
+			<div className="mx-auto max-w-7xl">{sectionContent}</div>
 		</main>
 	);
 };

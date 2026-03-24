@@ -198,7 +198,7 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 								</p>
 								<div className="flex items-center gap-3">
 									<a
-										href="https://www.instagram.com/usta_2019"
+										href="https://www.instagram.com/usta.barbershop"
 										target="_blank"
 										rel="noopener noreferrer"
 										className="inline-flex items-center gap-2 rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] transition hover:border-slate-500 dark:border-slate-600 dark:hover:border-slate-400"
@@ -283,8 +283,8 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 	}
 
 	return (
-		<main className="w-full px-3 pb-14 pt-24 sm:px-5 lg:px-8">
-			<div className="mx-auto max-w-6xl">{sectionContent}</div>
+		<main className="w-full px-3 pb-14 p-32 sm:px-5 lg:px-8">
+			<div className="mx-auto max-w-7xl">{sectionContent}</div>
 		</main>
 	);
 };

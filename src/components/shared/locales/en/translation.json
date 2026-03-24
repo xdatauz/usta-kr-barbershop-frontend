@@ -297,7 +297,9 @@
 		"booking": {
 			"slotLoadFailed": "Failed to load available slots.",
 			"submitSuccess": "Booking request sent successfully.",
-			"submitFailed": "Failed to send booking request."
+			"submitFailed": "Failed to send booking request.",
+			"cancelSuccess": "Booking cancelled successfully.",
+			"cancelFailed": "Failed to cancel booking. Please try again."
 		}
 	},
 	"social": {
@@ -308,9 +310,10 @@
 		"name": "Full name",
 		"phone": "Phone number",
 		"phoneInvalid": "Please enter a valid Korean phone number (e.g. 010-1234-5678).",
-		"telegramChatId": "Telegram Chat ID (optional)",
-		"loginHint": "Enter your phone number to continue.",
-		"signupHint": "Register with your name and phone number.",
+		"confirmPassword": "Confirm password",
+		"passwordMismatch": "Passwords do not match.",
+		"loginHint": "Enter your phone number and password to continue.",
+		"signupHint": "Register with your name, phone number and password.",
 		"haveAccount": "Already have an account?",
 		"noAccount": "No account yet?",
 		"email": "Email",
@@ -334,9 +337,18 @@
 		"title": "My Profile",
 		"subtitle": "Manage your basic account details and booking activity.",
 		"bookingsTitle": "Recent bookings",
-		"backHome": "Back to Home"
+		"backHome": "Back to Home",
+		"cancelBooking": "Cancel",
+		"cancelConfirmMsg": "Are you sure you want to cancel this appointment? This cannot be undone.",
+		"cancelConfirm": "Yes, cancel",
+		"cancelKeep": "Keep it",
+		"viewDetails": "View details",
+		"detailTitle": "Booking Details",
+		"detailId": "Booking ID",
+		"detailStatus": "Status",
+		"detailClose": "Close",
+		"detailBookedAt": "Booked at"
 	},
-
 	"bookingPage": {
 		"eyebrow": "Online Booking",
 		"title": "Book an Appointment",
@@ -409,30 +421,24 @@
 		"backToList": "Back to Barbers",
 		"bookWithBarber": "Book with this Barber",
 		"profileEyebrow": "Barber Profile",
-
 		"follow": "Follow",
 		"following": "Following",
 		"like": "Like",
 		"dislike": "Dislike",
-
 		"followers": "Followers",
 		"likes": "Likes",
 		"dislikes": "Dislikes",
-
 		"commentsTitle": "Client Reviews",
 		"noComments": "No reviews yet. Be the first to share your experience.",
 		"guestName": "Guest",
-
 		"commentForm": {
 			"author": "Your name (optional)",
 			"message": "Write your review...",
 			"submit": "Post Review"
 		},
-
 		"reportTitle": "Report Barber",
 		"reportDescription": "If you notice inappropriate behavior or content, please inform us.",
 		"reportCount": "Reports",
-
 		"reportForm": {
 			"placeholder": "Select a reason",
 			"submit": "Submit Report",
@@ -444,7 +450,6 @@
 				"other": "Other reason"
 			}
 		},
-
 		"barbers": {
 			"jamshid": {
 				"name": "Jamshid",
@@ -506,5 +511,24 @@
 				"content": "Write the full article..."
 			}
 		}
+	},
+	"quickBook": {
+		"title": "Quick Booking",
+		"anyBarber": "Any barber",
+		"selectTime": "Select a time slot",
+		"noSlots": "No slots available",
+		"loadingSlots": "Loading slots...",
+		"slotsAvailable": "slots available",
+		"checkBtn": "Check availability",
+		"checking": "Checking...",
+		"slotFree": "Slot is available!",
+		"slotBusy": "This slot is already booked. Please pick another.",
+		"bookNow": "Book now",
+		"labelDate": "Date",
+		"labelBarber": "Barber",
+		"labelTime": "Time",
+		"selectBarber": "Select a barber",
+		"selectBarberFirst": "Select a barber first",
+		"selectBarberHint": "Select date & barber"
 	}
 }

@@ -114,7 +114,7 @@ const normalizeBarberProfile = (raw: unknown): BarberProfile | null => {
 			: "",
 		bio: typeof source.bio === "string" ? source.bio : "",
 		image: typeof source.image === "string" ? source.image : "",
-		stats: normalizeStats(Object.keys(flatStats).length > 0 ? { ...flatStats, ...source.stats } : source.stats),
+		stats: normalizeStats(Object.keys(flatStats).length > 0 ? { ...flatStats, ...(typeof source.stats === "object" && source.stats !== null ? source.stats as object : {}) } : source.stats),
 		viewer: normalizeViewer(source.viewer),
 	};
 };

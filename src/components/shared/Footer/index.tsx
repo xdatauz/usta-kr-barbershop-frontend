@@ -9,7 +9,7 @@ const Footer = () => {
 
 	return (
 		<footer className="w-full px-4 py-8 sm:px-8">
-			<div className="mx-auto grid w-full max-w-6xl gap-6 md:grid-cols-3">
+			<div className="mx-auto grid w-full max-w-7xl gap-6 md:grid-cols-3">
 				<div className="space-y-3">
 					<Link
 						to={`/${locale}`}
@@ -21,7 +21,7 @@ const Footer = () => {
 					<p className="max-w-xs text-sm text-slate-400">{t("footer.tagline")}</p>
 					<div className="flex gap-2">
 						<a
-							href="https://www.instagram.com/usta_2019"
+							href="https://www.instagram.com/usta.barbershop"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="rounded-lg border border-slate-700 p-2 hover:border-emerald-400 hover:text-emerald-300"
@@ -56,20 +56,17 @@ const Footer = () => {
 						<Link to={`/${locale}/services`} className="hover:text-emerald-300">
 							{t("nav.services")}
 						</Link>
-						<Link to={`/${locale}/barbers`} className="hover:text-emerald-300">
-							{t("nav.barbers")}
-						</Link>
 						<Link to={`/${locale}/gallery`} className="hover:text-emerald-300">
 							{t("nav.gallery")}
+						</Link>
+						<Link to={`/${locale}/articles`} className="hover:text-emerald-300">
+							{t("nav.articles")}
 						</Link>
 						<Link to={`/${locale}/about`} className="hover:text-emerald-300">
 							{t("nav.about")}
 						</Link>
 						<Link to={`/${locale}/contact`} className="hover:text-emerald-300">
 							{t("nav.contact")}
-						</Link>
-						<Link to={`/${locale}/booking`} className="hover:text-emerald-300">
-							{t("nav.booking")}
 						</Link>
 					</div>
 				</div>
@@ -87,7 +84,7 @@ const Footer = () => {
 				</div>
 			</div>
 
-			<div className="mx-auto mt-6 w-full max-w-6xl border-t border-slate-800 pt-4 text-xs ">{t("footer.text")}</div>
+			<div className="mx-auto mt-6 w-full max-w-7xl border-t border-slate-800 pt-4 text-xs ">{t("footer.text")}</div>
 		</footer>
 	);
 };

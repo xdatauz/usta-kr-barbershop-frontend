@@ -37,9 +37,15 @@ const AboutPage = ({ preview = false }: AboutPageProps) => {
 			<div className="grid gap-8 lg:grid-cols-[1.1fr_1fr]">
 				<div className="space-y-5">
 					<div className="space-y-2">
-						<p className="text-xs font-semibold uppercase tracking-[0.17em] text-emerald-700 dark:text-emerald-300">{t("aboutSection.eyebrow")}</p>
-						<h2 className="text-2xl font-black text-slate-900 sm:text-3xl dark:text-slate-50">{t("aboutSection.title")}</h2>
-						<p className="text-sm leading-7 text-slate-700 sm:text-base dark:text-slate-300">{t("aboutSection.description")}</p>
+						<p className="text-xs font-semibold uppercase tracking-[0.17em] text-emerald-700 dark:text-emerald-300">
+							{t("aboutSection.eyebrow")}
+						</p>
+						<h2 className="text-2xl font-black text-slate-900 sm:text-3xl dark:text-slate-50">
+							{t("aboutSection.title")}
+						</h2>
+						<p className="text-sm leading-7 text-slate-700 sm:text-base dark:text-slate-300">
+							{t("aboutSection.description")}
+						</p>
 					</div>
 
 					<motion.div
@@ -70,8 +76,12 @@ const AboutPage = ({ preview = false }: AboutPageProps) => {
 											<Icon className="h-4 w-4" />
 										</span>
 										<div>
-											<h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100">{t(`aboutSection.values.${value.key}.title`)}</h4>
-											<p className="mt-1 text-xs leading-6 text-slate-600 dark:text-slate-400">{t(`aboutSection.values.${value.key}.text`)}</p>
+											<h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+												{t(`aboutSection.values.${value.key}.title`)}
+											</h4>
+											<p className="mt-1 text-xs leading-6 text-slate-600 dark:text-slate-400">
+												{t(`aboutSection.values.${value.key}.text`)}
+											</p>
 										</div>
 									</div>
 								</motion.div>
@@ -100,9 +110,15 @@ const AboutPage = ({ preview = false }: AboutPageProps) => {
 									/>
 								</Link>
 								<div className="space-y-1 p-3">
-									<h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100">{t(`aboutSection.team.${member.key}.name`)}</h4>
-									<p className="text-xs uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">{t(`aboutSection.team.${member.key}.role`)}</p>
-									<p className="text-xs leading-6 text-slate-600 dark:text-slate-400">{t(`aboutSection.team.${member.key}.bio`)}</p>
+									<h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+										{t(`aboutSection.team.${member.key}.name`)}
+									</h4>
+									<p className="text-xs uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">
+										{t(`aboutSection.team.${member.key}.role`)}
+									</p>
+									<p className="text-xs leading-6 text-slate-600 dark:text-slate-400">
+										{t(`aboutSection.team.${member.key}.bio`)}
+									</p>
 								</div>
 							</motion.article>
 						))}
@@ -146,8 +162,8 @@ const AboutPage = ({ preview = false }: AboutPageProps) => {
 	}
 
 	return (
-		<main className="w-full px-3 pb-14 pt-24 sm:px-5 lg:px-8">
-			<div className="mx-auto max-w-6xl">{sectionContent}</div>
+		<main className="w-full px-3 pb-14 p-32 sm:px-5 lg:px-8">
+			<div className="mx-auto max-w-7xl">{sectionContent}</div>
 		</main>
 	);
 };

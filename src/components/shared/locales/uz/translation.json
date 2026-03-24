@@ -297,7 +297,9 @@
 		"booking": {
 			"slotLoadFailed": "Bo'sh vaqtlarni yuklab bo'lmadi.",
 			"submitSuccess": "Bron so'rovi muvaffaqiyatli yuborildi.",
-			"submitFailed": "Bron so'rovini yuborib bo'lmadi."
+			"submitFailed": "Bron so'rovini yuborib bo'lmadi.",
+			"cancelSuccess": "Bron muvaffaqiyatli bekor qilindi.",
+			"cancelFailed": "Bronni bekor qilib bo'lmadi. Qayta urinib ko'ring."
 		}
 	},
 	"social": {
@@ -308,9 +310,10 @@
 		"name": "To'liq ism",
 		"phone": "Telefon raqam",
 		"phoneInvalid": "Iltimos, to'g'ri Koreya telefon raqamini kiriting (masalan, 010-1234-5678).",
-		"telegramChatId": "Telegram Chat ID (ixtiyoriy)",
-		"loginHint": "Davom etish uchun telefon raqamingizni kiriting.",
-		"signupHint": "Ism va telefon raqam bilan ro'yxatdan o'ting.",
+		"confirmPassword": "Parolni tasdiqlang",
+		"passwordMismatch": "Parollar mos kelmaydi.",
+		"loginHint": "Davom etish uchun telefon raqam va parolingizni kiriting.",
+		"signupHint": "Ism, telefon raqam va parol bilan ro'yxatdan o'ting.",
 		"switchToLogin": "Kirish",
 		"haveAccount": "Hisobingiz bormi?",
 		"signupCta": "Ro'yxatdan o'tish",
@@ -334,9 +337,18 @@
 		"guestDescription": "Shaxsiy profilingizni ko'rish uchun tizimga kiring.",
 		"title": "Mening profilim",
 		"subtitle": "Asosiy hisob ma'lumotlari va band qilish tarixini boshqaring.",
-		"guestTitle": "Kirish talab qilinadi"
+		"guestTitle": "Kirish talab qilinadi",
+		"cancelBooking": "Bekor qilish",
+		"cancelConfirmMsg": "Ushbu qabulni bekor qilmoqchimisiz? Bu amalni qaytarib bo'lmaydi.",
+		"cancelConfirm": "Ha, bekor qilish",
+		"cancelKeep": "Yo'q, qoldirish",
+		"viewDetails": "Batafsil",
+		"detailTitle": "Bron Tafsilotlari",
+		"detailId": "Bron ID",
+		"detailStatus": "Holat",
+		"detailClose": "Yopish",
+		"detailBookedAt": "Bron qilingan vaqt"
 	},
-
 	"bookingPage": {
 		"eyebrow": "Onlayn Bron",
 		"title": "Qabulga Yozilish",
@@ -409,30 +421,24 @@
 		"backToList": "Sartaroshlarga qaytish",
 		"bookWithBarber": "Shu sartaroshga yozilish",
 		"profileEyebrow": "Sartarosh Profili",
-
 		"follow": "Obuna bo‘lish",
 		"following": "Obuna bo‘lgansiz",
 		"like": "Yoqdi",
 		"dislike": "Yoqmadi",
-
 		"followers": "Obunachilar",
 		"likes": "Layklar",
 		"dislikes": "Dislayklar",
-
 		"commentsTitle": "Mijozlar Fikrlari",
 		"noComments": "Hali fikrlar yo‘q. Birinchi bo‘lib fikr bildiring.",
 		"guestName": "Mehmon",
-
 		"commentForm": {
 			"author": "Ismingiz (ixtiyoriy)",
 			"message": "Fikringizni yozing...",
 			"submit": "Fikr qoldirish"
 		},
-
 		"reportTitle": "Shikoyat yuborish",
 		"reportDescription": "Nomaqbul holatni sezsangiz, bizga xabar bering.",
 		"reportCount": "Shikoyatlar",
-
 		"reportForm": {
 			"placeholder": "Sababni tanlang",
 			"submit": "Yuborish",
@@ -444,7 +450,6 @@
 				"other": "Boshqa sabab"
 			}
 		},
-
 		"barbers": {
 			"jamshid": {
 				"name": "Jamshid",
@@ -506,5 +511,24 @@
 				"content": "To‘liq maqolani yozing..."
 			}
 		}
+	},
+	"quickBook": {
+		"title": "Tezkor band qilish",
+		"anyBarber": "Istalgan sartarosh",
+		"selectTime": "Vaqtni tanlang",
+		"noSlots": "Bo'sh vaqt yo'q",
+		"loadingSlots": "Yuklanmoqda...",
+		"slotsAvailable": "vaqt mavjud",
+		"checkBtn": "Mavjudligini tekshirish",
+		"checking": "Tekshirilmoqda...",
+		"slotFree": "Vaqt bo'sh!",
+		"slotBusy": "Bu vaqt band. Boshqa vaqt tanlang.",
+		"bookNow": "Band qilish",
+		"labelDate": "Sana",
+		"labelBarber": "Sartarosh",
+		"labelTime": "Vaqt",
+		"selectBarber": "Sartarosh tanlang",
+		"selectBarberFirst": "Avval sartarosh tanlang",
+		"selectBarberHint": "Sana va sartarosh tanlang"
 	}
 }

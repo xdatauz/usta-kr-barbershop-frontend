@@ -149,7 +149,9 @@ const BarbersPage = () => {
 					const fallback = fallbackBarbers.find((barber) => barber.id === id) || null;
 					setActiveBarber(fallback);
 					const message =
-						isApiError(profileResult.reason) && profileResult.reason.message ? profileResult.reason.message : t("toast.barbers.loadProfileFailed");
+						isApiError(profileResult.reason) && profileResult.reason.message
+							? profileResult.reason.message
+							: t("toast.barbers.loadProfileFailed");
 					toast.error(message);
 				}
 
@@ -158,7 +160,9 @@ const BarbersPage = () => {
 				} else {
 					setComments([]);
 					const message =
-						isApiError(commentsResult.reason) && commentsResult.reason.message ? commentsResult.reason.message : t("toast.barbers.loadCommentsFailed");
+						isApiError(commentsResult.reason) && commentsResult.reason.message
+							? commentsResult.reason.message
+							: t("toast.barbers.loadCommentsFailed");
 					toast.warning(message);
 				}
 			} finally {
@@ -232,7 +236,8 @@ const BarbersPage = () => {
 			const currentlyFollowing = Boolean(activeBarber?.viewer?.isFollowing);
 			const response = currentlyFollowing ? await unfollowBarberApi(id) : await followBarberApi(id);
 			const nextFollowing = Boolean(response.isFollowing);
-			const nextFollowers = typeof response.followers === "number" ? response.followers : activeBarber?.stats.followers || 0;
+			const nextFollowers =
+				typeof response.followers === "number" ? response.followers : activeBarber?.stats.followers || 0;
 
 			mergeStatsIntoList(id, { followers: nextFollowers }, nextFollowing);
 			updateActiveBarberState(id, { followers: nextFollowers }, nextFollowing);
@@ -310,8 +315,8 @@ const BarbersPage = () => {
 
 	if (!barberId) {
 		return (
-			<main className="w-full px-3 pb-14 pt-24 sm:px-5 lg:px-8">
-				<div className="mx-auto max-w-6xl space-y-6">
+			<main className="w-full px-3 pb-14 p-32 sm:px-5 lg:px-8">
+				<div className="mx-auto max-w-7xl space-y-6">
 					<section className="rounded-3xl border border-slate-300/70 bg-white p-5 text-center dark:border-slate-700 dark:bg-slate-900 sm:p-8">
 						<h1 className="text-2xl font-black text-slate-900 dark:text-slate-50">{t("barbersPage.title")}</h1>
 						<p className="mt-2 text-sm text-slate-700 dark:text-slate-300">{t("barbersPage.description")}</p>
@@ -338,13 +343,21 @@ const BarbersPage = () => {
 										<div className="space-y-3 p-4">
 											<div>
 												<h2 className="text-lg font-bold text-slate-900 dark:text-slate-50">{barber.name}</h2>
-												<p className="text-xs uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">{barber.role}</p>
+												<p className="text-xs uppercase tracking-[0.12em] text-emerald-700 dark:text-emerald-300">
+													{barber.role}
+												</p>
 											</div>
 											<p className="text-sm text-slate-700 dark:text-slate-300">{barber.bio}</p>
 											<div className="flex flex-wrap gap-2 text-xs text-slate-700 dark:text-slate-300">
-												<span className="rounded-full border border-slate-300 px-2 py-1 dark:border-slate-700">👍 {stats.likes}</span>
-												<span className="rounded-full border border-slate-300 px-2 py-1 dark:border-slate-700">👎 {stats.dislikes}</span>
-												<span className="rounded-full border border-slate-300 px-2 py-1 dark:border-slate-700">❤️ {stats.followers}</span>
+												<span className="rounded-full border border-slate-300 px-2 py-1 dark:border-slate-700">
+													👍 {stats.likes}
+												</span>
+												<span className="rounded-full border border-slate-300 px-2 py-1 dark:border-slate-700">
+													👎 {stats.dislikes}
+												</span>
+												<span className="rounded-full border border-slate-300 px-2 py-1 dark:border-slate-700">
+													❤️ {stats.followers}
+												</span>
 											</div>
 											<Link
 												to={`/${locale}/barbers/${barber.id}`}
@@ -365,8 +378,8 @@ const BarbersPage = () => {
 
 	if (isLoadingProfile) {
 		return (
-			<main className="w-full px-3 pb-14 pt-24 sm:px-5 lg:px-8">
-				<div className="mx-auto max-w-6xl rounded-2xl border border-dashed border-slate-300 p-6 text-sm text-slate-600 dark:border-slate-700 dark:text-slate-300">
+			<main className="w-full px-3 pb-14 p-32 sm:px-5 lg:px-8">
+				<div className="mx-auto max-w-7xl rounded-2xl border border-dashed border-slate-300 p-6 text-sm text-slate-600 dark:border-slate-700 dark:text-slate-300">
 					{t("barbersPage.loadingProfile")}
 				</div>
 			</main>
@@ -375,8 +388,8 @@ const BarbersPage = () => {
 
 	if (!activeBarber) {
 		return (
-			<main className="w-full px-3 pb-14 pt-24 sm:px-5 lg:px-8">
-				<div className="mx-auto max-w-6xl rounded-2xl border border-dashed border-slate-300 p-6 text-sm text-slate-600 dark:border-slate-700 dark:text-slate-300">
+			<main className="w-full px-3 pb-14 p-32 sm:px-5 lg:px-8">
+				<div className="mx-auto max-w-7xl rounded-2xl border border-dashed border-slate-300 p-6 text-sm text-slate-600 dark:border-slate-700 dark:text-slate-300">
 					{t("barbersPage.notFound")}
 				</div>
 			</main>
@@ -388,8 +401,8 @@ const BarbersPage = () => {
 	const isFollowing = Boolean(activeBarber.viewer?.isFollowing);
 
 	return (
-		<main className="w-full px-3 pb-14 pt-24 sm:px-5 lg:px-8">
-			<div className="mx-auto max-w-6xl space-y-5">
+		<main className="w-full px-3 pb-14 p-32 sm:px-5 lg:px-8">
+			<div className="mx-auto max-w-7xl space-y-5">
 				<div className="flex flex-wrap items-center justify-between gap-3">
 					<Link
 						to={`/${locale}/barbers`}
@@ -412,9 +425,13 @@ const BarbersPage = () => {
 
 					<div className="space-y-4">
 						<div>
-							<p className="text-xs font-semibold uppercase tracking-[0.17em] text-emerald-700 dark:text-emerald-300">{t("barbersPage.profileEyebrow")}</p>
+							<p className="text-xs font-semibold uppercase tracking-[0.17em] text-emerald-700 dark:text-emerald-300">
+								{t("barbersPage.profileEyebrow")}
+							</p>
 							<h1 className="text-3xl font-black text-slate-900 dark:text-slate-50">{activeBarber.name}</h1>
-							<p className="text-sm uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{activeBarber.role}</p>
+							<p className="text-sm uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
+								{activeBarber.role}
+							</p>
 							<p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">{activeBarber.bio}</p>
 						</div>
 
@@ -454,15 +471,21 @@ const BarbersPage = () => {
 
 						<div className="grid gap-3 sm:grid-cols-3">
 							<div className="rounded-xl border border-slate-300/70 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-950/60">
-								<p className="text-xs uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t("barbersPage.followers")}</p>
+								<p className="text-xs uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
+									{t("barbersPage.followers")}
+								</p>
 								<p className="mt-1 text-xl font-black text-slate-900 dark:text-slate-50">{stats.followers}</p>
 							</div>
 							<div className="rounded-xl border border-slate-300/70 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-950/60">
-								<p className="text-xs uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t("barbersPage.likes")}</p>
+								<p className="text-xs uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
+									{t("barbersPage.likes")}
+								</p>
 								<p className="mt-1 text-xl font-black text-slate-900 dark:text-slate-50">{stats.likes}</p>
 							</div>
 							<div className="rounded-xl border border-slate-300/70 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-950/60">
-								<p className="text-xs uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">{t("barbersPage.dislikes")}</p>
+								<p className="text-xs uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
+									{t("barbersPage.dislikes")}
+								</p>
 								<p className="mt-1 text-xl font-black text-slate-900 dark:text-slate-50">{stats.dislikes}</p>
 							</div>
 						</div>
@@ -477,7 +500,7 @@ const BarbersPage = () => {
 						</h2>
 
 						<form onSubmit={(event) => void submitComment(event, activeId)} className="mt-4 space-y-3">
-														<textarea
+							<textarea
 								value={commentText}
 								onChange={(event) => setCommentText(event.target.value)}
 								placeholder={t("barbersPage.commentForm.message")}
@@ -501,7 +524,10 @@ const BarbersPage = () => {
 								</p>
 							)}
 							{comments.map((comment) => (
-								<div key={comment.id} className="rounded-xl border border-slate-300/70 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-950/60">
+								<div
+									key={comment.id}
+									className="rounded-xl border border-slate-300/70 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-950/60"
+								>
 									<p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{comment.author}</p>
 									<p className="mt-1 text-sm text-slate-700 dark:text-slate-300">{comment.text}</p>
 								</div>

@@ -31,8 +31,8 @@ const normalizeClientAuth = (payload: Record<string, unknown>): ClientAuthResult
 	return { client, accessToken };
 };
 
-/** POST /client-auth/register — phone + optional name, no password */
-export const registerClientApi = async (payload: { phone: string; fullName?: string }): Promise<ClientAuthResult> => {
+/** POST /client-auth/register — phone + optional name + password */
+export const registerClientApi = async (payload: { phone: string; fullName?: string; password: string }): Promise<ClientAuthResult> => {
 	const response = await apiRequest<Record<string, unknown>>("/client-auth/register", {
 		method: "POST",
 		body: payload,
@@ -42,8 +42,8 @@ export const registerClientApi = async (payload: { phone: string; fullName?: str
 	return result;
 };
 
-/** POST /client-auth/login — phone only, no password */
-export const loginClientApi = async (payload: { phone: string }): Promise<ClientAuthResult> => {
+/** POST /client-auth/login — phone + password */
+export const loginClientApi = async (payload: { phone: string; password: string }): Promise<ClientAuthResult> => {
 	const response = await apiRequest<Record<string, unknown>>("/client-auth/login", {
 		method: "POST",
 		body: payload,

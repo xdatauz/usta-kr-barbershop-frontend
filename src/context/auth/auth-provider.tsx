@@ -15,8 +15,8 @@ export interface AuthUser {
 interface AuthContextValue {
 	currentUser: AuthUser | null;
 	isAuthLoading: boolean;
-	login: (payload: { phone: string }) => Promise<{ ok: boolean; error?: string }>;
-	signup: (payload: { name: string; phone: string }) => Promise<{ ok: boolean; error?: string }>;
+	login: (payload: { phone: string; password: string }) => Promise<{ ok: boolean; error?: string }>;
+	signup: (payload: { name: string; phone: string; password: string }) => Promise<{ ok: boolean; error?: string }>;
 	logout: () => void;
 }
 
@@ -88,10 +88,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		localStorage.setItem(CURRENT_USER_STORAGE_KEY, JSON.stringify(user));
 	};
 
-	const login = async ({ phone }: { phone: string }) => {
+	const login = async ({ phone, password }: { phone: string; password: string }) => {
 		setIsAuthLoading(true);
 		try {
-			const result = await loginClientApi({ phone: phone.trim() });
+			const result = await loginClientApi({ phone: phone.trim(), password });
 			const user = clientToAuthUser(result.client);
 			setCurrentUser(user);
 			persistUser(user);
@@ -104,10 +104,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		}
 	};
 
-	const signup = async ({ name, phone }: { name: string; phone: string }) => {
+	const signup = async ({ name, phone, password }: { name: string; phone: string; password: string }) => {
 		setIsAuthLoading(true);
 		try {
-			const result = await registerClientApi({ fullName: name.trim(), phone: phone.trim() });
+			const result = await registerClientApi({ fullName: name.trim(), phone: phone.trim(), password });
 			const user = clientToAuthUser(result.client);
 			setCurrentUser(user);
 			persistUser(user);

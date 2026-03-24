@@ -7,6 +7,7 @@ export interface MyBooking {
 	time: string;
 	style: string;
 	status: string;
+	createdAt: string | null;
 }
 
 export type BookingStyle = 'classic' | 'fade' | 'beard' | 'deluxe' | 'color' | 'fatherSon';
@@ -42,9 +43,14 @@ export const getMyBookingsApi = async (): Promise<MyBooking[]> => {
 				time: typeof src.time === "string" ? src.time : "",
 				style: typeof src.style === "string" ? src.style : "",
 				status: typeof src.status === "string" ? src.status : "pending",
+				createdAt: typeof src.createdAt === "string" ? src.createdAt : null,
 			};
 		})
 		.filter((b): b is MyBooking => b !== null);
+};
+
+export const cancelMyBookingApi = async (id: string): Promise<void> => {
+	await apiRequest<unknown>(`/bookings/${id}/cancel`, { method: "PATCH", auth: true });
 };
 
 export const createBookingApi = async (payload: BookingPayload) => {

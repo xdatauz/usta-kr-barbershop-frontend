@@ -35,9 +35,15 @@ const GalleryPage = ({ preview = false }: GalleryPageProps) => {
 	const sectionContent = (
 		<section className="rounded-3xl border border-slate-300/70 bg-white/80 p-4 shadow-sm backdrop-blur sm:p-6 lg:p-8 dark:border-slate-700 dark:bg-slate-900/70">
 			<div className="max-w-2xl space-y-2">
-				<p className="text-xs font-semibold uppercase tracking-[0.17em] text-emerald-700 dark:text-emerald-300">{t("gallerySection.eyebrow")}</p>
-				<h2 className="text-2xl font-black text-slate-900 sm:text-3xl dark:text-slate-50">{t("gallerySection.title")}</h2>
-				<p className="text-sm leading-7 text-slate-700 sm:text-base dark:text-slate-300">{t("gallerySection.description")}</p>
+				<p className="text-xs font-semibold uppercase tracking-[0.17em] text-emerald-700 dark:text-emerald-300">
+					{t("gallerySection.eyebrow")}
+				</p>
+				<h2 className="text-2xl font-black text-slate-900 sm:text-3xl dark:text-slate-50">
+					{t("gallerySection.title")}
+				</h2>
+				<p className="text-sm leading-7 text-slate-700 sm:text-base dark:text-slate-300">
+					{t("gallerySection.description")}
+				</p>
 			</div>
 
 			<div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
@@ -85,12 +91,18 @@ const GalleryPage = ({ preview = false }: GalleryPageProps) => {
 			{!preview && (
 				<div className="mt-8 grid gap-4 lg:grid-cols-3">
 					<div className="rounded-2xl border border-slate-300/70 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950/60">
-						<p className="text-xs uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">{t("gallerySection.extras.noteLabel")}</p>
-						<h3 className="mt-2 text-lg font-bold text-slate-900 dark:text-slate-100">{t("gallerySection.extras.noteTitle")}</h3>
+						<p className="text-xs uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+							{t("gallerySection.extras.noteLabel")}
+						</p>
+						<h3 className="mt-2 text-lg font-bold text-slate-900 dark:text-slate-100">
+							{t("gallerySection.extras.noteTitle")}
+						</h3>
 						<p className="mt-2 text-sm text-slate-700 dark:text-slate-300">{t("gallerySection.extras.noteText")}</p>
 					</div>
 					<div className="rounded-2xl border border-slate-300/70 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950/60">
-						<h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{t("gallerySection.extras.stylesTitle")}</h3>
+						<h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
+							{t("gallerySection.extras.stylesTitle")}
+						</h3>
 						<ul className="mt-3 space-y-2 text-sm text-slate-700 dark:text-slate-300">
 							<li>• {t("gallerySection.extras.styleOne")}</li>
 							<li>• {t("gallerySection.extras.styleTwo")}</li>
@@ -99,7 +111,11 @@ const GalleryPage = ({ preview = false }: GalleryPageProps) => {
 						</ul>
 					</div>
 					<div className="overflow-hidden rounded-2xl border border-slate-300/70 dark:border-slate-700">
-						<img src="/images/gallery/24.webp" alt={t("gallerySection.title")} className="h-full min-h-44 w-full object-cover" />
+						<img
+							src="/images/gallery/24.webp"
+							alt={t("gallerySection.title")}
+							className="h-full min-h-44 w-full object-cover"
+						/>
 					</div>
 				</div>
 			)}
@@ -111,8 +127,8 @@ const GalleryPage = ({ preview = false }: GalleryPageProps) => {
 	}
 
 	return (
-		<main className="w-full px-3 pb-14 pt-24 sm:px-5 lg:px-8">
-			<div className="mx-auto max-w-6xl">{sectionContent}</div>
+		<main className="w-full px-3 pb-14 p-32 sm:px-5 lg:px-8">
+			<div className="mx-auto max-w-7xl">{sectionContent}</div>
 		</main>
 	);
 };

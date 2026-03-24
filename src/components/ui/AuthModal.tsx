@@ -1,6 +1,6 @@
 import { useEffect, useState, type MouseEvent } from "react";
 import { createPortal } from "react-dom";
-import { X, Phone, User, Send } from "lucide-react";
+import { X, Phone, User, Lock, Eye, EyeOff } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/auth/auth-provider";
@@ -19,21 +19,24 @@ const formatKoreanPhone = (raw: string): string => {
 };
 
 // Valid Korean mobile: 010-XXXX-XXXX
-const isValidKoreanPhone = (phone: string): boolean =>
-	/^010-\d{4}-\d{4}$/.test(phone);
+const isValidKoreanPhone = (phone: string): boolean => /^010-\d{4}-\d{4}$/.test(phone);
 
 export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 	const { t } = useTranslation();
 	const { login, signup, isAuthLoading } = useAuth();
 	const [mode, setMode] = useState<"login" | "signup">("login");
-	const [form, setForm] = useState({ name: "", phone: "", telegramChatId: "" });
+	const [form, setForm] = useState({ name: "", phone: "", password: "", confirmPassword: "" });
 	const [phoneError, setPhoneError] = useState("");
+	const [showPassword, setShowPassword] = useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 	useEffect(() => {
 		if (!isOpen) return;
 		const prev = document.body.style.overflow;
 		document.body.style.overflow = "hidden";
-		const onEsc = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+		const onEsc = (e: KeyboardEvent) => {
+			if (e.key === "Escape") onClose();
+		};
 		window.addEventListener("keydown", onEsc);
 		return () => {
 			document.body.style.overflow = prev;
@@ -53,14 +56,16 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 	};
 
 	const resetForm = () => {
-		setForm({ name: "", phone: "", telegramChatId: "" });
+		setForm({ name: "", phone: "", password: "", confirmPassword: "" });
 		setPhoneError("");
+		setShowPassword(false);
+		setShowConfirmPassword(false);
 	};
 
 	const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		if (!form.phone.trim()) {
+		if (!form.phone.trim() || !form.password.trim()) {
 			toast.warning(t("toast.validation.requiredFields"));
 			return;
 		}
@@ -71,17 +76,30 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 		}
 
 		if (mode === "login") {
-			const result = await login({ phone: form.phone.trim() });
-			if (!result.ok) { toast.error(result.error || t("toast.auth.loginFailed")); return; }
+			const result = await login({ phone: form.phone.trim(), password: form.password });
+			if (!result.ok) {
+				toast.error(result.error || t("toast.auth.loginFailed"));
+				return;
+			}
 			toast.success(t("toast.auth.loginSuccess"));
 		} else {
-			if (!form.name.trim()) { toast.warning(t("toast.validation.requiredFields")); return; }
+			if (!form.name.trim()) {
+				toast.warning(t("toast.validation.requiredFields"));
+				return;
+			}
+			if (form.password !== form.confirmPassword) {
+				toast.error(t("auth.passwordMismatch"));
+				return;
+			}
 			const result = await signup({
 				name: form.name.trim(),
 				phone: form.phone.trim(),
-				...(form.telegramChatId.trim() ? { telegramChatId: form.telegramChatId.trim() } : {}),
+				password: form.password,
 			});
-			if (!result.ok) { toast.error(result.error || t("toast.auth.signupFailed")); return; }
+			if (!result.ok) {
+				toast.error(result.error || t("toast.auth.signupFailed"));
+				return;
+			}
 			toast.success(t("toast.auth.signupSuccess"));
 		}
 
@@ -92,8 +110,10 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 		if (e.target === e.currentTarget) onClose();
 	};
 
-	const inputClass = "w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 pl-9 text-sm text-slate-800 placeholder:text-slate-400 focus:border-slate-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 dark:placeholder:text-slate-500";
-	const inputErrorClass = "w-full rounded-xl border border-red-400 bg-white px-3 py-2.5 pl-9 text-sm text-slate-800 placeholder:text-slate-400 focus:border-red-500 focus:outline-none dark:border-red-500 dark:bg-slate-950 dark:text-slate-200 dark:placeholder:text-slate-500";
+	const inputClass =
+		"w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 pl-9 text-sm text-slate-800 placeholder:text-slate-400 focus:border-slate-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 dark:placeholder:text-slate-500";
+	const inputErrorClass =
+		"w-full rounded-xl border border-red-400 bg-white px-3 py-2.5 pl-9 text-sm text-slate-800 placeholder:text-slate-400 focus:border-red-500 focus:outline-none dark:border-red-500 dark:bg-slate-950 dark:text-slate-200 dark:placeholder:text-slate-500";
 
 	return createPortal(
 		<div className="fixed inset-0 z-[9999] bg-black/60 p-4" onMouseDown={onOverlay}>
@@ -143,27 +163,50 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 										type="tel"
 										value={form.phone}
 										onChange={handlePhoneChange}
-										placeholder="010-7699-6622"
+										placeholder="010-4619-5515"
 										maxLength={13}
 										inputMode="numeric"
 										className={phoneError ? inputErrorClass : inputClass}
 									/>
 								</div>
-								{phoneError && (
-									<p className="mt-1 pl-1 text-xs text-red-500">{phoneError}</p>
-								)}
+								{phoneError && <p className="mt-1 pl-1 text-xs text-red-500">{phoneError}</p>}
+							</div>
+
+							<div className="relative">
+								<Lock className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+								<input
+									type={showPassword ? "text" : "password"}
+									value={form.password}
+									onChange={set("password")}
+									placeholder={t("auth.password")}
+									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 pl-9 pr-9 text-sm text-slate-800 placeholder:text-slate-400 focus:border-slate-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 dark:placeholder:text-slate-500"
+								/>
+								<button
+									type="button"
+									onClick={() => setShowPassword((v) => !v)}
+									className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+								>
+									{showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+								</button>
 							</div>
 
 							{mode === "signup" && (
 								<div className="relative">
-									<Send className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+									<Lock className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 									<input
-										type="text"
-										value={form.telegramChatId}
-										onChange={set("telegramChatId")}
-										placeholder={t("auth.telegramChatId")}
-										className={inputClass}
+										type={showConfirmPassword ? "text" : "password"}
+										value={form.confirmPassword}
+										onChange={set("confirmPassword")}
+										placeholder={t("auth.confirmPassword")}
+										className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 pl-9 pr-9 text-sm text-slate-800 placeholder:text-slate-400 focus:border-slate-500 focus:outline-none dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 dark:placeholder:text-slate-500"
 									/>
+									<button
+										type="button"
+										onClick={() => setShowConfirmPassword((v) => !v)}
+										className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+									>
+										{showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+									</button>
 								</div>
 							)}
 
@@ -180,7 +223,10 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 							{mode === "login" ? t("auth.noAccount") : t("auth.haveAccount")}{" "}
 							<button
 								type="button"
-								onClick={() => { setMode((p) => (p === "login" ? "signup" : "login")); resetForm(); }}
+								onClick={() => {
+									setMode((p) => (p === "login" ? "signup" : "login"));
+									resetForm();
+								}}
 								className="font-semibold text-emerald-700 hover:underline dark:text-emerald-400"
 							>
 								{mode === "login" ? t("auth.switchToSignup") : t("auth.switchToLogin")}

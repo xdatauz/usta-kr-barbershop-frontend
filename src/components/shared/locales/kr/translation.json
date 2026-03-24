@@ -297,7 +297,9 @@
 		"booking": {
 			"slotLoadFailed": "예약 가능 시간을 불러오지 못했습니다.",
 			"submitSuccess": "예약 요청이 전송되었습니다.",
-			"submitFailed": "예약 요청 전송에 실패했습니다."
+			"submitFailed": "예약 요청 전송에 실패했습니다.",
+			"cancelSuccess": "예약이 성공적으로 취소되었습니다.",
+			"cancelFailed": "예약 취소에 실패했습니다. 다시 시도해주세요."
 		}
 	},
 	"social": {
@@ -310,9 +312,10 @@
 		"signupTitle": "계정 만들기",
 		"loginTitle": "환영합니다",
 		"phoneInvalid": "올바른 한국 전화번호를 입력해 주세요 (예: 010-1234-5678).",
-		"telegramChatId": "텔레그램 Chat ID (선택)",
-		"loginHint": "계속하려면 전화번호를 입력하세요.",
-		"signupHint": "이름과 전화번호로 가입하세요.",
+		"confirmPassword": "비밀번호 확인",
+		"passwordMismatch": "비밀번호가 일치하지 않습니다.",
+		"loginHint": "계속하려면 전화번호와 비밀번호를 입력하세요.",
+		"signupHint": "이름, 전화번호, 비밀번호로 가입하세요.",
 		"phone": "전화번호",
 		"email": "이메일",
 		"switchToLogin": "로그인",
@@ -334,9 +337,18 @@
 		"guestDescription": "개인 프로필을 보려면 먼저 로그인하세요.",
 		"guestTitle": "로그인이 필요합니다",
 		"bookingsTitle": "최근 예약",
-		"title": "내 프로필"
+		"title": "내 프로필",
+		"cancelBooking": "취소",
+		"cancelConfirmMsg": "이 예약을 취소하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+		"cancelConfirm": "네, 취소합니다",
+		"cancelKeep": "유지하기",
+		"viewDetails": "자세히 보기",
+		"detailTitle": "예약 상세 정보",
+		"detailId": "예약 ID",
+		"detailStatus": "상태",
+		"detailClose": "닫기",
+		"detailBookedAt": "예약한 시각"
 	},
-
 	"bookingPage": {
 		"eyebrow": "온라인 예약",
 		"title": "예약하기",
@@ -409,30 +421,24 @@
 		"backToList": "바버 목록으로 돌아가기",
 		"bookWithBarber": "이 바버 예약하기",
 		"profileEyebrow": "바버 프로필",
-
 		"follow": "팔로우",
 		"following": "팔로잉 중",
 		"like": "좋아요",
 		"dislike": "싫어요",
-
 		"followers": "팔로워",
 		"likes": "좋아요 수",
 		"dislikes": "싫어요 수",
-
 		"commentsTitle": "고객 리뷰",
 		"noComments": "아직 리뷰가 없습니다. 첫 번째 리뷰를 남겨보세요.",
 		"guestName": "방문자",
-
 		"commentForm": {
 			"author": "이름 (선택 사항)",
 			"message": "리뷰를 작성하세요...",
 			"submit": "리뷰 등록"
 		},
-
 		"reportTitle": "바버 신고",
 		"reportDescription": "부적절한 행동이나 내용을 발견하셨다면 알려주세요.",
 		"reportCount": "신고 수",
-
 		"reportForm": {
 			"placeholder": "사유 선택",
 			"submit": "신고하기",
@@ -444,7 +450,6 @@
 				"other": "기타 사유"
 			}
 		},
-
 		"barbers": {
 			"jamshid": {
 				"name": "잠시드",
@@ -506,7 +511,24 @@
 				"content": "전체 내용을 작성하세요..."
 			}
 		}
+	},
+	"quickBook": {
+		"title": "빠른 예약",
+		"anyBarber": "아무 바버",
+		"selectTime": "시간 선택",
+		"noSlots": "예약 가능한 시간 없음",
+		"loadingSlots": "로딩 중...",
+		"slotsAvailable": "개 슬롯 사용 가능",
+		"checkBtn": "예약 가능 확인",
+		"checking": "확인 중...",
+		"slotFree": "예약 가능합니다!",
+		"slotBusy": "이미 예약된 시간입니다. 다른 시간을 선택하세요.",
+		"bookNow": "예약하기",
+		"labelDate": "날짜",
+		"labelBarber": "바버",
+		"labelTime": "시간",
+		"selectBarber": "바버 선택",
+		"selectBarberFirst": "먼저 바버를 선택하세요",
+		"selectBarberHint": "날짜 및 바버 선택"
 	}
 }
-
-
