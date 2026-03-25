@@ -4,6 +4,7 @@ export interface ClientUser {
 	id: string;
 	name: string;
 	phone: string;
+	userType?: string;
 }
 
 export interface ClientAuthResult {
@@ -21,6 +22,7 @@ const normalizeClient = (raw: unknown): ClientUser | null => {
 		id,
 		name: typeof src.name === "string" ? src.name : "",
 		phone: typeof src.phone === "string" ? src.phone : "",
+		userType: typeof src.userType === "string" ? src.userType : undefined,
 	};
 };
 

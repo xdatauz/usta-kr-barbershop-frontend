@@ -10,7 +10,7 @@ export interface MyBooking {
 	createdAt: string | null;
 }
 
-export type BookingStyle = 'classic' | 'fade' | 'beard' | 'deluxe' | 'color' | 'fatherSon';
+export type BookingStyle = "classic" | "fade" | "beard" | "deluxe" | "color" | "fatherSon";
 
 export interface BookingPayload {
 	name: string;
@@ -61,23 +61,21 @@ export const createBookingApi = async (payload: BookingPayload) => {
 };
 
 export const getBookingSlotsApi = async (barberId: string, date: string): Promise<BookingSlot[]> => {
-	const response = await apiRequest<unknown>(`/bookings/slots?date=${encodeURIComponent(date)}&barberId=${encodeURIComponent(barberId)}`, {
-		method: "GET",
-	});
+	const response = await apiRequest<unknown>(
+		`/bookings/slots?date=${encodeURIComponent(date)}&barberId=${encodeURIComponent(barberId)}`,
+		{
+			method: "GET",
+		},
+	);
 
-	const slotsRaw =
-		Array.isArray(response)
-			? response
-			: response && typeof response === "object" && Array.isArray((response as { slots?: unknown[] }).slots)
-				? ((response as { slots: unknown[] }).slots ?? [])
-				: [];
+	// Backend returns { data: { barberId, date, slots: [{ time, available }] } }
+	const data = response && typeof response === "object" && (response as { data?: unknown }).data;
+	const slotsObj = data && typeof data === "object" ? (data as { slots?: unknown[] }).slots : undefined;
+	const slotsRaw = Array.isArray(slotsObj) ? slotsObj : [];
 
 	return slotsRaw
 		.map((item) => {
-			// Backend may return plain time strings like ["09:00", "09:30"]
-			if (typeof item === "string") {
-				return { time: item, available: true };
-			}
+			// Backend returns objects like { time: "09:00", available: true }
 			if (!item || typeof item !== "object") {
 				return null;
 			}

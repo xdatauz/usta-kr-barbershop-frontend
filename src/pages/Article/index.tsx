@@ -4,9 +4,10 @@ import { motion } from "framer-motion";
 import { AlertTriangle, CalendarDays, PenSquare, RefreshCw, ShieldCheck, UserRound } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
-import { useAuth, type UserType } from "../../context/auth/auth-provider";
+import { useAuth } from "../../context/auth/auth-provider";
 import { getArticlesApi, createArticleApi, type ArticleItem } from "../../lib/api/articles";
 import { isApiError } from "../../lib/api/client";
+import { StaffRole } from "../../lib/enums/staff-role.enum";
 
 interface ArticleFormState {
 	title: string;
@@ -14,13 +15,12 @@ interface ArticleFormState {
 	content: string;
 }
 
-
 interface ArticlePageProps {
 	preview?: boolean;
 }
 
-const canWriteArticles = (role: UserType | undefined): role is "ADMIN" | "BARBER" => {
-	return role === "ADMIN" || role === "BARBER";
+const canWriteArticles = (role: StaffRole | undefined): boolean => {
+	return role === StaffRole.ADMIN || role === StaffRole.BARBER;
 };
 
 const ArticlePage = ({ preview = false }: ArticlePageProps) => {
@@ -70,10 +70,9 @@ const ArticlePage = ({ preview = false }: ArticlePageProps) => {
 
 	useEffect(() => {
 		void fetchArticles();
-  }, [fetchArticles]);
-  
+	}, [fetchArticles]);
 
-  const visibleArticles = preview ? articles.slice(0, 3) : articles;
+	const visibleArticles = preview ? articles.slice(0, 3) : articles;
 
 	const createArticle = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();

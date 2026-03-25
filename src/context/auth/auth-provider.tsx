@@ -1,14 +1,13 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { clientLogout, getClientMeApi, loginClientApi, registerClientApi } from "../../lib/api/client-auth";
 import { clearStoredTokens, isApiError } from "../../lib/api/client";
-
-export type UserType = "USER";
+import { StaffRole } from "../../lib/enums/staff-role.enum";
 
 export interface AuthUser {
 	id: string;
 	name: string;
 	phone: string;
-	userType: UserType;
+	userType: StaffRole;
 	image?: string | null;
 }
 
@@ -24,11 +23,21 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 const CURRENT_USER_STORAGE_KEY = "usta_auth_user";
 
-const clientToAuthUser = (client: { id: string; name: string; phone: string }): AuthUser => ({
+const VALID_USER_TYPES = new Set<StaffRole>([
+	StaffRole.ADMIN,
+	StaffRole.BARBER,
+	StaffRole.HEAD_BARBER,
+	StaffRole.RECEPTION,
+]);
+
+const clientToAuthUser = (client: { id: string; name: string; phone: string; userType?: string }): AuthUser => ({
 	id: client.id,
 	name: client.name,
 	phone: client.phone,
-	userType: "USER",
+	userType:
+		client.userType && VALID_USER_TYPES.has(client.userType as StaffRole)
+			? (client.userType as StaffRole)
+			: StaffRole.BARBER,
 	image: null,
 });
 
@@ -52,7 +61,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 				localStorage.removeItem(CURRENT_USER_STORAGE_KEY);
 				return;
 			}
-			setCurrentUser({ id: parsed.id, name: parsed.name, phone: parsed.phone, userType: "USER", image: parsed.image ?? null });
+			setCurrentUser({
+				id: parsed.id,
+				name: parsed.name,
+				phone: parsed.phone,
+				userType:
+					parsed.userType && VALID_USER_TYPES.has(parsed.userType as StaffRole)
+						? (parsed.userType as StaffRole)
+						: StaffRole.BARBER,
+				image: parsed.image ?? null,
+			});
 		} catch {
 			localStorage.removeItem(CURRENT_USER_STORAGE_KEY);
 		}
@@ -127,10 +145,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		window.location.reload();
 	};
 
-	const value = useMemo(
-		() => ({ currentUser, isAuthLoading, login, signup, logout }),
-		[currentUser, isAuthLoading],
-	);
+	const value = useMemo(() => ({ currentUser, isAuthLoading, login, signup, logout }), [currentUser, isAuthLoading]);
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
