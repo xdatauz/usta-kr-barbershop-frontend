@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Instagram, Send, Menu, X, ExternalLink, Phone } from "lucide-react";
+import { Instagram, Send, Menu, X, ExternalLink, Phone, Bell } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { ThemeToggle } from "../../ui/ThemeToggle";
 import { UserProfileMenu } from "../../ui/UserProfile";
 import AuthModal from "../../ui/AuthModal";
 import { useAuth } from "../../../context/auth/auth-provider";
+import { getClientNotificationsApi } from "../../../lib/api/notifications";
 
 interface NavbarProps {
 	scrolled: boolean;
@@ -19,6 +20,14 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 	const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 	const locale = location.pathname.split("/")[1] || "uz";
 	const { currentUser, logout } = useAuth();
+	const [unreadCount, setUnreadCount] = useState(0);
+
+	useEffect(() => {
+		if (!currentUser) { setUnreadCount(0); return; }
+		getClientNotificationsApi()
+			.then((list) => setUnreadCount(list.filter((n) => !n.isRead).length))
+			.catch(() => {});
+	}, [currentUser]);
 
 	const navItems = [
 		{ key: "nav.home", path: "" },
@@ -34,13 +43,28 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 			<div className="border-b border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900">
 				<div className="navbar-container mx-auto flex h-10 items-center justify-between px-6">
 					{/* Left: phone */}
-					<a
-						href="tel:+820107699662"
-						className="flex items-center gap-1.5 text-xs font-medium text-slate-500 transition hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400"
-					>
-						<Phone className="h-3 w-3" />
-						010-4619-5515
-					</a>
+					<div className="flex items-center gap-1.5">
+						<a
+							href="tel:+820107699662"
+							className="flex items-center gap-1.5 text-xs font-medium text-slate-500 transition hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400"
+						>
+							<Phone className="h-3 w-3" />
+							010-4619-5515
+						</a>
+						{currentUser && (
+						<Link
+							to={`/${locale}/notifications`}
+							className="relative ml-2 text-slate-500 transition hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400"
+						>
+							<Bell className="h-4 w-4" />
+							{unreadCount > 0 && (
+								<span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500 text-[9px] font-bold text-white">
+									{unreadCount > 9 ? "9+" : unreadCount}
+								</span>
+							)}
+						</Link>
+					)}
+					</div>
 
 					{/* Right: socials · divider · language · theme */}
 					<div className="flex items-center gap-3">

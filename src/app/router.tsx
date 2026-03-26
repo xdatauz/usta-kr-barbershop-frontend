@@ -8,6 +8,7 @@ import UserPage from "../pages/User";
 import BookingPage from "../pages/Booking";
 import BarbersPage from "../pages/Barbers";
 import ArticlePage from "../pages/Article";
+import NotificationsPage from "../pages/Notifications";
 
 const supportedLocales = ["uz", "kr", "en", "ru"] as const;
 
@@ -38,6 +39,7 @@ const AppRouter = () => {
 				<Route path="barbers" element={<BarbersPage />} />
 				<Route path="barbers/:barberId" element={<BarbersPage />} />
 				<Route path="profile" element={<UserPage />} />
+				<Route path="notifications" element={<NotificationsPage />} />
 			</Route>
 
 			<Route path="*" element={<Navigate to="/uz" replace />} />

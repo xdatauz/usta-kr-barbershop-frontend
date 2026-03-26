@@ -80,6 +80,7 @@ const BarbersPage = () => {
 	const [comments, setComments] = useState<BarberComment[]>([]);
 	const [commentText, setCommentText] = useState("");
 	const [reportReason, setReportReason] = useState("");
+	const [reportDetails, setReportDetails] = useState("");
 	const [reportStatus, setReportStatus] = useState<"idle" | "sent" | "error">("idle");
 	const [isLoadingList, setIsLoadingList] = useState(false);
 	const [isLoadingProfile, setIsLoadingProfile] = useState(false);
@@ -295,8 +296,10 @@ const BarbersPage = () => {
 		try {
 			await reportBarberApi(id, {
 				reason: reportReason,
+				details: reportDetails.trim() || undefined,
 			});
 			setReportReason("");
+			setReportDetails("");
 			setReportStatus("sent");
 			toast.success(t("toast.barbers.reportSuccess"));
 		} catch (error) {
@@ -571,6 +574,16 @@ const BarbersPage = () => {
 								<option value="offensive">{t("barbersPage.reportForm.reasons.offensive")}</option>
 								<option value="other">{t("barbersPage.reportForm.reasons.other")}</option>
 							</select>
+							{reportReason === "other" && (
+								<textarea
+									value={reportDetails}
+									onChange={(e) => setReportDetails(e.target.value)}
+									placeholder={t("barbersPage.reportForm.detailsPlaceholder")}
+									maxLength={1000}
+									rows={3}
+									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 resize-none"
+								/>
+							)}
 							<button
 								type="button"
 								disabled={isActionLoading}
