@@ -1,224 +1,187 @@
+import axios, {
+  type AxiosError,
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
+} from "axios";
+
+// ── ApiError ──────────────────────────────────────────────────────────────────
+
 export interface ApiErrorPayload {
-	code?: string;
-	message?: string;
-	fields?: Record<string, string>;
+  code?: string;
+  message?: string;
+  fields?: Record<string, string>;
 }
 
 export class ApiError extends Error {
-	status: number;
-	code?: string;
-	fields?: Record<string, string>;
-	raw?: unknown;
+  status: number;
+  code?: string;
+  fields?: Record<string, string>;
+  raw?: unknown;
 
-	constructor(params: { message: string; status: number; code?: string; fields?: Record<string, string>; raw?: unknown }) {
-		super(params.message);
-		this.name = "ApiError";
-		this.status = params.status;
-		this.code = params.code;
-		this.fields = params.fields;
-		this.raw = params.raw;
-	}
+  constructor(params: { message: string; status: number; code?: string; fields?: Record<string, string>; raw?: unknown }) {
+    super(params.message);
+    this.name = "ApiError";
+    this.status = params.status;
+    this.code = params.code;
+    this.fields = params.fields;
+    this.raw = params.raw;
+  }
 }
+
+// ── Token helpers ─────────────────────────────────────────────────────────────
 
 export const ACCESS_TOKEN_KEY = "usta_access_token";
 export const REFRESH_TOKEN_KEY = "usta_refresh_token";
 
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim().replace(/\/$/, "") ?? "";
-const API_PREFIX = `${API_BASE_URL}/api/v1`;
-let refreshRequest: Promise<string | null> | null = null;
+export const getAccessToken = () =>
+  localStorage.getItem(ACCESS_TOKEN_KEY) || localStorage.getItem("access_token");
 
-export const getApiUrl = (path: string): string => {
-	if (path.startsWith("http://") || path.startsWith("https://")) {
-		return path;
-	}
-	const normalized = path.startsWith("/") ? path : `/${path}`;
-	return `${API_PREFIX}${normalized}`;
-};
-
-export const getAccessToken = () => localStorage.getItem(ACCESS_TOKEN_KEY) || localStorage.getItem("access_token");
 export const setAccessToken = (token: string | null) => {
-	if (!token) {
-		localStorage.removeItem(ACCESS_TOKEN_KEY);
-		return;
-	}
-	localStorage.setItem(ACCESS_TOKEN_KEY, token);
+  if (!token) { localStorage.removeItem(ACCESS_TOKEN_KEY); return; }
+  localStorage.setItem(ACCESS_TOKEN_KEY, token);
 };
 
 export const getRefreshToken = () => localStorage.getItem(REFRESH_TOKEN_KEY);
+
 export const setRefreshToken = (token: string | null) => {
-	if (!token) {
-		localStorage.removeItem(REFRESH_TOKEN_KEY);
-		return;
-	}
-	localStorage.setItem(REFRESH_TOKEN_KEY, token);
+  if (!token) { localStorage.removeItem(REFRESH_TOKEN_KEY); return; }
+  localStorage.setItem(REFRESH_TOKEN_KEY, token);
 };
 
 export const clearStoredTokens = () => {
-	localStorage.removeItem(ACCESS_TOKEN_KEY);
-	localStorage.removeItem(REFRESH_TOKEN_KEY);
-	localStorage.removeItem("access_token");
+  localStorage.removeItem(ACCESS_TOKEN_KEY);
+  localStorage.removeItem(REFRESH_TOKEN_KEY);
+  localStorage.removeItem("access_token");
 };
 
-const tryParseJson = async (response: Response): Promise<unknown> => {
-	try {
-		return await response.json();
-	} catch {
-		return null;
-	}
-};
+// ── Axios instance ────────────────────────────────────────────────────────────
 
-const extractApiError = (status: number, payload: unknown): ApiError => {
-	if (payload && typeof payload === "object") {
-		const objectPayload = payload as { error?: ApiErrorPayload; message?: string };
-		const message = objectPayload.error?.message || objectPayload.message || `Request failed with status ${status}`;
-		return new ApiError({
-			status,
-			message,
-			code: objectPayload.error?.code,
-			fields: objectPayload.error?.fields,
-			raw: payload,
-		});
-	}
+const API_BASE_URL =
+  (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim().replace(/\/$/, "") ?? "";
 
-	return new ApiError({
-		status,
-		message: `Request failed with status ${status}`,
-		raw: payload,
-	});
-};
+const api = axios.create({
+  baseURL: `${API_BASE_URL}/api/v1`,
+  headers: { Accept: "application/json", "Content-Type": "application/json" },
+  withCredentials: true,
+});
 
-export interface ApiRequestOptions extends Omit<RequestInit, "body"> {
-	auth?: boolean;
-	body?: unknown;
-	skipAuthRefresh?: boolean;
-}
+// Attach auth token
+api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const token = getAccessToken();
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (config.data instanceof FormData) delete config.headers["Content-Type"];
+  return config;
+});
 
-const resolveData = <T>(payload: unknown): T => {
-	if (payload && typeof payload === "object" && "data" in payload) {
-		return (payload as { data: T }).data;
-	}
+// ── Token refresh ─────────────────────────────────────────────────────────────
 
-	return payload as T;
-};
-
-const normalizeRefreshPayload = (payload: unknown): { accessToken: string | null; refreshToken: string | null } => {
-	const data = resolveData<unknown>(payload);
-	if (!data || typeof data !== "object") {
-		return {
-			accessToken: null,
-			refreshToken: null,
-		};
-	}
-
-	const source = data as { accessToken?: unknown; refreshToken?: unknown; token?: unknown };
-	return {
-		accessToken:
-			typeof source.accessToken === "string"
-				? source.accessToken
-				: typeof source.token === "string"
-					? source.token
-					: null,
-		refreshToken: typeof source.refreshToken === "string" ? source.refreshToken : null,
-	};
-};
+let refreshRequest: Promise<string | null> | null = null;
 
 const requestAccessTokenRefresh = async (): Promise<string | null> => {
-	const refreshToken = getRefreshToken();
-	if (!refreshToken) {
-		clearStoredTokens();
-		return null;
-	}
+  const refreshToken = getRefreshToken();
+  if (!refreshToken) { clearStoredTokens(); return null; }
 
-	const response = await fetch(getApiUrl("/auth/refresh"), {
-		method: "POST",
-		headers: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ refreshToken }),
-		credentials: "include",
-	});
+  const response = await axios.post(
+    `${API_BASE_URL}/api/v1/auth/refresh`,
+    { refreshToken },
+    { headers: { Accept: "application/json", "Content-Type": "application/json" }, withCredentials: true },
+  );
 
-	const payload = await tryParseJson(response);
-	if (!response.ok) {
-		clearStoredTokens();
-		throw extractApiError(response.status, payload);
-	}
+  const payload = response.data;
+  if (payload?.success === false) { clearStoredTokens(); return null; }
 
-	const nextTokens = normalizeRefreshPayload(payload);
-	if (!nextTokens.accessToken) {
-		clearStoredTokens();
-		return null;
-	}
+  const data = payload?.data ?? payload;
+  const accessToken =
+    typeof data?.accessToken === "string" ? data.accessToken
+    : typeof data?.token === "string" ? data.token
+    : null;
+  const newRefreshToken = typeof data?.refreshToken === "string" ? data.refreshToken : null;
 
-	setAccessToken(nextTokens.accessToken);
-	setRefreshToken(nextTokens.refreshToken ?? refreshToken);
-	return nextTokens.accessToken;
+  if (!accessToken) { clearStoredTokens(); return null; }
+
+  setAccessToken(accessToken);
+  setRefreshToken(newRefreshToken ?? refreshToken);
+  return accessToken;
 };
 
 const refreshAccessToken = async (): Promise<string | null> => {
-	if (!refreshRequest) {
-		refreshRequest = requestAccessTokenRefresh().finally(() => {
-			refreshRequest = null;
-		});
-	}
-
-	return refreshRequest;
+  if (!refreshRequest) {
+    refreshRequest = requestAccessTokenRefresh().finally(() => { refreshRequest = null; });
+  }
+  return refreshRequest;
 };
 
-export const apiRequest = async <T>(path: string, options: ApiRequestOptions = {}): Promise<T> => {
-	const { auth = false, headers, body, skipAuthRefresh = false, ...rest } = options;
-	const isBodyFormData = body instanceof FormData;
+// ── Response interceptor ──────────────────────────────────────────────────────
 
-	const sendRequest = async (tokenOverride?: string) => {
-		const requestHeaders = new Headers(headers || {});
+api.interceptors.response.use(
+  // Success handler — backend always returns HTTP 200
+  async (response: AxiosResponse) => {
+    const payload = response.data;
 
-		if (!requestHeaders.has("Accept")) {
-			requestHeaders.set("Accept", "application/json");
-		}
+    // Handle backend error (HTTP 200 but success: false)
+    if (payload && typeof payload === "object" && payload.success === false) {
+      const err = (payload.error ?? {}) as Record<string, unknown>;
+      const originalRequest = response.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
-		if (body !== undefined && !isBodyFormData && !requestHeaders.has("Content-Type")) {
-			requestHeaders.set("Content-Type", "application/json");
-		}
+      if (err.statusCode === 401 && !originalRequest._retry && !originalRequest.url?.includes("/auth/refresh")) {
+        originalRequest._retry = true;
+        try {
+          const token = await refreshAccessToken();
+          if (token) {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            return api(originalRequest);
+          }
+        } catch { clearStoredTokens(); }
+      }
 
-		if (auth) {
-			const token = tokenOverride ?? getAccessToken();
-			if (token) {
-				requestHeaders.set("Authorization", `Bearer ${token}`);
-			}
-		}
+      throw new ApiError({
+        status: (err.statusCode as number) ?? 500,
+        message: (err.message as string) ?? "Request failed",
+        code: err.code as string | undefined,
+        fields: err.fields as Record<string, string> | undefined,
+        raw: payload,
+      });
+    }
 
-		const response = await fetch(getApiUrl(path), {
-			...rest,
-			headers: requestHeaders,
-			body: body === undefined ? undefined : isBodyFormData ? body : JSON.stringify(body),
-			credentials: "include",
-		});
+    // Unwrap success envelope: { success: true, data: <actual> }
+    if (payload && typeof payload === "object" && payload.success === true && "data" in payload) {
+      response.data = payload.data;
+    }
 
-		const payload = await tryParseJson(response);
-		return { response, payload };
-	};
+    return response;
+  },
 
-	let { response, payload } = await sendRequest();
+  // HTTP error handler (non-200 — fallback for old backend)
+  async (error: AxiosError) => {
+    if (!error.response) {
+      throw new ApiError({ status: 0, message: error.message ?? "Network error", raw: error });
+    }
 
-	if (auth && response.status === 401 && !skipAuthRefresh && !path.includes("/auth/refresh")) {
-		try {
-			const token = await refreshAccessToken();
-			if (token) {
-				const retryResult = await sendRequest(token);
-				response = retryResult.response;
-				payload = retryResult.payload;
-			}
-		} catch {
-			clearStoredTokens();
-		}
-	}
+    const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
+    const status = error.response.status;
+    const payload = error.response.data as Record<string, unknown> | undefined;
+    const errObj = (payload?.error ?? {}) as Record<string, unknown>;
 
-	if (!response.ok) {
-		throw extractApiError(response.status, payload);
-	}
+    if (status === 401 && !originalRequest._retry && !originalRequest.url?.includes("/auth/refresh")) {
+      originalRequest._retry = true;
+      try {
+        const token = await refreshAccessToken();
+        if (token) {
+          originalRequest.headers.Authorization = `Bearer ${token}`;
+          return api(originalRequest);
+        }
+      } catch { clearStoredTokens(); }
+    }
 
-	return resolveData<T>(payload);
-};
+    throw new ApiError({
+      status,
+      message: (errObj.message as string) ?? (payload?.message as string) ?? error.message ?? `Request failed`,
+      code: errObj.code as string | undefined,
+      fields: errObj.fields as Record<string, string> | undefined,
+      raw: payload,
+    });
+  },
+);
 
+export default api;
 export const isApiError = (error: unknown): error is ApiError => error instanceof ApiError;

@@ -1,4 +1,4 @@
-import { apiRequest } from "./client";
+import api from "./client";
 
 export interface RevenueReport {
 	total: number;
@@ -45,57 +45,38 @@ export interface MonthlyOverview {
 	newClients: number;
 }
 
-const buildDateQuery = (params: { from?: string; to?: string }): string => {
-	const q = new URLSearchParams();
-	if (params.from) q.set("from", params.from);
-	if (params.to) q.set("to", params.to);
-	return q.toString();
-};
-
 /** GET /reports/revenue */
 export const getRevenueReportApi = async (params: { from?: string; to?: string } = {}): Promise<RevenueReport> => {
-	const qs = buildDateQuery(params);
-	return apiRequest<RevenueReport>(`/reports/revenue${qs ? `?${qs}` : ""}`, { method: "GET", auth: true });
+	const { data } = await api.get<RevenueReport>("/reports/revenue", { params });
+	return data;
 };
 
 /** GET /reports/services-top */
 export const getTopServicesApi = async (params: { from?: string; to?: string; limit?: number } = {}): Promise<TopService[]> => {
-	const q = new URLSearchParams();
-	if (params.from) q.set("from", params.from);
-	if (params.to) q.set("to", params.to);
-	if (params.limit !== undefined) q.set("limit", String(params.limit));
-	const qs = q.toString();
-
-	const response = await apiRequest<unknown>(`/reports/services-top${qs ? `?${qs}` : ""}`, { method: "GET", auth: true });
-	return Array.isArray(response) ? (response as TopService[]) : [];
+	const { data } = await api.get<unknown>("/reports/services-top", { params });
+	return Array.isArray(data) ? (data as TopService[]) : [];
 };
 
 /** GET /reports/barbers */
 export const getBarberStatsReportApi = async (params: { from?: string; to?: string } = {}): Promise<BarberStats[]> => {
-	const qs = buildDateQuery(params);
-	const response = await apiRequest<unknown>(`/reports/barbers${qs ? `?${qs}` : ""}`, { method: "GET", auth: true });
-	return Array.isArray(response) ? (response as BarberStats[]) : [];
+	const { data } = await api.get<unknown>("/reports/barbers", { params });
+	return Array.isArray(data) ? (data as BarberStats[]) : [];
 };
 
 /** GET /reports/channels */
 export const getChannelStatsApi = async (params: { from?: string; to?: string } = {}): Promise<ChannelStats[]> => {
-	const qs = buildDateQuery(params);
-	const response = await apiRequest<unknown>(`/reports/channels${qs ? `?${qs}` : ""}`, { method: "GET", auth: true });
-	return Array.isArray(response) ? (response as ChannelStats[]) : [];
+	const { data } = await api.get<unknown>("/reports/channels", { params });
+	return Array.isArray(data) ? (data as ChannelStats[]) : [];
 };
 
 /** GET /reports/cancel-no-show */
 export const getCancelNoShowStatsApi = async (params: { from?: string; to?: string } = {}): Promise<CancelNoShowStats> => {
-	const qs = buildDateQuery(params);
-	return apiRequest<CancelNoShowStats>(`/reports/cancel-no-show${qs ? `?${qs}` : ""}`, { method: "GET", auth: true });
+	const { data } = await api.get<CancelNoShowStats>("/reports/cancel-no-show", { params });
+	return data;
 };
 
 /** GET /reports/overview */
 export const getMonthlyOverviewApi = async (params: { year?: number } = {}): Promise<MonthlyOverview[]> => {
-	const q = new URLSearchParams();
-	if (params.year !== undefined) q.set("year", String(params.year));
-	const qs = q.toString();
-
-	const response = await apiRequest<unknown>(`/reports/overview${qs ? `?${qs}` : ""}`, { method: "GET", auth: true });
-	return Array.isArray(response) ? (response as MonthlyOverview[]) : [];
+	const { data } = await api.get<unknown>("/reports/overview", { params });
+	return Array.isArray(data) ? (data as MonthlyOverview[]) : [];
 };

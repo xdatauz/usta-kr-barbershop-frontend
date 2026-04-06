@@ -1,4 +1,5 @@
-import { apiRequest } from "./client";
+import api from "./client";
+import { normalizeString, normalizeNumber } from "./normalizers";
 
 export interface HealthStatus {
 	status: "ok" | "error";
@@ -7,12 +8,12 @@ export interface HealthStatus {
 }
 
 export const getHealthApi = async (): Promise<HealthStatus> => {
-	const response = await apiRequest<unknown>("/health", { method: "GET" });
-	if (!response || typeof response !== "object") return { status: "ok" };
-	const src = response as Record<string, unknown>;
+	const { data } = await api.get<unknown>("/health");
+	if (!data || typeof data !== "object") return { status: "ok" };
+	const src = data as Record<string, unknown>;
 	return {
-		status: src.status === "error" ? "error" : "ok",
+		status: normalizeString(src.status) === "error" ? "error" : "ok",
 		timestamp: typeof src.timestamp === "string" ? src.timestamp : undefined,
-		uptime: typeof src.uptime === "number" ? src.uptime : undefined,
+		uptime: typeof src.uptime === "number" ? normalizeNumber(src.uptime) : undefined,
 	};
 };

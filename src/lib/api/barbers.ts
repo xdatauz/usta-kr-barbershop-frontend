@@ -1,4 +1,5 @@
-import { apiRequest } from "./client";
+import api from "./client";
+import { normalizeId, normalizeString, normalizeNumber, normalizeBoolean, normalizeArray, extractList } from "./normalizers";
 
 export interface BarberStats {
 	likes: number;
@@ -35,24 +36,16 @@ export interface CommentListResponse {
 	total: number;
 }
 
-const toNumber = (value: unknown, fallback = 0) => (typeof value === "number" && Number.isFinite(value) ? value : fallback);
-
 const normalizeStats = (raw: unknown): BarberStats => {
 	if (!raw || typeof raw !== "object") {
-		return {
-			likes: 0,
-			dislikes: 0,
-			followers: 0,
-			reports: 0,
-		};
+		return { likes: 0, dislikes: 0, followers: 0, reports: 0 };
 	}
-
 	const source = raw as Partial<BarberStats>;
 	return {
-		likes: toNumber(source.likes),
-		dislikes: toNumber(source.dislikes),
-		followers: toNumber(source.followers),
-		reports: toNumber(source.reports),
+		likes: normalizeNumber(source.likes),
+		dislikes: normalizeNumber(source.dislikes),
+		followers: normalizeNumber(source.followers),
+		reports: normalizeNumber(source.reports),
 	};
 };
 
@@ -60,19 +53,16 @@ const normalizeViewer = (raw: unknown): BarberViewer => {
 	if (!raw || typeof raw !== "object") {
 		return { isFollowing: false, liked: false, disliked: false };
 	}
-
 	const source = raw as Partial<BarberViewer>;
 	return {
-		isFollowing: Boolean(source.isFollowing),
-		liked: Boolean(source.liked),
-		disliked: Boolean(source.disliked),
+		isFollowing: normalizeBoolean(source.isFollowing),
+		liked: normalizeBoolean(source.liked),
+		disliked: normalizeBoolean(source.disliked),
 	};
 };
 
 const normalizeBarberProfile = (raw: unknown): BarberProfile | null => {
-	if (!raw || typeof raw !== "object") {
-		return null;
-	}
+	if (!raw || typeof raw !== "object") return null;
 
 	const source = raw as {
 		id?: unknown;
@@ -89,16 +79,8 @@ const normalizeBarberProfile = (raw: unknown): BarberProfile | null => {
 		viewer?: unknown;
 	};
 
-	const id =
-		typeof source.id === "string"
-			? source.id
-			: typeof source.id === "number"
-				? String(source.id)
-				: null;
-
-	if (!id) {
-		return null;
-	}
+	const id = normalizeId(source.id);
+	if (!id) return null;
 
 	const name = typeof source.name === "string" ? source.name
 		: typeof source.fullName === "string" ? source.fullName
@@ -116,83 +98,79 @@ const normalizeBarberProfile = (raw: unknown): BarberProfile | null => {
 		role: typeof source.role === "string" ? source.role
 			: typeof source.displayRole === "string" ? source.displayRole
 			: "",
-		bio: typeof source.bio === "string" ? source.bio : "",
-		image: typeof source.image === "string" ? source.image : "",
+		bio: normalizeString(source.bio),
+		image: normalizeString(source.image),
 		stats: normalizeStats(Object.keys(flatStats).length > 0 ? { ...flatStats, ...(typeof source.stats === "object" && source.stats !== null ? source.stats as object : {}) } : source.stats),
 		viewer: normalizeViewer(source.viewer),
 	};
 };
 
 const normalizeComment = (raw: unknown): BarberComment | null => {
-	if (!raw || typeof raw !== "object") {
-		return null;
-	}
+	if (!raw || typeof raw !== "object") return null;
 
 	const source = raw as Partial<BarberComment>;
-	if (typeof source.id !== "string" || typeof source.text !== "string") {
-		return null;
-	}
+	if (typeof source.id !== "string" || typeof source.text !== "string") return null;
 
 	return {
 		id: source.id,
 		author: typeof source.author === "string" && source.author.trim() ? source.author : "Guest",
 		text: source.text,
-		createdAt: typeof source.createdAt === "string" ? source.createdAt : new Date().toISOString(),
+		createdAt: normalizeString(source.createdAt, new Date().toISOString()),
 	};
 };
 
 export const getBarbersApi = async (): Promise<BarberProfile[]> => {
-	const response = await apiRequest<unknown>("/barbers", { method: "GET" });
-	const list = Array.isArray(response)
-		? response
-		: response && typeof response === "object" && Array.isArray((response as { items?: unknown[] }).items)
-			? ((response as { items: unknown[] }).items ?? [])
-			: [];
-
-	return list.map((item) => normalizeBarberProfile(item)).filter((item): item is BarberProfile => item !== null);
+	const { data } = await api.get<unknown>("/barbers");
+	// Handle both { data: [...] } wrapper and plain array
+	const list = extractList(data);
+	return normalizeArray(list, normalizeBarberProfile);
 };
 
 export const getBarberApi = async (id: string): Promise<BarberProfile> => {
-	const response = await apiRequest<unknown>(`/barbers/${id}`, { method: "GET", auth: true });
-	const profile = normalizeBarberProfile(response);
-
-	if (!profile) {
-		throw new Error("Invalid barber response");
-	}
-
+	const { data } = await api.get<unknown>(`/barbers/${id}`);
+	// Handle both { data: {...} } wrapper and plain object
+	const raw = data && typeof data === "object" && "data" in (data as Record<string, unknown>)
+		? (data as Record<string, unknown>).data
+		: data;
+	const profile = normalizeBarberProfile(raw);
+	if (!profile) throw new Error("Invalid barber response");
 	return profile;
 };
 
 export const getBarberCommentsApi = async (id: string): Promise<CommentListResponse> => {
-	const response = await apiRequest<unknown>(`/barbers/${id}/comments?page=1&pageSize=30`, { method: "GET" });
+	const { data } = await api.get<unknown>(`/barbers/${id}/comments`, {
+		params: { page: 1, pageSize: 30 },
+	});
 
-	const list = Array.isArray(response)
-		? response
-		: response && typeof response === "object" && Array.isArray((response as { items?: unknown[] }).items)
-			? ((response as { items: unknown[] }).items ?? [])
-			: [];
+	const list = extractList(data);
 
 	const metaTotal =
-		response && typeof response === "object" && response && "meta" in (response as object)
-			? toNumber(((response as { meta?: { total?: unknown } }).meta?.total ?? list.length), list.length)
+		data && typeof data === "object" && "meta" in (data as object)
+			? normalizeNumber(((data as { meta?: { total?: unknown } }).meta?.total ?? list.length), list.length)
 			: list.length;
 
 	return {
-		items: list.map((item) => normalizeComment(item)).filter((item): item is BarberComment => item !== null),
+		items: normalizeArray(list, normalizeComment),
 		total: metaTotal,
 	};
+};
+
+// Unwrap potential { data: {...} } wrapper from old backend
+const unwrap = (d: unknown): Record<string, unknown> => {
+	if (!d || typeof d !== "object") return {};
+	const obj = d as Record<string, unknown>;
+	if ("data" in obj && obj.data && typeof obj.data === "object" && !("liked" in obj) && !("id" in obj))
+		return obj.data as Record<string, unknown>;
+	return obj;
 };
 
 export const postBarberCommentApi = async (id: string, payload: { text: string; author?: string }): Promise<BarberComment | null> => {
 	const body: Record<string, string> = { text: payload.text };
 	if (payload.author) body.author = payload.author;
 
-	const response = await apiRequest<unknown>(`/barbers/${id}/comments`, {
-		method: "POST",
-		auth: true,
-		body,
-	});
-	return normalizeComment(response);
+	const { data } = await api.post<unknown>(`/barbers/${id}/comments`, body);
+	const raw = unwrap(data);
+	return normalizeComment(raw);
 };
 
 export interface ReactionResult {
@@ -202,65 +180,43 @@ export interface ReactionResult {
 }
 
 export const likeBarberApi = async (id: string): Promise<ReactionResult | null> => {
-	const response = await apiRequest<unknown>(`/barbers/${id}/like`, {
-		method: "POST",
-		auth: true,
-	});
-	if (!response || typeof response !== "object") {
-		return null;
-	}
-	const source = response as { liked?: unknown; disliked?: unknown };
+	const { data } = await api.post<unknown>(`/barbers/${id}/like`);
+	const source = unwrap(data);
 	return {
-		stats: normalizeStats(response),
-		liked: Boolean(source.liked),
-		disliked: Boolean(source.disliked),
+		stats: normalizeStats(source),
+		liked: normalizeBoolean(source.liked),
+		disliked: normalizeBoolean(source.disliked),
 	};
 };
 
 export const dislikeBarberApi = async (id: string): Promise<ReactionResult | null> => {
-	const response = await apiRequest<unknown>(`/barbers/${id}/dislike`, {
-		method: "POST",
-		auth: true,
-	});
-	if (!response || typeof response !== "object") {
-		return null;
-	}
-	const source = response as { liked?: unknown; disliked?: unknown };
+	const { data } = await api.post<unknown>(`/barbers/${id}/dislike`);
+	const source = unwrap(data);
 	return {
-		stats: normalizeStats(response),
-		liked: Boolean(source.liked),
-		disliked: Boolean(source.disliked),
+		stats: normalizeStats(source),
+		liked: normalizeBoolean(source.liked),
+		disliked: normalizeBoolean(source.disliked),
 	};
 };
 
 export const followBarberApi = async (id: string): Promise<{ isFollowing: boolean; followers: number }> => {
-	const response = await apiRequest<unknown>(`/barbers/${id}/follow`, {
-		method: "POST",
-		auth: true,
-	});
-	const source = response && typeof response === "object" ? (response as { isFollowing?: unknown; followers?: unknown }) : {};
+	const { data } = await api.post<unknown>(`/barbers/${id}/follow`);
+	const source = unwrap(data);
 	return {
-		isFollowing: Boolean(source.isFollowing),
-		followers: toNumber(source.followers),
+		isFollowing: normalizeBoolean(source.isFollowing),
+		followers: normalizeNumber(source.followers),
 	};
 };
 
 export const unfollowBarberApi = async (id: string): Promise<{ isFollowing: boolean; followers: number }> => {
-	const response = await apiRequest<unknown>(`/barbers/${id}/follow`, {
-		method: "DELETE",
-		auth: true,
-	});
-	const source = response && typeof response === "object" ? (response as { isFollowing?: unknown; followers?: unknown }) : {};
+	const { data } = await api.delete<unknown>(`/barbers/${id}/follow`);
+	const source = unwrap(data);
 	return {
-		isFollowing: Boolean(source.isFollowing),
-		followers: toNumber(source.followers),
+		isFollowing: normalizeBoolean(source.isFollowing),
+		followers: normalizeNumber(source.followers),
 	};
 };
 
 export const reportBarberApi = async (id: string, payload: { reason: string; details?: string }) => {
-	await apiRequest(`/barbers/${id}/report`, {
-		method: "POST",
-		auth: true,
-		body: payload,
-	});
+	await api.post(`/barbers/${id}/report`, payload);
 };

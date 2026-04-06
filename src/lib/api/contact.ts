@@ -1,4 +1,4 @@
-import { apiRequest } from "./client";
+import api from "./client";
 
 export interface ContactPayload {
 	name: string;
@@ -7,8 +7,6 @@ export interface ContactPayload {
 }
 
 export const submitContactApi = async (payload: ContactPayload) => {
-	return apiRequest("/contact", {
-		method: "POST",
-		body: payload,
-	});
+	const { data } = await api.post("/contact", payload);
+	return data;
 };

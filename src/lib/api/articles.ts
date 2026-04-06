@@ -1,4 +1,5 @@
-import { apiRequest } from "./client";
+import api from "./client";
+import { normalizeId, normalizeString, normalizeArray, extractList } from "./normalizers";
 
 export interface ArticleItem {
 	id: string;
@@ -22,70 +23,49 @@ const normalizeArticle = (raw: unknown): ArticleItem | null => {
 	if (!raw || typeof raw !== "object") return null;
 	const src = raw as Record<string, unknown>;
 
-	const id = typeof src.id === "string" ? src.id : typeof src.id === "number" ? String(src.id) : null;
+	const id = normalizeId(src.id);
 	if (!id) return null;
 
 	const author = src.author && typeof src.author === "object" ? (src.author as Record<string, unknown>) : null;
 
 	return {
 		id,
-		title: typeof src.title === "string" ? src.title : "",
-		summary: typeof src.summary === "string" ? src.summary : "",
-		content: typeof src.content === "string" ? src.content : "",
+		title: normalizeString(src.title),
+		summary: normalizeString(src.summary),
+		content: normalizeString(src.content),
 		authorId: typeof src.authorId === "string" ? src.authorId : author ? String(author.id ?? "") : "",
 		authorName: typeof src.authorName === "string" ? src.authorName : author ? String(author.name ?? "") : "",
 		authorRole: typeof src.authorRole === "string" ? src.authorRole : author ? String(author.userType ?? author.role ?? "") : "",
-		createdAt: typeof src.createdAt === "string" ? src.createdAt : new Date().toISOString(),
-		updatedAt: typeof src.updatedAt === "string" ? src.updatedAt : new Date().toISOString(),
+		createdAt: normalizeString(src.createdAt, new Date().toISOString()),
+		updatedAt: normalizeString(src.updatedAt, new Date().toISOString()),
 	};
-};
-
-const extractList = (response: unknown): unknown[] => {
-	if (Array.isArray(response)) return response;
-	if (!response || typeof response !== "object") return [];
-	const src = response as Record<string, unknown>;
-	if (Array.isArray(src.items)) return src.items;
-	if (Array.isArray(src.data)) return src.data;
-	if (src.data && typeof src.data === "object") {
-		const data = src.data as Record<string, unknown>;
-		if (Array.isArray(data.items)) return data.items;
-	}
-	return [];
 };
 
 export const getArticlesApi = async (params: { page?: number; pageSize?: number } = {}): Promise<ArticleItem[]> => {
 	const { page = 1, pageSize = 20 } = params;
-	const response = await apiRequest<unknown>(`/articles?page=${page}&pageSize=${pageSize}`, { method: "GET" });
-	return extractList(response)
-		.map(normalizeArticle)
-		.filter((a): a is ArticleItem => a !== null);
+	const { data } = await api.get<unknown>("/articles", {
+		params: { page, pageSize },
+	});
+	return normalizeArray(extractList(data), normalizeArticle);
 };
 
 export const getArticleApi = async (id: string): Promise<ArticleItem> => {
-	const response = await apiRequest<unknown>(`/articles/${id}`, { method: "GET" });
-	const article = normalizeArticle(response);
+	const { data } = await api.get<unknown>(`/articles/${id}`);
+	const article = normalizeArticle(data);
 	if (!article) throw new Error("Invalid article response");
 	return article;
 };
 
 export const createArticleApi = async (payload: ArticleCreatePayload): Promise<ArticleItem | null> => {
-	const response = await apiRequest<unknown>("/articles", {
-		method: "POST",
-		auth: true,
-		body: payload,
-	});
-	return normalizeArticle(response);
+	const { data } = await api.post<unknown>("/articles", payload);
+	return normalizeArticle(data);
 };
 
 export const updateArticleApi = async (id: string, payload: Partial<ArticleCreatePayload>): Promise<ArticleItem | null> => {
-	const response = await apiRequest<unknown>(`/articles/${id}`, {
-		method: "PATCH",
-		auth: true,
-		body: payload,
-	});
-	return normalizeArticle(response);
+	const { data } = await api.patch<unknown>(`/articles/${id}`, payload);
+	return normalizeArticle(data);
 };
 
 export const deleteArticleApi = async (id: string): Promise<void> => {
-	await apiRequest(`/articles/${id}`, { method: "DELETE", auth: true });
+	await api.delete(`/articles/${id}`);
 };

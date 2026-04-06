@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { CalendarDays, Clock, User, XCircle, Loader2, ArrowRight, Scissors } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { getBarbersApi, type BarberProfile } from "../../lib/api/barbers";
-import { apiRequest } from "../../lib/api/client";
+import api from "../../lib/api/client";
 
 interface BookingSlot {
 	time: string;
@@ -11,17 +11,19 @@ interface BookingSlot {
 }
 
 const getSlotsApi = async (date: string, barberId: string): Promise<BookingSlot[]> => {
-	const res = await apiRequest<{ data?: { slots?: unknown[] }; slots?: unknown[] }>(
-		`/bookings/slots?date=${date}&barberId=${barberId}`,
-		{ method: "GET" },
-	);
-	const raw = res?.data?.slots ?? (res as { slots?: unknown[] })?.slots ?? [];
+	const { data } = await api.get("/bookings/slots", { params: { date, barberId } });
+	const raw = data?.slots ?? [];
 	return (Array.isArray(raw) ? raw : [])
 		.filter((s): s is Record<string, unknown> => !!s && typeof s === "object")
 		.map((s) => ({ time: String(s.time ?? ""), available: s.available !== false }))
 		.filter((s) => s.time);
 };
 
+const tomorrowStr = () => {
+	const d = new Date();
+	d.setDate(d.getDate() + 1);
+	return d.toISOString().split("T")[0];
+};
 const todayStr = () => new Date().toISOString().split("T")[0];
 
 const FieldLabel = ({ icon, label }: { icon: React.ReactNode; label: string }) => (
@@ -39,7 +41,7 @@ export default function QuickBookWidget() {
 	const location = useLocation();
 	const locale = location.pathname.split("/")[1] || "uz";
 
-	const [date, setDate] = useState(todayStr());
+	const [date, setDate] = useState(tomorrowStr());
 	const [barbers, setBarbers] = useState<BarberProfile[]>([]);
 	const [barberId, setBarberId] = useState<string>("");
 	const [slots, setSlots] = useState<BookingSlot[]>([]);

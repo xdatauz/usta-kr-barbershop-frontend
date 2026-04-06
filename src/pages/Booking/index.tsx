@@ -1,34 +1,22 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
-import { CalendarDays, CheckCircle2, Clock3, History, Scissors, Send, ShieldAlert } from "lucide-react";
+import { CalendarDays, Clock3, History, Scissors, Send, ShieldAlert } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import { createBookingApi, getBookingSlotsApi, type BookingStyle } from "../../lib/api/bookings";
-import { getBarbersApi, type BarberProfile } from "../../lib/api/barbers";
-import { getPublicServicesApi, type Service } from "../../lib/api/services";
+import { type BookingStyle } from "../../lib/api/bookings";
 import { isApiError } from "../../lib/api/client";
 import { useAuth } from "../../context/auth/auth-provider";
-
-const BOOKING_STYLES: { value: BookingStyle; labelKey: string }[] = [
-	{ value: "classic", labelKey: "bookingPage.hairstyles.classic" },
-	{ value: "fade", labelKey: "bookingPage.hairstyles.fade" },
-	{ value: "beard", labelKey: "bookingPage.hairstyles.beard" },
-	{ value: "deluxe", labelKey: "bookingPage.hairstyles.deluxe" },
-	{ value: "color", labelKey: "bookingPage.hairstyles.color" },
-	{ value: "fatherSon", labelKey: "bookingPage.hairstyles.fatherSon" },
-];
+import { useBarbers, useBookingSlots, useCreateBooking, usePublicServices } from "../../hooks";
+import { bookingFormSchema } from "../../lib/schemas/booking.schema";
+import BookingBarberSelector from "./BookingBarberSelector";
+import BookingServiceSelector from "./BookingServiceSelector";
+import BookingTimeSlots from "./BookingTimeSlots";
+import BookingSummary from "./BookingSummary";
 
 type SubmitStatus = "idle" | "sending" | "success" | "validationError" | "requestError" | "configError";
 
 const fallbackSlots = ["09:00", "10:00", "11:00", "12:00", "13:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
-
-const formatKoreanPhone = (value: string) => {
-	const digits = value.replace(/\D/g, "").slice(0, 11);
-	if (digits.length <= 3) return digits;
-	if (digits.length <= 7) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
-	return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
-};
 
 const BookingPage = () => {
 	const { t } = useTranslation();
@@ -43,14 +31,31 @@ const BookingPage = () => {
 		phone: currentUser?.phone ?? "",
 		barberId: searchParams.get("barberId") ?? "",
 		style: "",
-		date: searchParams.get("date") ?? "",
+		date: searchParams.get("date") ?? (() => { const d = new Date(); d.setDate(d.getDate() + 1); return d.toISOString().split("T")[0]; })(),
 		time: searchParams.get("time") ?? "",
 	});
-	const [availableSlots, setAvailableSlots] = useState<string[]>(fallbackSlots);
-	const [barbers, setBarbers] = useState<BarberProfile[]>([]);
-	const [services, setServices] = useState<Service[]>([]);
-
 	const today = new Date().toISOString().split("T")[0];
+
+	// React Query hooks
+	const { data: barbers = [] } = useBarbers();
+	const { data: services = [] } = usePublicServices();
+	const { data: slotsData } = useBookingSlots(form.barberId, form.date);
+	const createBookingMutation = useCreateBooking();
+
+	// Filter services based on selected barber's role
+	const filteredServices = useMemo(() => {
+		if (!form.barberId) return services;
+		const selectedBarber = barbers.find((b) => b.id === form.barberId);
+		if (!selectedBarber) return services;
+		const isHead = selectedBarber.role?.toUpperCase().includes("HEAD");
+		return isHead ? services : services.filter((s) => !s.isHeadBarberOnly);
+	}, [form.barberId, barbers, services]);
+
+	const availableSlots = useMemo(() => {
+		if (!slotsData) return fallbackSlots;
+		const onlyAvailable = slotsData.filter((slot) => slot.available).map((slot) => slot.time);
+		return onlyAvailable.length ? onlyAvailable : fallbackSlots;
+	}, [slotsData]);
 
 	// Sync name/phone from auth once user is resolved (in case auth loads after initial render)
 	useEffect(() => {
@@ -62,46 +67,6 @@ const BookingPage = () => {
 		}));
 	}, [currentUser]);
 
-	useEffect(() => {
-		const loadBarbers = async () => {
-			try {
-				const list = await getBarbersApi();
-				setBarbers(list);
-			} catch {
-				setBarbers([]);
-			}
-		};
-		const loadServices = async () => {
-			try {
-				const list = await getPublicServicesApi();
-				setServices(list);
-			} catch {
-				setServices([]);
-			}
-		};
-		void loadBarbers();
-		void loadServices();
-	}, []);
-
-	useEffect(() => {
-		const loadSlots = async () => {
-			if (!form.date || !form.barberId) {
-				setAvailableSlots(fallbackSlots);
-				return;
-			}
-			try {
-				const slots = await getBookingSlotsApi(form.barberId, form.date);
-				const onlyAvailable = slots.filter((slot) => slot.available).map((slot) => slot.time);
-				setAvailableSlots(onlyAvailable.length ? onlyAvailable : fallbackSlots);
-			} catch (error) {
-				const message = isApiError(error) && error.message ? error.message : t("toast.booking.slotLoadFailed");
-				toast.error(message);
-				setAvailableSlots(fallbackSlots);
-			}
-		};
-		void loadSlots();
-	}, [form.date, form.barberId, t]);
-
 	const selectedBarberName = useMemo(() => {
 		const found = barbers.find((b) => b.id === form.barberId);
 		return found ? found.name : "-";
@@ -111,10 +76,22 @@ const BookingPage = () => {
 		return form.style ? t(`bookingPage.hairstyles.${form.style}`) : "-";
 	}, [form.style, t]);
 
+	const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+
 	const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		setValidationErrors({});
 
-		if (!form.name.trim() || !form.phone.trim() || !form.barberId || !form.style || !form.date || !form.time) {
+		const result = bookingFormSchema.safeParse(form);
+		if (!result.success) {
+			const fieldErrors: Record<string, string> = {};
+			for (const issue of result.error.issues) {
+				const field = issue.path[0];
+				if (field && !fieldErrors[String(field)]) {
+					fieldErrors[String(field)] = issue.message;
+				}
+			}
+			setValidationErrors(fieldErrors);
 			setStatus("validationError");
 			return;
 		}
@@ -122,13 +99,13 @@ const BookingPage = () => {
 		setStatus("sending");
 
 		try {
-			await createBookingApi({
-				name: form.name.trim(),
-				phone: form.phone.trim(),
-				barberId: form.barberId,
-				date: form.date,
-				time: form.time,
-				style: form.style as BookingStyle,
+			await createBookingMutation.mutateAsync({
+				name: result.data.name,
+				phone: result.data.phone,
+				barberId: result.data.barberId,
+				date: result.data.date,
+				time: result.data.time,
+				style: result.data.style as BookingStyle,
 			});
 		} catch (error) {
 			setStatus("requestError");
@@ -207,106 +184,29 @@ const BookingPage = () => {
 						onSubmit={onSubmit}
 						className="space-y-4 rounded-3xl border border-slate-300/70 bg-white p-4 dark:border-slate-700 dark:bg-slate-900 sm:p-6"
 					>
-						<div className="grid gap-3 sm:grid-cols-2">
-							<label className="space-y-1">
-								<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">
-									{t("bookingPage.form.labels.name")}
-								</span>
-								<input
-									type="text"
-									value={form.name}
-									onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
-									placeholder={t("bookingPage.form.placeholders.name")}
-									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-								/>
-							</label>
-							<label className="space-y-1">
-								<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">
-									{t("bookingPage.form.labels.phone")}
-								</span>
-								<input
-									type="tel"
-									value={form.phone}
-									onChange={(event) => setForm((prev) => ({ ...prev, phone: formatKoreanPhone(event.target.value) }))}
-									placeholder={t("bookingPage.form.placeholders.phone")}
-									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-								/>
-							</label>
-						</div>
+						<BookingBarberSelector
+							name={form.name}
+							phone={form.phone}
+							onNameChange={(name) => setForm((prev) => ({ ...prev, name }))}
+							onPhoneChange={(phone) => setForm((prev) => ({ ...prev, phone }))}
+						/>
 
-						<div className="grid gap-3 sm:grid-cols-2">
-							<label className="space-y-1">
-								<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">
-									{t("bookingPage.form.labels.barber")}
-								</span>
-								<select
-									value={form.barberId}
-									onChange={(event) => setForm((prev) => ({ ...prev, barberId: event.target.value, time: "" }))}
-									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-								>
-									<option value="">{t("bookingPage.form.placeholders.barber")}</option>
-									{barbers.map((barber) => (
-										<option key={barber.id} value={barber.id}>
-											{barber.name}
-										</option>
-									))}
-								</select>
-							</label>
-							<label className="space-y-1">
-								<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">
-									{t("bookingPage.form.labels.service")}
-								</span>
-								<select
-									value={form.style}
-									onChange={(event) => setForm((prev) => ({ ...prev, style: event.target.value }))}
-									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-								>
-									<option value="">{t("bookingPage.form.placeholders.service")}</option>
-									{BOOKING_STYLES.map((style) => (
-										<option key={style.value} value={style.value}>
-											{t(style.labelKey)}
-										</option>
-									))}
-								</select>
-							</label>
-						</div>
+						<BookingServiceSelector
+							barberId={form.barberId}
+							style={form.style}
+							barbers={barbers}
+							onBarberChange={(barberId) => setForm((prev) => ({ ...prev, barberId, time: "" }))}
+							onStyleChange={(style) => setForm((prev) => ({ ...prev, style }))}
+						/>
 
-						<div className="grid gap-3 sm:grid-cols-2">
-							<label className="space-y-1">
-								<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">
-									{t("bookingPage.form.labels.date")}
-								</span>
-								<input
-									type="date"
-									min={today}
-									value={form.date}
-									onChange={(event) => setForm((prev) => ({ ...prev, date: event.target.value, time: "" }))}
-									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-								/>
-							</label>
-							<label className="space-y-1">
-								<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">
-									{t("bookingPage.form.labels.time")}
-								</span>
-								<select
-									value={form.time}
-									onChange={(event) => setForm((prev) => ({ ...prev, time: event.target.value }))}
-									className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200"
-								>
-									<option value="">{t("bookingPage.form.placeholders.time")}</option>
-									{form.time && !availableSlots.includes(form.time) && (
-										<option key={form.time} value={form.time}>
-											{form.time}
-										</option>
-									)}
-									{availableSlots.map((slot) => (
-										<option key={slot} value={slot}>
-											{slot}
-										</option>
-									))}
-								</select>
-							</label>
-						</div>
+						<BookingTimeSlots
+							date={form.date}
+							time={form.time}
+							availableSlots={availableSlots}
+							today={today}
+							onDateChange={(date) => setForm((prev) => ({ ...prev, date, time: "" }))}
+							onTimeChange={(time) => setForm((prev) => ({ ...prev, time }))}
+						/>
 
 						<div className="flex gap-3">
 							<button
@@ -320,9 +220,6 @@ const BookingPage = () => {
 
 							<Link
 								to={`/${locale}/profile`}
-								// onClick={(e) => {
-								// 	if (status !== "success") e.preventDefault();
-								// }}
 								className={`inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition
 			${
 				status === "success"
@@ -336,10 +233,17 @@ const BookingPage = () => {
 						</div>
 
 						{status === "validationError" && (
-							<p className="inline-flex items-center gap-2 rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-700 dark:text-red-300">
-								<ShieldAlert className="h-4 w-4" />
-								{t("bookingPage.form.messages.validationError")}
-							</p>
+							<div className="space-y-1">
+								<p className="inline-flex items-center gap-2 rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-700 dark:text-red-300">
+									<ShieldAlert className="h-4 w-4" />
+									{t("bookingPage.form.messages.validationError")}
+								</p>
+								{Object.entries(validationErrors).map(([field, messageKey]) => (
+									<p key={field} className="pl-1 text-xs text-red-600 dark:text-red-400">
+										{t(messageKey, messageKey)}
+									</p>
+								))}
+							</div>
 						)}
 						{status === "requestError" && (
 							<p className="inline-flex items-center gap-2 rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-700 dark:text-red-300">
@@ -355,55 +259,15 @@ const BookingPage = () => {
 						)}
 					</motion.form>
 
-					<div className="space-y-4">
-						<div className="rounded-3xl border border-slate-300/70 bg-white p-4 dark:border-slate-700 dark:bg-slate-900 sm:p-5">
-							<h2 className="text-lg font-bold text-slate-900 dark:text-slate-50">{t("bookingPage.summary.title")}</h2>
-							<div className="mt-3 space-y-2 text-sm text-slate-700 dark:text-slate-300">
-								<p>
-									<strong>{t("bookingPage.form.labels.name")}:</strong> {form.name || "-"}
-								</p>
-								<p>
-									<strong>{t("bookingPage.form.labels.phone")}:</strong> {form.phone || "-"}
-								</p>
-								<p>
-									<strong>{t("bookingPage.form.labels.barber")}:</strong> {form.barberId ? selectedBarberName : "-"}
-								</p>
-								<p>
-									<strong>{t("bookingPage.form.labels.service")}:</strong> {form.style ? selectedServiceName : "-"}
-								</p>
-								<p>
-									<strong>{t("bookingPage.form.labels.date")}:</strong> {form.date || "-"}
-								</p>
-								<p>
-									<strong>{t("bookingPage.form.labels.time")}:</strong> {form.time || "-"}
-								</p>
-							</div>
-						</div>
-
-						{services.length > 0 && (
-							<div className="rounded-3xl border border-slate-300/70 bg-white p-4 dark:border-slate-700 dark:bg-slate-900 sm:p-5">
-								<h2 className="text-lg font-bold text-slate-900 dark:text-slate-50">
-									<Scissors className="inline h-5 w-5 text-emerald-600 dark:text-emerald-300 mr-2" />
-									{t("servicesSection.title")}
-								</h2>
-								<div className="mt-3 divide-y divide-slate-100 dark:divide-slate-800">
-									{services.map((service) => (
-										<div key={service.id} className="flex items-center justify-between py-2 text-sm">
-											<span className="font-medium text-slate-800 dark:text-slate-200">{service.name}</span>
-											<span className="text-emerald-700 dark:text-emerald-300 font-semibold">
-												{Number(service.price).toLocaleString()}
-												{service.durationMinutes ? (
-													<span className="ml-2 text-xs text-slate-500 dark:text-slate-400 font-normal">
-														{service.durationMinutes} {t("common.min")}
-													</span>
-												) : null}
-											</span>
-										</div>
-									))}
-								</div>
-							</div>
-						)}
-					</div>
+					<BookingSummary
+						name={form.name}
+						phone={form.phone}
+						barberName={form.barberId ? selectedBarberName : "-"}
+						serviceName={form.style ? selectedServiceName : "-"}
+						date={form.date}
+						time={form.time}
+						services={filteredServices}
+					/>
 				</section>
 			</div>
 		</main>

@@ -1,16 +1,24 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route, Navigate, Outlet, useParams } from "react-router-dom";
-import HomePage from "../pages/Home";
-import ServicePage from "../pages/Services";
-import GalleryPage from "../pages/Gallery";
-import AboutPage from "../pages/About";
-import ContactPage from "../pages/Contact";
-import UserPage from "../pages/User";
-import BookingPage from "../pages/Booking";
-import BarbersPage from "../pages/Barbers";
-import ArticlePage from "../pages/Article";
-import NotificationsPage from "../pages/Notifications";
+
+const HomePage = lazy(() => import("../pages/Home"));
+const ServicePage = lazy(() => import("../pages/Services"));
+const GalleryPage = lazy(() => import("../pages/Gallery"));
+const AboutPage = lazy(() => import("../pages/About"));
+const ContactPage = lazy(() => import("../pages/Contact"));
+const UserPage = lazy(() => import("../pages/User"));
+const BookingPage = lazy(() => import("../pages/Booking"));
+const BarbersPage = lazy(() => import("../pages/Barbers"));
+const ArticlePage = lazy(() => import("../pages/Article"));
+const NotificationsPage = lazy(() => import("../pages/Notifications"));
 
 const supportedLocales = ["uz", "kr", "en", "ru"] as const;
+
+const PageLoader = () => (
+	<div className="flex min-h-[60vh] items-center justify-center">
+		<div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-300 border-t-emerald-500" />
+	</div>
+);
 
 const LocaleGuard = () => {
 	const { locale } = useParams();
@@ -24,26 +32,28 @@ const LocaleGuard = () => {
 
 const AppRouter = () => {
 	return (
-		<Routes>
-			{/* Redirect root to default language */}
-			<Route path="/" element={<Navigate to="/uz" replace />} />
+		<Suspense fallback={<PageLoader />}>
+			<Routes>
+				{/* Redirect root to default language */}
+				<Route path="/" element={<Navigate to="/uz" replace />} />
 
-			<Route path="/:locale" element={<LocaleGuard />}>
-				<Route index element={<HomePage />} />
-				<Route path="services" element={<ServicePage />} />
-				<Route path="gallery" element={<GalleryPage />} />
-				<Route path="about" element={<AboutPage />} />
-				<Route path="contact" element={<ContactPage />} />
-				<Route path="booking" element={<BookingPage />} />
-				<Route path="articles" element={<ArticlePage />} />
-				<Route path="barbers" element={<BarbersPage />} />
-				<Route path="barbers/:barberId" element={<BarbersPage />} />
-				<Route path="profile" element={<UserPage />} />
-				<Route path="notifications" element={<NotificationsPage />} />
-			</Route>
+				<Route path="/:locale" element={<LocaleGuard />}>
+					<Route index element={<HomePage />} />
+					<Route path="services" element={<ServicePage />} />
+					<Route path="gallery" element={<GalleryPage />} />
+					<Route path="about" element={<AboutPage />} />
+					<Route path="contact" element={<ContactPage />} />
+					<Route path="booking" element={<BookingPage />} />
+					<Route path="articles" element={<ArticlePage />} />
+					<Route path="barbers" element={<BarbersPage />} />
+					<Route path="barbers/:barberId" element={<BarbersPage />} />
+					<Route path="profile" element={<UserPage />} />
+					<Route path="notifications" element={<NotificationsPage />} />
+				</Route>
 
-			<Route path="*" element={<Navigate to="/uz" replace />} />
-		</Routes>
+				<Route path="*" element={<Navigate to="/uz" replace />} />
+			</Routes>
+		</Suspense>
 	);
 };
 

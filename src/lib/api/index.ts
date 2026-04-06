@@ -1,3 +1,6 @@
+// Shared normalizers
+export * from "./normalizers";
+
 // Core client + error helpers
 export * from "./client";
 

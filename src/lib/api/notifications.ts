@@ -1,4 +1,4 @@
-import { apiRequest } from "./client";
+import api from "./client";
 
 export interface ClientNotification {
   id: number;
@@ -8,17 +8,23 @@ export interface ClientNotification {
   createdAt: string;
 }
 
-export const getClientNotificationsApi = (): Promise<ClientNotification[]> =>
-  apiRequest("/client/notifications", { method: "GET", auth: true });
+export const getClientNotificationsApi = async (): Promise<ClientNotification[]> => {
+  const { data } = await api.get<ClientNotification[]>("/client/notifications");
+  return data;
+};
 
-export const markClientNotificationReadApi = (id: number): Promise<void> =>
-  apiRequest(`/client/notifications/${id}/read`, { method: "PATCH", auth: true });
+export const markClientNotificationReadApi = async (id: number): Promise<void> => {
+  await api.patch(`/client/notifications/${id}/read`);
+};
 
-export const markAllClientNotificationsReadApi = (): Promise<void> =>
-  apiRequest("/client/notifications/read-all", { method: "PATCH", auth: true });
+export const markAllClientNotificationsReadApi = async (): Promise<void> => {
+  await api.patch("/client/notifications/read-all");
+};
 
-export const deleteClientNotificationApi = (id: number): Promise<void> =>
-  apiRequest(`/client/notifications/${id}`, { method: "DELETE", auth: true });
+export const deleteClientNotificationApi = async (id: number): Promise<void> => {
+  await api.delete(`/client/notifications/${id}`);
+};
 
-export const deleteAllClientNotificationsApi = (): Promise<void> =>
-  apiRequest("/client/notifications", { method: "DELETE", auth: true });
+export const deleteAllClientNotificationsApi = async (): Promise<void> => {
+  await api.delete("/client/notifications");
+};

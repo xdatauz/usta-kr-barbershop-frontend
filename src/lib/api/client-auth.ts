@@ -1,4 +1,5 @@
-import { apiRequest, clearStoredTokens, setAccessToken } from "./client";
+import api, { clearStoredTokens, setAccessToken } from "./client";
+import { normalizeId, normalizeString } from "./normalizers";
 
 export interface ClientUser {
 	id: string;
@@ -15,13 +16,12 @@ export interface ClientAuthResult {
 const normalizeClient = (raw: unknown): ClientUser | null => {
 	if (!raw || typeof raw !== "object") return null;
 	const src = raw as Record<string, unknown>;
-	const rawId = src.id;
-	const id = typeof rawId === "number" ? String(rawId) : typeof rawId === "string" ? rawId : null;
+	const id = normalizeId(src.id);
 	if (!id) return null;
 	return {
 		id,
-		name: typeof src.name === "string" ? src.name : "",
-		phone: typeof src.phone === "string" ? src.phone : "",
+		name: normalizeString(src.name),
+		phone: normalizeString(src.phone),
 		userType: typeof src.userType === "string" ? src.userType : undefined,
 	};
 };
@@ -35,31 +35,25 @@ const normalizeClientAuth = (payload: Record<string, unknown>): ClientAuthResult
 
 /** POST /client-auth/register — phone + optional name + password */
 export const registerClientApi = async (payload: { phone: string; fullName?: string; password: string }): Promise<ClientAuthResult> => {
-	const response = await apiRequest<Record<string, unknown>>("/client-auth/register", {
-		method: "POST",
-		body: payload,
-	});
-	const result = normalizeClientAuth(response);
+	const { data } = await api.post<Record<string, unknown>>("/client-auth/register", payload);
+	const result = normalizeClientAuth(data);
 	setAccessToken(result.accessToken);
 	return result;
 };
 
 /** POST /client-auth/login — phone + password */
 export const loginClientApi = async (payload: { phone: string; password: string }): Promise<ClientAuthResult> => {
-	const response = await apiRequest<Record<string, unknown>>("/client-auth/login", {
-		method: "POST",
-		body: payload,
-	});
-	const result = normalizeClientAuth(response);
+	const { data } = await api.post<Record<string, unknown>>("/client-auth/login", payload);
+	const result = normalizeClientAuth(data);
 	setAccessToken(result.accessToken);
 	return result;
 };
 
 /** GET /client-auth/me */
 export const getClientMeApi = async (): Promise<ClientUser> => {
-	const response = await apiRequest<unknown>("/client-auth/me", { method: "GET", auth: true });
-	const src = response as Record<string, unknown>;
-	const client = normalizeClient(src.client ?? response);
+	const { data } = await api.get<unknown>("/client-auth/me");
+	const src = data as Record<string, unknown>;
+	const client = normalizeClient(src.client ?? data);
 	if (!client) throw new Error("CLIENT_PROFILE_INVALID");
 	return client;
 };

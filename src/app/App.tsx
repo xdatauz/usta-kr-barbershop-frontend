@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Navbar from "../components/shared/Navbar";
 import Footer from "../components/shared/Footer";
+import ErrorBoundary from "../components/ErrorBoundary";
 import { ThemeProvider } from "../context/theme/theme-provider";
 
 export default function App() {
@@ -47,15 +48,17 @@ export default function App() {
 							<Navbar scrolled={scrolled} />
 						</div>
 						{/* MAIN CONTENT */}
-						<motion.div
-							className="w-full"
-							initial={{ opacity: 0, scale: 0.95, y: 20 }}
-							animate={{ opacity: 1, scale: 1, y: 0 }}
-							exit={{ opacity: 0, scale: 0.95, y: 20 }}
-							transition={{ duration: 0.5, ease: "easeInOut" }}
-						>
-							<AppRouter />
-						</motion.div>
+						<ErrorBoundary>
+							<motion.div
+								className="w-full"
+								initial={{ opacity: 0, scale: 0.95, y: 20 }}
+								animate={{ opacity: 1, scale: 1, y: 0 }}
+								exit={{ opacity: 0, scale: 0.95, y: 20 }}
+								transition={{ duration: 0.5, ease: "easeInOut" }}
+							>
+								<AppRouter />
+							</motion.div>
+						</ErrorBoundary>
 
 						{/* FOOTER */}
 						<div className="w-full border-t border-slate-300 dark:border-slate-800">

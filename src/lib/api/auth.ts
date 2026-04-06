@@ -1,6 +1,7 @@
 import type { AuthUser } from "../../context/auth/auth-provider";
 import { StaffRole } from "../enums/staff-role.enum";
-import { apiRequest, clearStoredTokens, setAccessToken, setRefreshToken } from "./client";
+import api, { clearStoredTokens, setAccessToken, setRefreshToken } from "./client";
+import { normalizeId, normalizeString } from "./normalizers";
 
 export interface AuthRequestPayload {
 	/** email or phone — sent as `identifier` to backend */
@@ -51,7 +52,7 @@ const normalizeUser = (raw: unknown): AuthUser | null => {
 	if (!raw || typeof raw !== "object") return null;
 
 	const src = raw as Record<string, unknown>;
-	const id = typeof src.id === "string" ? src.id : typeof src.id === "number" ? String(src.id) : null;
+	const id = normalizeId(src.id);
 	const name = typeof src.name === "string" ? src.name : null;
 	const phone = typeof src.phone === "string" ? src.phone : typeof src.email === "string" ? src.email : null;
 
@@ -62,7 +63,7 @@ const normalizeUser = (raw: unknown): AuthUser | null => {
 		name,
 		phone,
 		userType: toUserType(src.userType ?? src.role),
-		image: typeof src.image === "string" ? src.image : null,
+		image: normalizeString(src.image, "") || null,
 	};
 };
 
@@ -85,29 +86,26 @@ const persistTokens = (result: AuthResult) => {
 
 export const loginApi = async (payload: AuthRequestPayload): Promise<AuthResult> => {
 	// Backend expects `identifier` (email or phone); we map `email` → `identifier`
-	const response = await apiRequest<AuthResponseShape>("/auth/login", {
-		method: "POST",
-		body: { email: payload.email, password: payload.password },
+	const { data } = await api.post<AuthResponseShape>("/auth/login", {
+		email: payload.email,
+		password: payload.password,
 	});
-	const result = normalizeAuthResponse(response);
+	const result = normalizeAuthResponse(data);
 	persistTokens(result);
 	return result;
 };
 
 export const signupApi = async (payload: SignupRequestPayload): Promise<AuthResult> => {
-	const response = await apiRequest<AuthResponseShape>("/auth/signup", {
-		method: "POST",
-		body: payload,
-	});
-	const result = normalizeAuthResponse(response);
+	const { data } = await api.post<AuthResponseShape>("/auth/signup", payload);
+	const result = normalizeAuthResponse(data);
 	persistTokens(result);
 	return result;
 };
 
 export const getMeApi = async (): Promise<AuthUser> => {
-	const response = await apiRequest<unknown>("/auth/me", { method: "GET", auth: true });
-	const src = response as Record<string, unknown>;
-	const user = normalizeUser(src.user ?? response);
+	const { data } = await api.get<unknown>("/auth/me");
+	const src = data as Record<string, unknown>;
+	const user = normalizeUser(src.user ?? data);
 
 	if (!user) throw new Error("AUTH_PROFILE_INVALID");
 
@@ -116,10 +114,7 @@ export const getMeApi = async (): Promise<AuthUser> => {
 
 export const logoutApi = async (): Promise<void> => {
 	try {
-		await apiRequest("/auth/logout", {
-			method: "POST",
-			auth: true,
-		});
+		await api.post("/auth/logout");
 	} finally {
 		clearStoredTokens();
 	}

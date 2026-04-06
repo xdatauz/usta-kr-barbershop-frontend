@@ -1,4 +1,5 @@
-import { apiRequest } from "./client";
+import api from "./client";
+import { normalizeNumber, normalizeString, normalizeArray } from "./normalizers";
 
 export type CheckStatus = "OPEN" | "CLOSED";
 
@@ -20,19 +21,16 @@ export interface Check {
 	createdAt: string;
 }
 
-const toNum = (v: unknown, fallback = 0): number =>
-	typeof v === "number" ? v : Number.isFinite(Number(v)) ? Number(v) : fallback;
-
 const normalizeItem = (raw: unknown): CheckItem | null => {
 	if (!raw || typeof raw !== "object") return null;
 	const src = raw as Record<string, unknown>;
-	const serviceId = toNum(src.serviceId, -1);
+	const serviceId = normalizeNumber(src.serviceId, -1);
 	if (serviceId < 0) return null;
 	return {
 		serviceId,
 		serviceName: typeof src.serviceName === "string" ? src.serviceName : undefined,
-		quantity: toNum(src.quantity, 1),
-		price: toNum(src.price),
+		quantity: normalizeNumber(src.quantity, 1),
+		price: normalizeNumber(src.price),
 	};
 };
 
@@ -40,7 +38,7 @@ const normalizeCheck = (raw: unknown): Check | null => {
 	if (!raw || typeof raw !== "object") return null;
 	const src = raw as Record<string, unknown>;
 
-	const id = toNum(src.id, -1);
+	const id = normalizeNumber(src.id, -1);
 	if (id < 0) return null;
 
 	const rawItems = Array.isArray(src.items) ? src.items : [];
@@ -49,42 +47,42 @@ const normalizeCheck = (raw: unknown): Check | null => {
 		id,
 		appointmentId: typeof src.appointmentId === "number" ? src.appointmentId : undefined,
 		status: src.status === "CLOSED" ? "CLOSED" : "OPEN",
-		items: rawItems.map(normalizeItem).filter((i): i is CheckItem => i !== null),
-		subtotal: toNum(src.subtotal),
-		discountAmount: toNum(src.discountAmount),
-		total: toNum(src.total),
-		createdAt: typeof src.createdAt === "string" ? src.createdAt : new Date().toISOString(),
+		items: normalizeArray(rawItems, normalizeItem),
+		subtotal: normalizeNumber(src.subtotal),
+		discountAmount: normalizeNumber(src.discountAmount),
+		total: normalizeNumber(src.total),
+		createdAt: normalizeString(src.createdAt, new Date().toISOString()),
 	};
 };
 
 /** POST /checks — open a new check */
 export const createCheckApi = async (payload: { appointmentId?: number }): Promise<Check> => {
-	const response = await apiRequest<unknown>("/checks", { method: "POST", auth: true, body: payload });
-	const check = normalizeCheck(response);
+	const { data } = await api.post<unknown>("/checks", payload);
+	const check = normalizeCheck(data);
 	if (!check) throw new Error("Invalid check response");
 	return check;
 };
 
 /** PATCH /checks/:id/add-item */
 export const addCheckItemApi = async (id: number, payload: { serviceId: number; quantity?: number }): Promise<Check> => {
-	const response = await apiRequest<unknown>(`/checks/${id}/add-item`, { method: "PATCH", auth: true, body: payload });
-	const check = normalizeCheck(response);
+	const { data } = await api.patch<unknown>(`/checks/${id}/add-item`, payload);
+	const check = normalizeCheck(data);
 	if (!check) throw new Error("Invalid check response");
 	return check;
 };
 
 /** PATCH /checks/:id/discount — ADMIN only */
 export const applyDiscountApi = async (id: number, payload: { discountPercent?: number; discountAmount?: number }): Promise<Check> => {
-	const response = await apiRequest<unknown>(`/checks/${id}/discount`, { method: "PATCH", auth: true, body: payload });
-	const check = normalizeCheck(response);
+	const { data } = await api.patch<unknown>(`/checks/${id}/discount`, payload);
+	const check = normalizeCheck(data);
 	if (!check) throw new Error("Invalid check response");
 	return check;
 };
 
 /** PATCH /checks/:id/close */
 export const closeCheckApi = async (id: number): Promise<Check> => {
-	const response = await apiRequest<unknown>(`/checks/${id}/close`, { method: "PATCH", auth: true });
-	const check = normalizeCheck(response);
+	const { data } = await api.patch<unknown>(`/checks/${id}/close`);
+	const check = normalizeCheck(data);
 	if (!check) throw new Error("Invalid check response");
 	return check;
 };

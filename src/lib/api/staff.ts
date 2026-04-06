@@ -1,4 +1,5 @@
-import { apiRequest } from "./client";
+import api from "./client";
+import { normalizeNumber, normalizeString, normalizeArray, extractList } from "./normalizers";
 
 export type StaffRole = "ADMIN" | "BARBER" | "RECEPTION" | "HEAD_BARBER";
 
@@ -38,22 +39,19 @@ export interface ScheduleCreatePayload {
 	isWorking?: boolean;
 }
 
-const toNum = (v: unknown, fallback = 0): number =>
-	typeof v === "number" ? v : Number.isFinite(Number(v)) ? Number(v) : fallback;
-
 const validRoles: StaffRole[] = ["ADMIN", "BARBER", "RECEPTION", "HEAD_BARBER"];
 
 const normalizeStaff = (raw: unknown): StaffMember | null => {
 	if (!raw || typeof raw !== "object") return null;
 	const src = raw as Record<string, unknown>;
 
-	const id = toNum(src.id, -1);
+	const id = normalizeNumber(src.id, -1);
 	if (id < 0) return null;
 
 	return {
 		id,
-		name: typeof src.name === "string" ? src.name : "",
-		email: typeof src.email === "string" ? src.email : "",
+		name: normalizeString(src.name),
+		email: normalizeString(src.email),
 		phone: typeof src.phone === "string" ? src.phone : undefined,
 		role: validRoles.includes(src.role as StaffRole) ? (src.role as StaffRole) : "RECEPTION",
 		branchId: typeof src.branchId === "number" ? src.branchId : undefined,
@@ -65,87 +63,74 @@ const normalizeSchedule = (raw: unknown): StaffSchedule | null => {
 	if (!raw || typeof raw !== "object") return null;
 	const src = raw as Record<string, unknown>;
 
-	const id = toNum(src.id, -1);
+	const id = normalizeNumber(src.id, -1);
 	if (id < 0) return null;
 
 	return {
 		id,
-		staffId: toNum(src.staffId),
-		dayOfWeek: toNum(src.dayOfWeek),
-		startTime: typeof src.startTime === "string" ? src.startTime : "09:00",
-		endTime: typeof src.endTime === "string" ? src.endTime : "18:00",
+		staffId: normalizeNumber(src.staffId),
+		dayOfWeek: normalizeNumber(src.dayOfWeek),
+		startTime: normalizeString(src.startTime, "09:00"),
+		endTime: normalizeString(src.endTime, "18:00"),
 		isWorking: src.isWorking !== false,
 	};
 };
 
-const extractList = (response: unknown): unknown[] => {
-	if (Array.isArray(response)) return response;
-	if (!response || typeof response !== "object") return [];
-	const src = response as Record<string, unknown>;
-	return Array.isArray(src.items) ? src.items : [];
-};
-
 export const getStaffApi = async (): Promise<StaffMember[]> => {
-	const response = await apiRequest<unknown>("/staff", { method: "GET", auth: true });
-	return extractList(response)
-		.map(normalizeStaff)
-		.filter((s): s is StaffMember => s !== null);
+	const { data } = await api.get<unknown>("/staff");
+	return normalizeArray(extractList(data), normalizeStaff);
 };
 
 export const getStaffMemberApi = async (id: number): Promise<StaffMember> => {
-	const response = await apiRequest<unknown>(`/staff/${id}`, { method: "GET", auth: true });
-	const member = normalizeStaff(response);
+	const { data } = await api.get<unknown>(`/staff/${id}`);
+	const member = normalizeStaff(data);
 	if (!member) throw new Error("Invalid staff response");
 	return member;
 };
 
 export const createStaffApi = async (payload: StaffCreatePayload): Promise<StaffMember> => {
-	const response = await apiRequest<unknown>("/staff", { method: "POST", auth: true, body: payload });
-	const member = normalizeStaff(response);
+	const { data } = await api.post<unknown>("/staff", payload);
+	const member = normalizeStaff(data);
 	if (!member) throw new Error("Invalid staff response");
 	return member;
 };
 
 export const updateStaffApi = async (id: number, payload: Partial<Omit<StaffCreatePayload, "password">>): Promise<StaffMember> => {
-	const response = await apiRequest<unknown>(`/staff/${id}`, { method: "PATCH", auth: true, body: payload });
-	const member = normalizeStaff(response);
+	const { data } = await api.patch<unknown>(`/staff/${id}`, payload);
+	const member = normalizeStaff(data);
 	if (!member) throw new Error("Invalid staff response");
 	return member;
 };
 
 export const deleteStaffApi = async (id: number): Promise<void> => {
-	await apiRequest(`/staff/${id}`, { method: "DELETE", auth: true });
+	await api.delete(`/staff/${id}`);
 };
 
 /** GET /staff/me/schedule — own schedule (for barber/staff) */
 export const getMyScheduleApi = async (): Promise<StaffSchedule[]> => {
-	const response = await apiRequest<unknown>("/staff/me/schedule", { method: "GET", auth: true });
-	return extractList(response)
-		.map(normalizeSchedule)
-		.filter((s): s is StaffSchedule => s !== null);
+	const { data } = await api.get<unknown>("/staff/me/schedule");
+	return normalizeArray(extractList(data), normalizeSchedule);
 };
 
 export const getSchedulesApi = async (): Promise<StaffSchedule[]> => {
-	const response = await apiRequest<unknown>("/staff/schedules", { method: "GET", auth: true });
-	return extractList(response)
-		.map(normalizeSchedule)
-		.filter((s): s is StaffSchedule => s !== null);
+	const { data } = await api.get<unknown>("/staff/schedules");
+	return normalizeArray(extractList(data), normalizeSchedule);
 };
 
 export const createScheduleApi = async (payload: ScheduleCreatePayload): Promise<StaffSchedule> => {
-	const response = await apiRequest<unknown>("/staff/schedules", { method: "POST", auth: true, body: payload });
-	const schedule = normalizeSchedule(response);
+	const { data } = await api.post<unknown>("/staff/schedules", payload);
+	const schedule = normalizeSchedule(data);
 	if (!schedule) throw new Error("Invalid schedule response");
 	return schedule;
 };
 
 export const updateScheduleApi = async (id: number, payload: Partial<ScheduleCreatePayload>): Promise<StaffSchedule> => {
-	const response = await apiRequest<unknown>(`/staff/schedules/${id}`, { method: "PATCH", auth: true, body: payload });
-	const schedule = normalizeSchedule(response);
+	const { data } = await api.patch<unknown>(`/staff/schedules/${id}`, payload);
+	const schedule = normalizeSchedule(data);
 	if (!schedule) throw new Error("Invalid schedule response");
 	return schedule;
 };
 
 export const deleteScheduleApi = async (id: number): Promise<void> => {
-	await apiRequest(`/staff/schedules/${id}`, { method: "DELETE", auth: true });
+	await api.delete(`/staff/schedules/${id}`);
 };
