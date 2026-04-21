@@ -60,7 +60,7 @@ const BookingSummary = ({
 							<div key={service.id} className="flex items-center justify-between py-2 text-sm">
 								<span className="font-medium text-slate-800 dark:text-slate-200">{service.name}</span>
 								<span className="text-emerald-700 dark:text-emerald-300 font-semibold">
-									{Number(service.price).toLocaleString()}
+									₩{Math.round(Number(service.price)).toLocaleString("ko-KR")}
 									{service.durationMinutes ? (
 										<span className="ml-2 text-xs text-slate-500 dark:text-slate-400 font-normal">
 											{service.durationMinutes} {t("common.min")}

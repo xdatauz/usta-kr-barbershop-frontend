@@ -1,9 +1,24 @@
 {
 	"meta": {
-		"title": "Usta | Premium Sartaroshxona",
-		"description": "Usta Premium Sartaroshxona zamonaviy soch turmaklari, soqol parvarishi va professional xizmatlarni taqdim etadi.",
-		"ogTitle": "Usta | Premium Sartaroshxona",
-		"ogDescription": "Zamonaviy uslub, aniq trim va premium parvarish Usta'da."
+		"title": "Usta Barber | Koreyadagi Premium O'zbek Sartaroshxonasi",
+		"description": "Usta Barber — Koreyadagi o'zbek sartaroshxonasi. Zamonaviy soch turmagi, soqol parvarishi, skin fade, klassik kesim. Professional barberlar, qulay narxlar. Janubiy Koreyada premium erkaklar sartaroshxonasi.",
+		"ogTitle": "Usta Barber | Koreyadagi Premium O'zbek Sartaroshxonasi",
+		"ogDescription": "Zamonaviy uslub, aniq trim va premium parvarish. Janubiy Koreyadagi eng yaxshi o'zbek barber xizmati.",
+		"keywords": "sartaroshxona, barber, Koreyadagi sartaroshxona, o'zbek barber, erkaklar soch turmagi, soqol olish, skin fade, klassik kesim, premium barber, 한국 우즈벡 바버샵, Usta Barber, barbershop Korea, корейский барбершоп",
+		"servicesTitle": "Xizmatlar | Usta Barber — Soch va Soqol Xizmatlari",
+		"servicesDescription": "Klassik kesim, skin fade, soqol shakllantirish, deluxe parvarish va boshqa premium xizmatlar. Koreyadagi eng yaxshi sartaroshxona narxlari.",
+		"bookingTitle": "Online Bron | Usta Barber — Qabulga Yozilish",
+		"bookingDescription": "Usta Barber da onlayn bron qiling. Qulay vaqtni tanlang, professional barber xizmatidan foydalaning. Tez tasdiqlash.",
+		"barbersTitle": "Bizning Barberlar | Usta Barber Professional Jamoasi",
+		"barbersDescription": "Tajribali va professional barberlar jamoasi. Har bir usta o'z sohasida mutaxassis. Profillarni ko'ring va tanlang.",
+		"galleryTitle": "Galereya | Usta Barber — Ishlarimiz Namunalari",
+		"galleryDescription": "Oldin va keyin natijalari, barberlar ish jarayonida, interyer va muhit suratlari. Real ishlarimiz bilan tanishing.",
+		"aboutTitle": "Biz Haqimizda | Usta Barber — Tariximiz va Qadriyatlarimiz",
+		"aboutDescription": "Usta Barber — aniqlik, sifat va mijoz ishonchiga asoslangan premium sartaroshxona. Bizning hikoyamiz va jamoamiz bilan tanishing.",
+		"contactTitle": "Aloqa | Usta Barber — Manzil, Telefon, Ish Vaqti",
+		"contactDescription": "Usta Barber bilan bog'laning. Manzil, telefon raqam, ish vaqti va xarita. Savol va takliflaringizni yuboring.",
+		"articlesTitle": "Maqolalar | Usta Barber — Grooming Bo'yicha Maslahatlar",
+		"articlesDescription": "Professional barberlardan grooming, soch parvarishi va uslub bo'yicha foydali maqolalar va maslahatlar."
 	},
 	"nav": {
 		"home": "Bosh sahifa",
@@ -41,87 +56,87 @@
 		"switchToLight": "Yorug' rejimga o'tish"
 	},
 	"homeHero": {
-		"badge": "Premium parvarish",
-		"title": "Aniq uslub, ishonchli ko'rinish va har bir detalda e'tibor.",
-		"subtitle": "Klassik kesimlardan zamonaviy fade uslublarigacha, Usta professional barberlar va qulay muhit bilan to'liq tajriba taqdim etadi.",
-		"primaryCta": "Uchrashuvni band qilish",
-		"secondaryCta": "Bo'limlarni ochish",
-		"revealDone": "Bo'limlar ochildi",
+		"badge": "2019-yildan beri xizmatda",
+		"title": "Uslub — bu ichki ishonchning tashqi ifodasi.",
+		"subtitle": "Janubiy Koreadagi birinchi o'zbek premium sartaroshxonasi. Har bir tashrifda siz faqat soch kestirmasiz — yangilanib chiqasiz.",
+		"primaryCta": "Navbatni band qilish",
+		"secondaryCta": "Xizmatlarni ko'rish",
+		"revealDone": "Xizmatlar ochildi",
 		"stats": {
-			"yearsValue": "12+",
+			"yearsValue": "6+",
 			"clientsValue": "8k+",
 			"ratingValue": "4.9",
 			"years": "Yillik tajriba",
-			"clients": "Mamnun mijozlar",
-			"rating": "O'rtacha reyting"
+			"clients": "Doimiy mijozlar",
+			"rating": "Mijozlar bahosi"
 		},
-		"imageAltOne": "Barber mijoz sochini turmaklamoqda",
-		"imageAltTwo": "Soqolni professional trim qilish"
+		"imageAltOne": "Professional barber ish jarayonida",
+		"imageAltTwo": "Soqolni aniqlik bilan shakllantirish"
 	},
 	"homeReveal": {
-		"description": "Bosh sahifani silliq ko'rish uchun bo'limlar bosqichma-bosqich ochiladi.",
-		"showMoreButton": "{{count}}-bo'limni ochish",
-		"resetButton": "Bo'limlarni yashirish"
+		"description": "Xizmatlarimiz bilan batafsil tanishing.",
+		"showMoreButton": "Ko'proq ko'rish",
+		"resetButton": "Yashirish"
 	},
 	"servicesSection": {
 		"eyebrow": "Xizmatlar",
-		"title": "Har bir uslub uchun premium xizmatlar",
-		"description": "Xizmatni tanlang va jamoamiz uslubingizni aniqlik, gigiyena va barqaror sifat bilan yakunlasin.",
+		"title": "Professionallik har bir detalda",
+		"description": "O'zingizga mos xizmatni tanlang. Aniqlik, tozalik va mukammal natija — har bir tashrifda kafolatlanadi.",
 		"bookNow": "Hozir band qilish",
 		"noServices": "Hozircha xizmatlar mavjud emas.",
 		"items": {
 			"classicCut": {
-				"name": "Klassik soch olish",
-				"description": "Qaychi va mashinka bilan toza kesim, yakunda zamonaviy styling.",
+				"name": "Klassik kesim",
+				"description": "Qaychi va mashinkaning uyg'un birligi. Sochingiz tabiiy shakl oladi, yakunda zamonaviy styling bilan taqdim etiladi.",
 				"price": "120 000 so'm",
 				"duration": "35 daq"
 			},
 			"beardStyling": {
-				"name": "Soqolni shakllantirish",
-				"description": "Yuz tuzilishiga mos chiziqlar va toza kontur bilan soqolga forma berish.",
+				"name": "Soqol san'ati",
+				"description": "Yuz tuzilishingizga mos ravishda soqolga aniq chiziqlar va toza kontur beriladi. Natija — kuchli va tartibli ko'rinish.",
 				"price": "100 000 so'm",
 				"duration": "30 daq"
 			},
 			"skinFade": {
-				"name": "Skin fade",
-				"description": "Teri darajasidan yuqoriga mukammal o'tish bilan yuqori aniqlikdagi fade.",
+				"name": "Skin Fade",
+				"description": "Teri darajasidan silliq o'tish — millimetr aniqligida. Zamonaviy va dadil ko'rinish xohlovchilar uchun.",
 				"price": "150 000 so'm",
 				"duration": "45 daq"
 			},
 			"fatherSon": {
-				"name": "Ota + O'g'il paketi",
-				"description": "Ikki kishilik qulay paket: bir xil sifat va bir xil qulay xizmat.",
+				"name": "Ota va O'g'il",
+				"description": "Ikki avlod — bir stul, bir sifat. Otasiga ham, o'g'liga ham bir xil e'tibor va g'amxo'rlik.",
 				"price": "220 000 so'm",
 				"duration": "60 daq"
 			},
 			"deluxePackage": {
-				"name": "Deluxe parvarish",
-				"description": "Soch, soqol, yuvish va issiq sochiq bilan to'liq premium kompleks.",
+				"name": "To'liq parvarish",
+				"description": "Soch kesimi, soqol shakllantirish, boshni yuvish va issiq sochiq — barchasi bir seansda. O'zingizga lazzat bering.",
 				"price": "280 000 so'm",
 				"duration": "70 daq"
 			},
 			"hairColor": {
-				"name": "Soch rangini yangilash",
-				"description": "Tabiiy tonni yangilash va kulrang sochlarni professional bo'yoq bilan moslash.",
+				"name": "Rang yangilash",
+				"description": "Tabiiy tonni qaytarish yoki yangi ko'rinishga o'tish. Kulrang tolalar ko'rinmay qoladi, siz esa yosharasiz.",
 				"price": "190 000 so'm",
 				"duration": "50 daq"
 			}
 		},
 		"extras": {
-			"memberText": "Oylik a'zolik orqali qulay vaqt va chegirmali paketlardan foydalaning.",
-			"processOne": "Qisqa konsultatsiya va uslub tanlash",
-			"processTwo": "Aniq kesim va fade ishlovi",
-			"popularTitle": "Eng mashhur",
-			"memberTitle": "A'zolik afzalliklari",
-			"popularText": "Skin Fade + Soqol styling eng ko'p tanlanadigan kombinatsiya.",
-			"processThree": "Soqol/detal yakuni va oxirgi tekshiruv",
-			"processTitle": "Tashrif qanday o'tadi"
+			"memberText": "Oylik a'zolik bilan sevimli barber va qulay vaqtni band qiling — har safar chegirmali narxlarda.",
+			"processOne": "Qisqa suhbat: qanday ko'rinish xohlaysiz?",
+			"processTwo": "Usta ishlaydi — kesim, fade, detal ishlovi",
+			"popularTitle": "Eng sevimli tanlov",
+			"memberTitle": "A'zolik imkoniyatlari",
+			"popularText": "Skin Fade + Soqol styling — mijozlarimiz eng ko'p tanlaydigan uyg'unlik.",
+			"processThree": "Yakuniy tekshiruv va oxirgi shtrixlar",
+			"processTitle": "Tashrif qanday kechadi"
 		}
 	},
 	"gallerySection": {
-		"eyebrow": "Galereya",
-		"title": "Har kunlik ish jarayonidan lavhalar",
-		"description": "Oldin/keyin natijalari, interyer muhiti va barberlarimiz ish jarayonidagi real kadrlar.",
+		"eyebrow": "Portfolio",
+		"title": "Natijalar o'zi gapiradi",
+		"description": "Har bir surat — haqiqiy mijoz va haqiqiy natija. Sifatimizga ishonch hosil qiling.",
 		"categories": {
 			"cuts": "Oldin / Keyin",
 			"interior": "Interyer",
@@ -135,87 +150,87 @@
 			"styleTwo": "Textured Crop",
 			"styleOne": "Skin Fade",
 			"styleFour": "Beard Line Up",
-			"stylesTitle": "Buyurtma berish mumkin bo'lgan uslublar",
+			"stylesTitle": "Sizni kutayotgan uslublar",
 			"noteLabel": "Eslatma",
 			"styleThree": "Classic Taper",
-			"noteTitle": "Haqiqiy rasm, haqiqiy mijoz",
-			"noteText": "Bu bo'limdagi barcha rasmlar sartaroshxonamizdagi real jarayonlardan olingan."
+			"noteTitle": "Haqiqiy ishlar, haqiqiy odamlar",
+			"noteText": "Bu yerda ko'rganingiz — studiya emas. Barchasi bizning stullarimizda, bizning qo'llarimiz bilan yaratilgan."
 		}
 	},
 	"aboutSection": {
 		"eyebrow": "Biz haqimizda",
-		"title": "Usta klassik intizom va zamonaviy uslubni birlashtiradi",
-		"description": "Biz aniqlik, mijoz ishonchi va kuchli grooming madaniyatiga tayangan jamoaviy sartaroshxonamiz.",
-		"storyTitle": "Bizning hikoyamiz",
-		"storyText": "Mahalliy kichik joydan boshlangan yo'limiz bugun barqaror sifat, qulay muhit va ishonchli natija uchun tanlanadigan maskanga aylandi.",
-		"valuesTitle": "Asosiy qadriyatlar",
+		"title": "An'anaviy mahorat. Zamonaviy standart.",
+		"description": "Sartaroshxona 2019-yildan beri mijozlar uchun xizmat qilib keladi va Janubiy Koreyadagi birinchi o'zbeklar barbershopi hisoblanadi.",
+		"storyTitle": "Qanday boshlangan edi",
+		"storyText": "2019-yilda bir stul va katta orzu bilan boshlangan yo'l. Biz Janubiy Koreadagi birinchi o'zbek sartaroshxonasi sifatida tarixga kirdik. Bugun Usta — minglab yurtdoshlar ishonib kelgan joy. Biz faqat soch kesmaymiz — biz odamlarga o'ziga ishonch bag'ishlaymiz.",
+		"valuesTitle": "Bizni boshqalardan ajratadigan narsalar",
 		"values": {
 			"precision": {
-				"title": "Aniqlik birinchi",
-				"text": "Har bir chiziq, o'tish va kontur detal darajasida yakunlanadi."
+				"title": "Millimetr aniqligi",
+				"text": "Har bir chiziq, har bir o'tish, har bir burchak — barchasi detal darajasida ishlangan."
 			},
 			"hospitality": {
-				"title": "Samimiy xizmat",
-				"text": "Har bir mehmonni hurmat bilan kutib oladigan do'stona atmosfera."
+				"title": "Uydan uzoqda — uy",
+				"text": "Kirib kelganingizda do'stga kelgandek his qilasiz. Choy, suhbat, iliq munosabat — bu bizning madaniyatimiz."
 			},
 			"hygiene": {
-				"title": "Qattiq gigiyena",
-				"text": "Steril asboblar va toza ish joyi har bir seansda majburiy."
+				"title": "Tozalik — shartsiz",
+				"text": "Steril asboblar, toza ish joyi, yangi sochiqlar. Bunda murosaga o'rin yo'q."
 			},
 			"craft": {
-				"title": "Doimiy rivojlanish",
-				"text": "Jamoamiz trendlar va treninglar orqali doim o'z ustida ishlaydi."
+				"title": "Har kuni o'sish",
+				"text": "Jamoamiz yangi texnikalarni o'rganadi, trendlarni kuzatadi va doim bir qadam oldinda yuradi."
 			}
 		},
 		"stats": {
-			"happy_clients": "Baxtli mijozlar",
-			"haircuts": "Kesim amalga oshirildi",
-			"experience": "Yil tajribasi",
-			"satisfaction": "Qanoatlantirish darajasi"
+			"happy_clients": "Mamnun yurtdoshlar",
+			"haircuts": "Yaratilgan uslublar",
+			"experience": "Yil mobaynida siz bilan",
+			"satisfaction": "Qaytib kelish darajasi"
 		},
-		"timelineTitle": "Bizning yo'limiz",
+		"timelineTitle": "Usta yo'li",
 		"timeline": {
 			"founded": "Asos solingan",
 			"expanded": "Kengaytirildi",
 			"modernized": "Modernlashtirildi",
 			"leading": "Yetakchi"
 		},
-		"teamTitle": "Jamoamiz bilan tanishing",
+		"teamTitle": "Har bir ustaning o'z hikoyasi bor",
 		"team": {
 			"jamshid": {
 				"name": "Jamshid",
 				"role": "Senior barber",
-				"bio": "12+ yildan beri fade uslublari va premium soqol shakllantirish."
+				"bio": "12 yildan ortiq tajriba. Uning qo'lida fade san'atga, soqol esa she'rga aylanadi."
 			},
 			"sardor": {
 				"name": "Sardor",
 				"role": "Style expert",
-				"bio": "Tekstural kesimlar va zamonaviy styling ustasi."
+				"bio": "Tekstura va shakl bo'yicha ko'zi o'tkir. Sardor har bir boshga individual yondashadi."
 			},
 			"aziz": {
 				"name": "Aziz",
 				"role": "Grooming specialist",
-				"bio": "Kompleks parvarish paketlari va mijoz qulayligiga ixtisoslashgan."
+				"bio": "Parvarish — uning ishi emas, ishtiyoqi. Kompleks paketlardan keyin odamlar yangilangan bo'lib chiqishadi."
 			}
 		},
-		"ctaTitle": "Almashuvga tayyormisiz?",
-		"ctaDescription": "Bugundan barcha sartarosh bilan uchrashing va Usta farqini sezib oling.",
+		"ctaTitle": "O'zingizga yangi ko'rinish hadya qiling",
+		"ctaDescription": "Eng yaqin qulay vaqtni tanlang — Usta farqini o'z ko'zingiz bilan ko'ring.",
 		"ctaButton": "Yozilish",
 		"extras": {
-			"timelineTwo": "Jamoa kengaydi va premium paketlar joriy qilindi.",
-			"timelineThree": "Bugun minglab doimiy mijozlar ishonchini qozonganmiz.",
-			"timelineOne": "Usta bir o'rindiqli mahalliy barber sifatida boshlangan."
+			"timelineTwo": "Jamoa kuchaydi, yangi xizmatlar paydo bo'ldi va har bir mijoz uchun shaxsiy yondashuv joriy qilindi.",
+			"timelineThree": "Bugun biz Koreyadagi o'zbek erkaklar orasida ishonchli nom sifatida tanilganmiz.",
+			"timelineOne": "Hammasi bir o'rindiq va bir orzudan boshlandi — yurtdoshlarga sifatli xizmat ko'rsatish."
 		}
 	},
 	"contactSection": {
-		"eyebrow": "Aloqa",
-		"title": "Biz bilan bog'laning",
-		"description": "Savolingiz bormi yoki murojaat qilmoqchimisiz? Formani to'ldiring, ish vaqtida javob beramiz.",
+		"eyebrow": "Gaplashamiz",
+		"title": "Bog'laning — javob tezda keladi",
+		"description": "Savol bo'lsa yoki shunchaki maslahat kerak bo'lsa — yozing. Ish vaqtida albatta javob beramiz.",
 		"form": {
 			"nameLabel": "To'liq ism",
 			"namePlaceholder": "Ismingiz",
 			"phoneLabel": "Telefon",
-			"phonePlaceholder": "+998 ...",
+			"phonePlaceholder": "010-1234-5678",
 			"serviceLabel": "Xizmat turi",
 			"servicePlaceholder": "Xizmatni tanlang",
 			"serviceOptions": {
@@ -231,7 +246,7 @@
 		},
 		"info": {
 			"addressLabel": "Manzil",
-			"address": "Toshkent shahri, Chilonzor tumani, Bunyodkor ko'chasi 12",
+			"address": "Gyeongsangbuk-do, Gyeongsan shahri, Dungji-ro 84-1",
 			"phoneLabel": "Telefon",
 			"emailLabel": "Email",
 			"hoursLabel": "Ish vaqti",
@@ -241,20 +256,20 @@
 			"mapLabel": "Usta sartaroshxona xaritasi"
 		},
 		"extras": {
-			"faqOneA": "Navbatsiz ham kirish mumkin, lekin oldindan yozilsangiz vaqt kafolatlanadi.",
-			"tipThree": "Uy sharoitida parvarish uchun barberdan tavsiya oling.",
+			"faqOneA": "Navbatsiz ham kirishingiz mumkin, lekin oldindan yozilsangiz — vaqtingiz kafolatlangan, kutish yo'q.",
+			"tipThree": "Uyda sochni qanday parvarish qilish haqida barberdan maslahat so'rang — bepul!",
 			"faqOneQ": "Oldindan yozilish shartmi?",
 			"faqTitle": "Ko'p beriladigan savollar",
-			"faqTwoQ": "Karta orqali to'lov bormi?",
-			"tipsTitle": "Tashrifdan oldin",
-			"tipOne": "Aniq uslub xohlasangiz, namunaviy rasm olib keling.",
-			"tipTwo": "Konsultatsiya uchun 5-10 daqiqa oldinroq keling.",
-			"faqTwoA": "Ha, naqd va karta orqali to'lov qabul qilamiz."
+			"faqTwoQ": "Karta bilan to'lash mumkinmi?",
+			"tipsTitle": "Kelishdan oldin bilib oling",
+			"tipOne": "Aniq uslub xohlasangiz — telefondagi rasmni ko'rsating. Usta tushunadi.",
+			"tipTwo": "5-10 daqiqa oldinroq keling — birga maslahat qilib, eng mos uslubni tanlaymiz.",
+			"faqTwoA": "Albatta. Naqd ham, karta ham — ikkalasi ham qabul qilinadi."
 		}
 	},
 	"footer": {
 		"text": "Barcha huquqlar himoyalangan.",
-		"tagline": "Zamonaviy erkaklar uchun premium barber xizmati.",
+		"tagline": "Koreyada o'zbek erkaklar uchun ishonchli va iliq sartaroshxona.",
 		"quickLinks": "Tezkor havolalar",
 		"contactTitle": "Bog'lanish"
 	},
@@ -370,18 +385,18 @@
 		"detailBookedAt": "Bron qilingan vaqt"
 	},
 	"bookingPage": {
-		"eyebrow": "Onlayn Bron",
-		"title": "Qabulga Yozilish",
-		"description": "Qulay vaqtni tanlang va professional barber xizmatidan foydalaning.",
+		"eyebrow": "Vaqtingizni band qiling",
+		"title": "O'zingizga qulay paytni tanlang",
+		"description": "Bir necha bosqichda yoziling — qolganini biz hal qilamiz. Siz faqat o'z vaqtingizda keling va rahatlaning.",
 		"badges": {
-			"fast": "Tez tasdiqlash",
-			"time": "Moslashuvchan vaqt",
-			"style": "Barcha uslublar"
+			"fast": "Bir zumda tasdiqlash",
+			"time": "Sizga qulay vaqt",
+			"style": "Har qanday uslub"
 		},
 		"telegram": {
-			"title": "Yangi Bron So‘rovi",
-			"description": "So‘rovingiz Telegram orqali yuboriladi.",
-			"subDescription": "Administrator tez orada siz bilan bog‘lanadi."
+			"title": "Yangi Bron So'rovi",
+			"description": "So'rovingiz Telegram orqali yuboriladi.",
+			"subDescription": "Administrator tez orada siz bilan bog'lanadi."
 		},
 		"form": {
 			"labels": {
@@ -395,11 +410,11 @@
 			},
 			"placeholders": {
 				"name": "Ismingizni kiriting",
-				"phone": "+998 90 123 45 67",
+				"phone": "010-1234-5678",
 				"barber": "Barberni tanlang",
 				"service": "Xizmatni tanlang",
 				"time": "Vaqtni tanlang",
-				"note": "Qo’shimcha izoh (ixtiyoriy)"
+				"note": "Qo'shimcha izoh (ixtiyoriy)"
 			},
 			"actions": {
 				"submit": "Bron qilish",
@@ -407,7 +422,7 @@
 			},
 			"messages": {
 				"success": "Bron muvaffaqiyatli yuborildi!",
-				"validationError": "Iltimos, barcha majburiy maydonlarni to‘ldiring.",
+				"validationError": "Iltimos, barcha majburiy maydonlarni to'ldiring.",
 				"sendFail": "Bron yuborishda xatolik yuz berdi.",
 				"configError": "Server sozlamalarida xatolik."
 			}
@@ -417,39 +432,40 @@
 			"fade": "Fade",
 			"beard": "Soqol olish",
 			"deluxe": "Deluxe paket",
-			"color": "Soch bo‘yash",
-			"fatherSon": "Ota va o‘g‘il"
+			"color": "Soch bo'yash",
+			"fatherSon": "Ota va o'g'il"
 		},
 		"summary": {
 			"title": "Bron Tafsilotlari",
-			"noNote": "Izoh yo‘q"
+			"noNote": "Izoh yo'q"
 		},
 		"help": {
-			"title": "Yordam kerakmi?",
-			"description": "Qaysi barber yoki xizmatni tanlashni bilmasangiz, quyidagilarni ko‘rib chiqing.",
+			"title": "Qaysi xizmatni tanlashni bilmayapsizmi?",
+			"description": "Hech gap emas. Barberlarimiz va xizmatlar sahifasini ko'rib chiqing — o'zingizga mosini topasiz.",
 			"barbersCta": "Barberlar",
 			"servicesCta": "Xizmatlar"
 		}
 	},
 	"barbersPage": {
-		"title": "Bizning Professional Sartaroshlarimiz",
-		"description": "Aniqlik, uslub va sifatli xizmatga bag‘ishlangan tajribali jamoamiz bilan tanishing.",
+		"title": "Usta qo'llar jamoasi",
+		"description": "Har bir barberning o'z uslubi, o'z kuchi bor. Ularni tanib oling — va o'zingizga eng yaqinini tanlang.",
 		"loadingList": "Sartaroshlar yuklanmoqda...",
 		"loadingProfile": "Sartarosh profili yuklanmoqda...",
 		"notFound": "Sartarosh topilmadi.",
-		"viewProfile": "Profilni ko‘rish",
+		"reviews": "ta fikr",
+		"viewProfile": "Profilni ko'rish",
 		"backToList": "Sartaroshlarga qaytish",
 		"bookWithBarber": "Shu sartaroshga yozilish",
 		"profileEyebrow": "Sartarosh Profili",
-		"follow": "Obuna bo‘lish",
-		"following": "Obuna bo‘lgansiz",
+		"follow": "Obuna bo'lish",
+		"following": "Obuna bo'lgansiz",
 		"like": "Yoqdi",
 		"dislike": "Yoqmadi",
 		"followers": "Obunachilar",
 		"likes": "Layklar",
 		"dislikes": "Dislayklar",
 		"commentsTitle": "Mijozlar Fikrlari",
-		"noComments": "Hali fikrlar yo‘q. Birinchi bo‘lib fikr bildiring.",
+		"noComments": "Hali fikrlar yo'q. Birinchi bo'lib fikr bildiring.",
 		"guestName": "Mehmon",
 		"commentForm": {
 			"author": "Ismingiz (ixtiyoriy)",
@@ -474,38 +490,38 @@
 			"jamshid": {
 				"name": "Jamshid",
 				"role": "Katta Sartarosh",
-				"bio": "8 yildan ortiq tajribaga ega, zamonaviy va klassik uslublar ustasi."
+				"bio": "8 yildan ortiq davomida qaychi va mashinka bilan gaplashib keladi. Uning stulida siz tinchlanasiz, ko'zguda esa hayron bo'lasiz."
 			},
 			"sardor": {
 				"name": "Sardor",
 				"role": "Uslub Mutaxassisi",
-				"bio": "Soqol dizayni va zamonaviy turmaklarda mohir."
+				"bio": "Soqol dizayni va zamonaviy turmaklarda uning qo'li yengil. Sardor har bir yuzga o'ziga xos shaklni topadi."
 			},
 			"aziz": {
 				"name": "Aziz",
 				"role": "Ijodkor Sartarosh",
-				"bio": "Jasur va individual uslublarni yaratishga ixtisoslashgan."
+				"bio": "Dadil va noodatiy uslublar — Azizning kuchli tomoni. Agar yangilik xohlasangiz, u bilan gaplashing."
 			},
 			"doston": {
 				"name": "Doston",
 				"role": "Klassik Uslub Ustasi",
-				"bio": "An’anaviy kesimlar va toza ishlov berishda tajribali."
+				"bio": "An'anaviy kesimlar va toza ishlov — bu Dostonning tili. Klassikani sevuvchilar uchun eng to'g'ri tanlov."
 			},
 			"islom": {
 				"name": "Islom",
 				"role": "Yosh Sartarosh",
-				"bio": "Zamonaviy ko‘rinishlar yaratishda e’tiborli va puxta ishlaydi."
+				"bio": "Yosh, lekin har bir detalga e'tiborli. Islom zamonaviy ko'rinishlarni yaratishda puxta va sabr bilan ishlaydi."
 			}
 		}
 	},
 	"articlePage": {
-		"eyebrow": "Bilim Markazi",
-		"title": "Maqolalar",
-		"description": "Jamoamizdan yangi parvarish materiallari. Admin va sartaroshlar chop etadi, hamma o‘qiy oladi.",
+		"eyebrow": "O'qing va bilib oling",
+		"title": "Foydali maqolalar",
+		"description": "Soch parvarishi, uslub sirlari va grooming bo'yicha amaliy maslahatlar — barberlarimiz qo'lidan chiqqan bilimlar.",
 		"refresh": "Yangilash",
 		"loading": "Maqolalar yuklanmoqda...",
-		"loadError": "Maqolalarni yuklashda xatolik yuz berdi. Qayta urinib ko‘ring.",
-		"empty": "Hozircha chop etilgan maqolalar yo‘q.",
+		"loadError": "Maqolalarni yuklashda xatolik yuz berdi. Qayta urinib ko'ring.",
+		"empty": "Hozircha chop etilgan maqolalar yo'q.",
 		"author": "Muallif",
 		"unknownAuthor": "Noma'lum muallif",
 		"publishedAt": "Chop etilgan vaqt",
@@ -521,14 +537,14 @@
 			"title": "Maqola yozish",
 			"submit": "Maqolani chop etish",
 			"submitting": "Chop etilmoqda...",
-			"validation": "Iltimos, barcha maydonlarni to‘ldiring.",
-			"restricted": "Faqat ADMIN yoki BARBER roliga ega foydalanuvchilar maqola chop eta oladi. Oddiy foydalanuvchilar barcha maqolalarni o‘qiy oladi.",
+			"validation": "Iltimos, barcha maydonlarni to'ldiring.",
+			"restricted": "Faqat ADMIN yoki BARBER roliga ega foydalanuvchilar maqola chop eta oladi. Oddiy foydalanuvchilar barcha maqolalarni o'qiy oladi.",
 			"success": "Maqola muvaffaqiyatli chop etildi.",
-			"error": "Maqolani chop etib bo‘lmadi. Qayta urinib ko‘ring.",
+			"error": "Maqolani chop etib bo'lmadi. Qayta urinib ko'ring.",
 			"fields": {
 				"title": "Maqola sarlavhasi",
 				"summary": "Qisqa tavsif",
-				"content": "To‘liq maqolani yozing..."
+				"content": "To'liq maqolani yozing..."
 			}
 		}
 	},

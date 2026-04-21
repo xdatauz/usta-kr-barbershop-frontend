@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Instagram, Send, Menu, X, ExternalLink, Phone, Bell } from "lucide-react";
+import { Instagram, Send, Menu, X, Phone, Bell } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { ThemeToggle } from "../../ui/ThemeToggle";
@@ -27,7 +27,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 		getClientNotificationsApi()
 			.then((list) => setUnreadCount(list.filter((n) => !n.isRead).length))
 			.catch(() => {});
-	}, [currentUser]);
+	}, [currentUser, location.pathname]);
 
 	const navItems = [
 		{ key: "nav.home", path: "" },
@@ -45,11 +45,11 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 					{/* Left: phone */}
 					<div className="flex items-center gap-1.5">
 						<a
-							href="tel:+820107699662"
+							href="tel:+82538135515"
 							className="flex items-center gap-1.5 text-xs font-medium text-slate-500 transition hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400"
 						>
 							<Phone className="h-3 w-3" />
-							010-4619-5515
+							053-813-5515
 						</a>
 						{currentUser && (
 						<Link
@@ -72,7 +72,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 							href="https://www.instagram.com/usta.barbershop"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="text-slate-400 transition hover:text-emerald-600 dark:hover:text-emerald-400"
+							className="text-pink-500 transition hover:text-pink-600 dark:text-pink-400 dark:hover:text-pink-300"
 						>
 							<Instagram className="h-3.5 w-3.5" />
 						</a>
@@ -80,17 +80,9 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 							href="https://t.me/usta_2019"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="text-slate-400 transition hover:text-emerald-600 dark:hover:text-emerald-400"
+							className="text-sky-500 transition hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-300"
 						>
 							<Send className="h-3.5 w-3.5" />
-						</a>
-						<a
-							href="https://www.usta.best"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="text-slate-400 transition hover:text-emerald-600 dark:hover:text-emerald-400"
-						>
-							<ExternalLink className="h-3.5 w-3.5" />
 						</a>
 
 						<div className="mx-1 h-4 w-px bg-slate-300 dark:bg-slate-700" />
@@ -216,7 +208,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 								href="https://www.instagram.com/usta.barbershop"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="text-slate-400 transition hover:text-emerald-600 dark:hover:text-emerald-400"
+								className="text-pink-500 transition hover:text-pink-600 dark:text-pink-400 dark:hover:text-pink-300"
 							>
 								<Instagram className="h-5 w-5" />
 							</a>
@@ -224,17 +216,9 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 								href="https://t.me/usta_2019"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="text-slate-400 transition hover:text-emerald-600 dark:hover:text-emerald-400"
+								className="text-sky-500 transition hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-300"
 							>
 								<Send className="h-5 w-5" />
-							</a>
-							<a
-								href="https://www.usta.best"
-								target="_blank"
-								rel="noopener noreferrer"
-								className="text-slate-400 transition hover:text-emerald-600 dark:hover:text-emerald-400"
-							>
-								<ExternalLink className="h-5 w-5" />
 							</a>
 						</div>
 					</div>

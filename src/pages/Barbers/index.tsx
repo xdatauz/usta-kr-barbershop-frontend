@@ -348,13 +348,7 @@ const BarbersPage = () => {
 											<p className="text-sm text-slate-700 dark:text-slate-300">{barber.bio}</p>
 											<div className="flex flex-wrap gap-2 text-xs text-slate-700 dark:text-slate-300">
 												<span className="inline-flex items-center gap-1 rounded-full border border-slate-300 px-2 py-1 dark:border-slate-700">
-													<ThumbsUp className="h-3.5 w-3.5" /> {stats.likes}
-												</span>
-												<span className="inline-flex items-center gap-1 rounded-full border border-slate-300 px-2 py-1 dark:border-slate-700">
-													<ThumbsDown className="h-3.5 w-3.5" /> {stats.dislikes}
-												</span>
-												<span className="inline-flex items-center gap-1 rounded-full border border-slate-300 px-2 py-1 dark:border-slate-700">
-													<Heart className="h-3.5 w-3.5" /> {stats.followers}
+													<MessageSquare className="h-3.5 w-3.5" /> {stats.likes + stats.dislikes} {t("barbersPage.reviews")}
 												</span>
 											</div>
 											<Link
@@ -435,77 +429,10 @@ const BarbersPage = () => {
 							<p className="mt-3 text-sm leading-7 text-slate-700 dark:text-slate-300">{activeBarber.bio}</p>
 						</div>
 
-						<div className="flex flex-wrap gap-2">
-							<button
-								type="button"
-								disabled={isActionLoading}
-								onClick={() => void toggleFollow(activeId, isFollowing)}
-								className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-70 ${
-									isFollowing
-										? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-200"
-										: "bg-slate-900 text-white hover:bg-slate-700 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
-								}`}
-							>
-								<UserPlus className="h-4 w-4" />
-								{isFollowing ? t("barbersPage.following") : t("barbersPage.follow")}
-							</button>
-							<button
-								type="button"
-								disabled={isActionLoading}
-								onClick={() => void likeBarber(activeId)}
-								className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-70 ${isLiked ? "bg-emerald-500/20 text-emerald-700 dark:text-emerald-200" : "border border-slate-300 text-slate-700 hover:border-slate-500 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-400"}`}
-							>
-								<ThumbsUp className="h-4 w-4" />
-								{t("barbersPage.like")}
-							</button>
-							<button
-								type="button"
-								disabled={isActionLoading}
-								onClick={() => void dislikeBarber(activeId)}
-								className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-70 ${isDisliked ? "bg-red-500/20 text-red-700 dark:text-red-300" : "border border-slate-300 text-slate-700 hover:border-slate-500 dark:border-slate-700 dark:text-slate-200 dark:hover:border-slate-400"}`}
-							>
-								<ThumbsDown className="h-4 w-4" />
-								{t("barbersPage.dislike")}
-							</button>
-						</div>
 
-						<div className="grid gap-3 sm:grid-cols-4">
-							<div className="rounded-xl border border-slate-300/70 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-950/60">
-								<div className="inline-flex items-center gap-1.5">
-									<Heart className="h-4 w-4 text-red-500" />
-									<p className="text-xs uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
-										{t("barbersPage.followers")}
-									</p>
-								</div>
-								<p className="mt-1 text-xl font-black text-slate-900 dark:text-slate-50">{stats.followers}</p>
-							</div>
-							<div className="rounded-xl border border-slate-300/70 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-950/60">
-								<div className="inline-flex items-center gap-1.5">
-									<ThumbsUp className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-									<p className="text-xs uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
-										{t("barbersPage.likes")}
-									</p>
-								</div>
-								<p className="mt-1 text-xl font-black text-slate-900 dark:text-slate-50">{stats.likes}</p>
-							</div>
-							<div className="rounded-xl border border-slate-300/70 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-950/60">
-								<div className="inline-flex items-center gap-1.5">
-									<ThumbsDown className="h-4 w-4 text-red-600 dark:text-red-400" />
-									<p className="text-xs uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
-										{t("barbersPage.dislikes")}
-									</p>
-								</div>
-								<p className="mt-1 text-xl font-black text-slate-900 dark:text-slate-50">{stats.dislikes}</p>
-							</div>
-							<div className="rounded-xl border border-slate-300/70 bg-slate-50 p-3 text-sm dark:border-slate-700 dark:bg-slate-950/60">
-								<div className="inline-flex items-center gap-1.5">
-									<MessageCircle className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-									<p className="text-xs uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
-										{t("barbersPage.comments")}
-									</p>
-								</div>
-								<p className="mt-1 text-xl font-black text-slate-900 dark:text-slate-50">{comments.length}</p>
-							</div>
+						<div className="inline-flex items-center gap-2 rounded-xl border border-slate-300/70 bg-slate-50 px-4 py-3 text-sm dark:border-slate-700 dark:bg-slate-950/60">
+							<MessageCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+							<span className="text-slate-700 dark:text-slate-300">{comments.length} {t("barbersPage.reviews")}</span>
 						</div>
 					</div>
 				</section>

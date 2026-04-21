@@ -1,9 +1,24 @@
 {
 	"meta": {
-		"title": "Usta | Premium Barber Shop",
-		"description": "Usta Premium Barber Shop offers modern haircuts, beard styling, and professional grooming services.",
-		"ogTitle": "Usta | Premium Barber Shop",
-		"ogDescription": "Modern cuts, beard trims, and premium grooming at Usta."
+		"title": "Usta Barber | Premium Uzbek Barbershop in Korea",
+		"description": "Usta Barber — Premium Uzbek barbershop in South Korea. Modern haircuts, beard styling, skin fade, classic cuts. Professional barbers, great prices.",
+		"ogTitle": "Usta Barber | Premium Uzbek Barbershop in Korea",
+		"ogDescription": "Modern cuts, beard trims, and premium grooming at Usta. Best Uzbek barber service in Korea.",
+		"keywords": "barbershop, barber, barbershop in Korea, Uzbek barber, men haircut, beard trim, skin fade, classic cut, premium barber, Usta Barber, 한국 바버샵, South Korea barbershop",
+		"servicesTitle": "Services | Usta Barber — Hair & Beard Services",
+		"servicesDescription": "Classic cuts, skin fade, beard styling, deluxe grooming and more premium services at Usta Barber in Korea.",
+		"bookingTitle": "Book Online | Usta Barber — Schedule Your Visit",
+		"bookingDescription": "Book your appointment at Usta Barber online. Choose your preferred time and enjoy professional barber services.",
+		"barbersTitle": "Our Barbers | Usta Barber Professional Team",
+		"barbersDescription": "Meet our experienced and professional barber team. Each master is an expert in their field.",
+		"galleryTitle": "Gallery | Usta Barber — Our Work Portfolio",
+		"galleryDescription": "Before & after results, barbers at work, interior and atmosphere photos. See our real work.",
+		"aboutTitle": "About Us | Usta Barber — Our Story & Values",
+		"aboutDescription": "Usta Barber — premium barbershop built on precision, quality, and client trust. Discover our story and team.",
+		"contactTitle": "Contact | Usta Barber — Address, Phone, Hours",
+		"contactDescription": "Get in touch with Usta Barber. Address, phone number, working hours and map.",
+		"articlesTitle": "Articles | Usta Barber — Grooming Tips & Advice",
+		"articlesDescription": "Useful articles and tips on grooming, hair care and styling from professional barbers."
 	},
 	"nav": {
 		"home": "Home",
@@ -41,87 +56,87 @@
 		"switchToLight": "Switch to light mode"
 	},
 	"homeHero": {
-		"badge": "Premium Grooming",
-		"title": "Sharp style, confident presence, and care in every detail.",
-		"subtitle": "From classic cuts to modern fades, Usta delivers a complete barbershop experience with expert barbers, precise tools, and warm hospitality.",
-		"primaryCta": "Book an appointment",
-		"secondaryCta": "Explore sections",
-		"revealDone": "Sections revealed",
+		"badge": "Serving since 2019",
+		"title": "Style is the outward expression of inner confidence.",
+		"subtitle": "The first Uzbek premium barbershop in South Korea. Every visit is not just a haircut — it's a transformation.",
+		"primaryCta": "Book Appointment",
+		"secondaryCta": "View Services",
+		"revealDone": "Services revealed",
 		"stats": {
-			"yearsValue": "12+",
+			"yearsValue": "6+",
 			"clientsValue": "8k+",
 			"ratingValue": "4.9",
-			"years": "Years Experience",
-			"clients": "Happy Clients",
-			"rating": "Average Rating"
+			"years": "Years of Experience",
+			"clients": "Loyal Clients",
+			"rating": "Client Rating"
 		},
-		"imageAltOne": "Barber styling client hair",
-		"imageAltTwo": "Beard trim and detailing"
+		"imageAltOne": "Professional barber at work",
+		"imageAltTwo": "Precision beard sculpting"
 	},
 	"homeReveal": {
-		"description": "Start with the hero, then reveal each section one by one for a cleaner and smoother experience.",
-		"showMoreButton": "Reveal section {{count}}",
-		"resetButton": "Hide sections"
+		"description": "Explore our services in detail.",
+		"showMoreButton": "Show more",
+		"resetButton": "Hide"
 	},
 	"servicesSection": {
 		"eyebrow": "Services",
-		"title": "Premium services designed for every style",
-		"description": "Choose your service and let our team shape your look with precision, hygiene, and consistency.",
+		"title": "Precision in every detail.",
+		"description": "Choose your service. Precision, cleanliness, and flawless results — guaranteed with every visit.",
 		"bookNow": "Book now",
 		"noServices": "No services available at the moment.",
 		"items": {
 			"classicCut": {
-				"name": "Classic Haircut",
-				"description": "Clean scissor and clipper work with styling finish for an everyday sharp look.",
+				"name": "The Classic",
+				"description": "Scissor and clipper work refined over thousands of cuts. Clean lines, natural movement, and a finish that looks as good on day five as day one.",
 				"price": "$12",
 				"duration": "35 min"
 			},
 			"beardStyling": {
-				"name": "Beard Styling",
-				"description": "Shape, define, and line up your beard to match your face structure.",
+				"name": "Beard Sculpt",
+				"description": "We read the angles of your face and carve a beard that belongs there. Sharp edges, soft blends, zero guesswork.",
 				"price": "$10",
 				"duration": "30 min"
 			},
 			"skinFade": {
 				"name": "Skin Fade",
-				"description": "High-detail fade blending from skin to top length with clean contours.",
+				"description": "From zero to hero. A seamless gradient from skin to length that demands a double-take in the mirror.",
 				"price": "$15",
 				"duration": "45 min"
 			},
 			"fatherSon": {
-				"name": "Father + Son Combo",
-				"description": "A convenient two-person package with matching quality and comfort.",
+				"name": "Father & Son",
+				"description": "Two chairs, one shared experience. Bring your boy in and both walk out looking sharp. A memory and a fresh cut, all in one visit.",
 				"price": "$20",
 				"duration": "60 min"
 			},
 			"deluxePackage": {
-				"name": "Deluxe Grooming",
-				"description": "Haircut, beard detail, wash, and hot towel refresh in one premium package.",
+				"name": "The Full Experience",
+				"description": "Haircut. Beard detail. Hot towel. Wash. This is not just grooming, it is a reset. Walk out feeling brand new.",
 				"price": "$25",
 				"duration": "70 min"
 			},
 			"hairColor": {
-				"name": "Hair Color Refresh",
-				"description": "Natural tone adjustment and grey blending with professional products.",
+				"name": "Color Refresh",
+				"description": "Subtle tone work that blends greys naturally and brings warmth back. Nobody will know, but everybody will notice.",
 				"price": "$18",
 				"duration": "50 min"
 			}
 		},
 		"extras": {
-			"processTwo": "Precision cut and blend execution",
-			"processThree": "Beard/details finishing and final check",
-			"popularText": "Skin Fade + Beard Styling is our top requested combo for a modern sharp look.",
-			"processTitle": "How Your Visit Works",
-			"processOne": "Quick consultation and style selection",
-			"popularTitle": "Most Popular",
-			"memberText": "Join monthly membership to get priority slots and discounted package grooming.",
-			"memberTitle": "Member Benefits"
+			"processTwo": "Your barber works with steady hands and fresh blades",
+			"processThree": "Final details, lineup, and a mirror check you will love",
+			"popularText": "Skin Fade paired with a Beard Sculpt is the combination our clients keep coming back for. Clean, modern, undeniable.",
+			"processTitle": "What to Expect",
+			"processOne": "A quick conversation about what you want and what will work",
+			"popularTitle": "The Fan Favorite",
+			"memberText": "Lock in a monthly membership for priority booking, better rates, and the kind of consistency your look deserves.",
+			"memberTitle": "Become a Regular"
 		}
 	},
 	"gallerySection": {
-		"eyebrow": "Gallery",
-		"title": "Style moments from our daily craft",
-		"description": "Before and after transformations, interior atmosphere, and real moments from our barbers at work.",
+		"eyebrow": "Portfolio",
+		"title": "Results speak for themselves.",
+		"description": "Every photo is a real client, a real result. See our quality for yourself.",
 		"categories": {
 			"cuts": "Before / After",
 			"interior": "Interior",
@@ -132,90 +147,90 @@
 		"loadingInstagram": "Loading Instagram content...",
 		"instagramError": "Could not load Instagram content. Showing gallery only.",
 		"extras": {
-			"stylesTitle": "Styles You Can Request",
+			"stylesTitle": "Styles Worth Trying",
 			"styleOne": "Skin Fade",
 			"styleTwo": "Textured Crop",
 			"styleThree": "Classic Taper",
 			"styleFour": "Beard Line Up",
 			"noteLabel": "Note",
-			"noteText": "All shots are from our own shop and daily workflow. No stock photos are used in this section.",
-			"noteTitle": "Real Photos, Real Clients"
+			"noteText": "Every image is shot in-house during real appointments. What you see here is what you get in the chair.",
+			"noteTitle": "Straight from the Shop Floor"
 		}
 	},
 	"aboutSection": {
 		"eyebrow": "About Us",
-		"title": "Usta blends classic discipline with modern style",
-		"description": "We are a team-focused barbershop built around precision service, client trust, and strong grooming culture.",
-		"storyTitle": "Our Story",
-		"storyText": "What started as a local chair has grown into a trusted destination where people come for consistency, comfort, and confidence. Every appointment is treated with care.",
-		"valuesTitle": "Our Core Values",
+		"title": "Traditional craft. Modern standard.",
+		"description": "Our barbershop has been serving clients since 2019 and is recognized as the first Uzbek barbershop in South Korea.",
+		"storyTitle": "How It Started",
+		"storyText": "It began in 2019 with one chair and a bold vision. We made history as the first Uzbek barbershop in South Korea. What started small became the place our community trusts for a fresh cut, honest conversation, and a moment to breathe.",
+		"valuesTitle": "What We Stand For",
 		"values": {
 			"precision": {
-				"title": "Precision First",
-				"text": "Every line, blend, and contour is finished with attention to detail."
+				"title": "Obsessive Detail",
+				"text": "Every fade, every line, every edge is finished like our reputation depends on it. Because it does."
 			},
 			"hospitality": {
-				"title": "Warm Hospitality",
-				"text": "A friendly environment where every guest feels welcome and respected."
+				"title": "Warmth You Can Feel",
+				"text": "You are not a ticket number here. You are a guest. Expect tea, conversation, and a chair that feels like it was waiting for you."
 			},
 			"hygiene": {
-				"title": "Strict Hygiene",
-				"text": "Sanitized tools and clean stations are non-negotiable in every session."
+				"title": "Clean Without Compromise",
+				"text": "Fresh blades, sanitized tools, spotless stations. Every time, no exceptions, no shortcuts."
 			},
 			"craft": {
-				"title": "Continuous Craft",
-				"text": "Our team improves constantly through training and trend awareness."
+				"title": "Never Finished Learning",
+				"text": "Our barbers train constantly, study new techniques, and push each other to be better than yesterday."
 			}
 		},
 		"stats": {
-			"happy_clients": "Happy Clients",
-			"haircuts": "Haircuts Given",
-			"experience": "Of Excellence",
-			"satisfaction": "Satisfaction Rate"
+			"happy_clients": "Smiles and Counting",
+			"haircuts": "Cuts Delivered",
+			"experience": "Years in the Game",
+			"satisfaction": "Would Come Back"
 		},
-		"timelineTitle": "Our Journey",
+		"timelineTitle": "The Road So Far",
 		"timeline": {
 			"founded": "Founded",
 			"expanded": "Expanded",
 			"modernized": "Modernized",
 			"leading": "Leading"
 		},
-		"teamTitle": "Meet The Team",
+		"teamTitle": "The Hands Behind the Craft",
 		"team": {
 			"jamshid": {
 				"name": "Jamshid",
 				"role": "Senior Barber",
-				"bio": "12+ years specializing in fades and premium beard shaping."
+				"bio": "Twelve years of fades, lineups, and beard work that speaks for itself. Jamshid is the steady hand clients trust with their look."
 			},
 			"sardor": {
 				"name": "Sardor",
 				"role": "Style Expert",
-				"bio": "Master of textured cuts and modern styling finishing techniques."
+				"bio": "Sardor sees texture and shape where others see hair. His finishing work turns a good cut into something you cannot stop touching."
 			},
 			"aziz": {
 				"name": "Aziz",
 				"role": "Grooming Specialist",
-				"bio": "Expert in complete grooming packages and client comfort."
+				"bio": "From hot towels to beard oils, Aziz turns a haircut into an experience. The kind of visit where you forget to check your phone."
 			}
 		},
-		"ctaTitle": "Ready For Your Next Transformation?",
-		"ctaDescription": "Book an appointment with one of our expert barbers today and experience the Usta difference.",
+		"ctaTitle": "Your Next Look Is Waiting",
+		"ctaDescription": "Sit in our chair once and you will understand why our clients keep coming back. Book a time that works for you.",
 		"ctaButton": "Book Now",
 		"extras": {
-			"timelineOne": "Usta started as a single-chair local barbershop.",
-			"timelineTwo": "Expanded to a full team and premium grooming packages.",
-			"timelineThree": "Trusted by thousands of returning clients across the city."
+			"timelineOne": "One chair, one barber, one neighborhood that believed in us from day one.",
+			"timelineTwo": "A full team, expanded services, and a reputation built entirely by word of mouth.",
+			"timelineThree": "Thousands of regulars, a loyal community, and a craft we sharpen every single day."
 		}
 	},
 	"contactSection": {
-		"eyebrow": "Contact",
-		"title": "Get in touch with us",
-		"description": "Have a question or want to reach out? Fill in the form and we'll get back to you during working hours.",
+		"eyebrow": "Say Hello",
+		"title": "We are easy to find and quick to reply",
+		"description": "Have a question, want to book something specific, or just want to say hi? Drop us a message and we will get back to you.",
 		"form": {
 			"nameLabel": "Full name",
 			"namePlaceholder": "Your name",
 			"phoneLabel": "Phone",
-			"phonePlaceholder": "+998 ...",
+			"phonePlaceholder": "010-1234-5678",
 			"serviceLabel": "Preferred service",
 			"servicePlaceholder": "Select service",
 			"serviceOptions": {
@@ -231,7 +246,7 @@
 		},
 		"info": {
 			"addressLabel": "Address",
-			"address": "12 Bunyodkor Street, Chilanzar District, Tashkent",
+			"address": "84-1 Dungji-ro, Gyeongsan-si, Gyeongsangbuk-do",
 			"phoneLabel": "Phone",
 			"emailLabel": "Email",
 			"hoursLabel": "Working Hours",
@@ -241,20 +256,20 @@
 			"mapLabel": "Usta barbershop map"
 		},
 		"extras": {
-			"faqTwoQ": "Do you accept card payments?",
-			"tipThree": "Ask your barber about home maintenance products.",
-			"faqOneQ": "Do I need to book in advance?",
-			"tipTwo": "Arrive 5-10 minutes early for consultation.",
-			"faqTwoA": "Yes, we accept cash and card payments.",
-			"tipsTitle": "Before Your Appointment",
-			"faqOneA": "Walk-ins are welcome, but booking guarantees your preferred time slot.",
-			"tipOne": "Bring a reference photo if you have a specific style in mind.",
-			"faqTitle": "Frequently Asked Questions"
+			"faqTwoQ": "Can I pay by card?",
+			"tipThree": "Ask your barber which products will keep your style looking fresh between visits.",
+			"faqOneQ": "Should I book ahead or just walk in?",
+			"tipTwo": "Come a few minutes early so we can talk through exactly what you want.",
+			"faqTwoA": "Absolutely. We accept both cash and card, whichever is easier for you.",
+			"tipsTitle": "Before You Visit",
+			"faqOneA": "Walk-ins are always welcome, but booking ahead guarantees you get the time and barber you want.",
+			"tipOne": "Got a photo of the style you are after? Bring it. It helps us nail it on the first pass.",
+			"faqTitle": "Quick Answers"
 		}
 	},
 	"footer": {
 		"text": "All rights reserved.",
-		"tagline": "Premium barber service for modern gentlemen.",
+		"tagline": "Crafted with care for the gentlemen of Korea.",
 		"quickLinks": "Quick links",
 		"contactTitle": "Contact info"
 	},
@@ -370,13 +385,13 @@
 		"detailBookedAt": "Booked at"
 	},
 	"bookingPage": {
-		"eyebrow": "Online Booking",
-		"title": "Book an Appointment",
-		"description": "Choose your preferred time and enjoy professional barber service.",
+		"eyebrow": "Reserve Your Chair",
+		"title": "Your Time. Your Barber. Your Call.",
+		"description": "Pick the day, pick the barber, and show up knowing the chair is ready and waiting for you.",
 		"badges": {
-			"fast": "Instant confirmation",
-			"time": "Flexible schedule",
-			"style": "All styles available"
+			"fast": "Confirmed in seconds",
+			"time": "Times that fit your life",
+			"style": "Every style on the menu"
 		},
 		"telegram": {
 			"title": "New Booking Request",
@@ -395,7 +410,7 @@
 			},
 			"placeholders": {
 				"name": "Enter your name",
-				"phone": "+1 234 567 890",
+				"phone": "010-1234-5678",
 				"barber": "Select barber",
 				"service": "Select service",
 				"time": "Select time",
@@ -425,18 +440,19 @@
 			"noNote": "No note provided"
 		},
 		"help": {
-			"title": "Need Help?",
-			"description": "If you're unsure which barber or service to choose, explore the options below.",
+			"title": "Not Sure Where to Start?",
+			"description": "No worries. Browse our barbers to find your match, or check out our services to see what catches your eye.",
 			"barbersCta": "View Barbers",
 			"servicesCta": "View Services"
 		}
 	},
 	"barbersPage": {
-		"title": "Our Professional Barbers",
-		"description": "Meet our experienced team of barbers dedicated to precision, style, and premium grooming.",
+		"title": "The People Behind Every Great Cut",
+		"description": "Five barbers, five different strengths, one shared obsession: making sure you leave looking and feeling better than when you walked in.",
 		"loadingList": "Loading barbers...",
 		"loadingProfile": "Loading barber profile...",
 		"notFound": "Barber not found.",
+		"reviews": "reviews",
 		"viewProfile": "View Profile",
 		"backToList": "Back to Barbers",
 		"bookWithBarber": "Book with this Barber",
@@ -474,34 +490,34 @@
 			"jamshid": {
 				"name": "Jamshid",
 				"role": "Senior Barber",
-				"bio": "Specialist in modern fades and classic gentlemen’s cuts with over 8 years of experience."
+				"bio": "Eight years of reading faces and knowing exactly what cut will make you look twice in the mirror. Fades and beard work are his language."
 			},
 			"sardor": {
 				"name": "Sardor",
 				"role": "Style Expert",
-				"bio": "Known for precise beard shaping and modern hair design."
+				"bio": "Sardor turns a trim into a statement. His beard shaping is surgical, and his eye for modern detail keeps clients coming back week after week."
 			},
 			"aziz": {
 				"name": "Aziz",
 				"role": "Creative Barber",
-				"bio": "Focused on bold styles, color transformations, and personalized grooming."
+				"bio": "If you want something bold, Aziz is your guy. Color work, sharp designs, and grooming that feels like a ritual, not a routine."
 			},
 			"doston": {
 				"name": "Doston",
 				"role": "Classic Specialist",
-				"bio": "Expert in traditional cuts and clean, sharp finishes."
+				"bio": "Doston believes the classics never go out of style. His scissor work is clean, his tapers are tight, and his finishes are always sharp."
 			},
 			"islom": {
 				"name": "Islom",
 				"role": "Junior Barber",
-				"bio": "Energetic barber delivering fresh looks with attention to detail."
+				"bio": "Young, hungry, and surprisingly precise. Islom brings fresh energy to every chair and a level of care that clients notice immediately."
 			}
 		}
 	},
 	"articlePage": {
-		"eyebrow": "Knowledge Hub",
-		"title": "Articles",
-		"description": "Fresh grooming content from our team. Admins and barbers can publish, everyone can read.",
+		"eyebrow": "From the Chair",
+		"title": "Tips, Stories & Know-How",
+		"description": "Grooming advice straight from the barbers who do this every day. No fluff, just the stuff that actually helps.",
 		"refresh": "Refresh",
 		"loading": "Loading articles...",
 		"loadError": "Failed to load articles. Please try again.",

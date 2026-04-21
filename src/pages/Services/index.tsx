@@ -4,7 +4,7 @@ import { ArrowUpRight, Scissors, Sparkles, ShieldCheck, Clock3 } from "lucide-re
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { ComponentType } from "react";
-import { getPublicServicesApi, type Service } from "../../lib/api/services";
+import { getPublicServicesApi, getFeaturedServicesApi, type Service } from "../../lib/api/services";
 
 interface ServicePageProps {
 	preview?: boolean;
@@ -43,7 +43,7 @@ const ServicePage = ({ preview = false }: ServicePageProps) => {
 		const load = async () => {
 			setIsLoading(true);
 			try {
-				const data = await getPublicServicesApi();
+				const data = preview ? await getFeaturedServicesApi() : await getPublicServicesApi();
 				setServices(data);
 			} catch {
 				setServices([]);
@@ -52,9 +52,9 @@ const ServicePage = ({ preview = false }: ServicePageProps) => {
 			}
 		};
 		void load();
-	}, []);
+	}, [preview]);
 
-	const visibleServices = preview ? services.slice(0, 4) : services;
+	const visibleServices = services;
 
 	const sectionContent = (
 		<section className="rounded-3xl border border-slate-300/70 bg-white/80 p-4 shadow-sm backdrop-blur sm:p-6 lg:p-8 dark:border-slate-700 dark:bg-slate-900/70">
@@ -87,7 +87,7 @@ const ServicePage = ({ preview = false }: ServicePageProps) => {
 				<div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
 					{visibleServices.map((service, index) => {
 						const Icon = SERVICE_ICONS[index % SERVICE_ICONS.length];
-						const image = SERVICE_IMAGES[index % SERVICE_IMAGES.length];
+						const image = service.imageUrl || SERVICE_IMAGES[index % SERVICE_IMAGES.length];
 
 						return (
 							<motion.article
@@ -112,7 +112,7 @@ const ServicePage = ({ preview = false }: ServicePageProps) => {
 											</span>
 										</div>
 										<p className="rounded-full bg-emerald-500 px-2.5 py-1 text-xs font-semibold text-slate-950">
-											{Number(service.price).toLocaleString()}
+											₩{Math.round(Number(service.price)).toLocaleString("ko-KR")}
 										</p>
 									</div>
 								</div>

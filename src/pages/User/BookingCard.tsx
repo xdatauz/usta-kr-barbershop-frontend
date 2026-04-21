@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { MyBooking } from "../../lib/api/bookings";
+import { localDateStr } from "../../lib/date";
 
 const STATUS_STYLE: Record<string, { badge: string; bar: string; label: string }> = {
 	pending: {
@@ -39,7 +40,7 @@ export const statusStyle = (s: string) => STATUS_STYLE[s] ?? STATUS_STYLE.pendin
 /** Can only cancel pending/confirmed bookings that are today or in the future */
 export const canCancel = (b: MyBooking): boolean => {
 	if (b.status !== "pending" && b.status !== "confirmed") return false;
-	const today = new Date().toISOString().split("T")[0];
+	const today = localDateStr();
 	return b.date >= today;
 };
 

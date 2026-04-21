@@ -8,6 +8,7 @@ export interface Service {
 	price: number;
 	durationMinutes: number;
 	isActive: boolean;
+	imageUrl?: string | null;
 }
 
 export interface ServiceCreatePayload {
@@ -32,6 +33,7 @@ const normalizeService = (raw: unknown): Service | null => {
 		// Backend uses 'duration', frontend interface uses durationMinutes
 		durationMinutes: normalizeNumber(src.durationMinutes ?? src.durationMin ?? src.duration, 30),
 		isActive: src.isActive !== false,
+		imageUrl: typeof src.imageUrl === "string" ? src.imageUrl : null,
 	};
 };
 
@@ -44,6 +46,12 @@ export const getServicesApi = async (): Promise<Service[]> => {
 /** Public: active services only */
 export const getPublicServicesApi = async (): Promise<Service[]> => {
 	const { data } = await api.get<unknown>("/services/public");
+	return normalizeArray(extractList(data), normalizeService);
+};
+
+/** Public: featured services for home page */
+export const getFeaturedServicesApi = async (): Promise<Service[]> => {
+	const { data } = await api.get<unknown>("/services/featured");
 	return normalizeArray(extractList(data), normalizeService);
 };
 

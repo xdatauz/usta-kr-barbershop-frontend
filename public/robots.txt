@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ustabarber.pro/sitemap.xml
+
+# Crawl-delay for polite bots
+User-agent: Yeti
+Crawl-delay: 1
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+User-agent: NaverBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Disallow: /*/profile
+Disallow: /*/notifications

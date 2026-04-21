@@ -7,7 +7,9 @@ import {
   Trash2,
   MessageSquare,
   Inbox,
+  ExternalLink,
 } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/auth/auth-provider";
 import {
   getClientNotificationsApi,
@@ -38,8 +40,14 @@ function formatDate(dateStr: string): string {
   });
 }
 
+const isAppointmentNotification = (n: ClientNotification) =>
+  n.title.includes("navbat") || n.title.includes("Navbat") || n.title.includes("✅") || n.title.includes("❌") || n.title.includes("✂️") || n.title.includes("📝");
+
 export default function NotificationsPage() {
   const { currentUser } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const locale = location.pathname.split("/")[1] || "uz";
   const [items, setItems] = useState<ClientNotification[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selected, setSelected] = useState<ClientNotification | null>(null);
@@ -253,6 +261,15 @@ export default function NotificationsPage() {
 
             {/* footer */}
             <div className="flex items-center justify-end gap-2 px-5 pb-5">
+              {isAppointmentNotification(selected) && (
+                <button
+                  onClick={() => { setSelected(null); navigate(`/${locale}/profile`); }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 transition-colors"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  Navbatlarni ko'rish
+                </button>
+              )}
               <button
                 onClick={() => void handleDelete(selected.id)}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-red-500 dark:text-red-400 border border-red-200 dark:border-red-500/30 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"

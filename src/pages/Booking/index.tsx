@@ -9,6 +9,7 @@ import { isApiError } from "../../lib/api/client";
 import { useAuth } from "../../context/auth/auth-provider";
 import { useBarbers, useBookingSlots, useCreateBooking, usePublicServices } from "../../hooks";
 import { bookingFormSchema } from "../../lib/schemas/booking.schema";
+import { localDateStr, tomorrowDateStr } from "../../lib/date";
 import BookingBarberSelector from "./BookingBarberSelector";
 import BookingServiceSelector from "./BookingServiceSelector";
 import BookingTimeSlots from "./BookingTimeSlots";
@@ -31,10 +32,10 @@ const BookingPage = () => {
 		phone: currentUser?.phone ?? "",
 		barberId: searchParams.get("barberId") ?? "",
 		style: "",
-		date: searchParams.get("date") ?? (() => { const d = new Date(); d.setDate(d.getDate() + 1); return d.toISOString().split("T")[0]; })(),
+		date: searchParams.get("date") ?? tomorrowDateStr(),
 		time: searchParams.get("time") ?? "",
 	});
-	const today = new Date().toISOString().split("T")[0];
+	const today = localDateStr();
 
 	// React Query hooks
 	const { data: barbers = [] } = useBarbers();
@@ -54,8 +55,20 @@ const BookingPage = () => {
 	const availableSlots = useMemo(() => {
 		if (!slotsData) return fallbackSlots;
 		const onlyAvailable = slotsData.filter((slot) => slot.available).map((slot) => slot.time);
-		return onlyAvailable.length ? onlyAvailable : fallbackSlots;
-	}, [slotsData]);
+		const base = onlyAvailable.length ? onlyAvailable : fallbackSlots;
+
+		// Bugungi sana tanlangan bo'lsa, o'tgan vaqtlarni olib tashlaymiz
+		if (form.date === today) {
+			const now = new Date();
+			const currentMinutes = now.getHours() * 60 + now.getMinutes();
+			return base.filter((slot) => {
+				const [h, m] = slot.split(":").map(Number);
+				return h * 60 + m > currentMinutes;
+			});
+		}
+
+		return base;
+	}, [slotsData, form.date, today]);
 
 	// Sync name/phone from auth once user is resolved (in case auth loads after initial render)
 	useEffect(() => {

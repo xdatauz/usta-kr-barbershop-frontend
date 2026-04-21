@@ -185,8 +185,11 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 							<Phone className="h-4 w-4 text-emerald-600 dark:text-emerald-300" />
 							{t("contactSection.info.phoneLabel")}
 						</p>
-						<a href="tel:+998901234567" className="block hover:text-emerald-600 dark:hover:text-emerald-300">
-							+998 90 123 45 67
+						<a href="tel:+82538135515" className="block hover:text-emerald-600 dark:hover:text-emerald-300">
+							053-813-5515
+						</a>
+						<a href="tel:+821046195515" className="block hover:text-emerald-600 dark:hover:text-emerald-300">
+							010-4619-5515
 						</a>
 
 						<p className="inline-flex items-center gap-2 font-semibold text-slate-900 dark:text-slate-100">
@@ -213,7 +216,7 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 									href="https://www.instagram.com/usta.barbershop"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="inline-flex items-center gap-2 rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] transition hover:border-slate-500 dark:border-slate-600 dark:hover:border-slate-400"
+									className="inline-flex items-center gap-2 rounded-lg border border-pink-300 bg-pink-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-pink-600 transition hover:border-pink-400 hover:bg-pink-100 dark:border-pink-500/30 dark:bg-pink-500/10 dark:text-pink-400 dark:hover:border-pink-400 dark:hover:bg-pink-500/20"
 								>
 									<Instagram className="h-3.5 w-3.5" />
 									{t("social.instagram")}
@@ -222,7 +225,7 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 									href="https://t.me/usta_2019"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="inline-flex items-center gap-2 rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] transition hover:border-slate-500 dark:border-slate-600 dark:hover:border-slate-400"
+									className="inline-flex items-center gap-2 rounded-lg border border-sky-300 bg-sky-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-sky-600 transition hover:border-sky-400 hover:bg-sky-100 dark:border-sky-500/30 dark:bg-sky-500/10 dark:text-sky-400 dark:hover:border-sky-400 dark:hover:bg-sky-500/20"
 								>
 									<Send className="h-3.5 w-3.5" />
 									{t("social.telegram")}
@@ -241,7 +244,7 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 			>
 				<iframe
 					title={t("contactSection.info.mapLabel")}
-					src="https://www.google.com/maps?q=41.2995,69.2401&z=14&output=embed"
+					src="https://www.google.com/maps?q=35.8251,128.7414&z=16&output=embed"
 					className="h-96 w-full border-0"
 					loading="lazy"
 					referrerPolicy="no-referrer-when-downgrade"

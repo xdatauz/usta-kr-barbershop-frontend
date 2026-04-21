@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Instagram, Send, Phone, MapPin, ExternalLink } from "lucide-react";
+import { Instagram, Send, Phone, MapPin } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
@@ -24,7 +24,7 @@ const Footer = () => {
 							href="https://www.instagram.com/usta.barbershop"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="rounded-lg border border-slate-700 p-2 hover:border-emerald-400 hover:text-emerald-300"
+							className="rounded-lg border border-pink-500/30 bg-pink-500/10 p-2 text-pink-400 transition hover:border-pink-400 hover:bg-pink-500/20 hover:text-pink-300"
 						>
 							<Instagram className="h-4 w-4" />
 						</a>
@@ -32,17 +32,9 @@ const Footer = () => {
 							href="https://t.me/usta_2019"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="rounded-lg border border-slate-700 p-2 hover:border-emerald-400 hover:text-emerald-300"
+							className="rounded-lg border border-sky-500/30 bg-sky-500/10 p-2 text-sky-400 transition hover:border-sky-400 hover:bg-sky-500/20 hover:text-sky-300"
 						>
 							<Send className="h-4 w-4" />
-						</a>
-						<a
-							href="https://www.usta.best"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="rounded-lg border border-slate-700 p-2 hover:border-emerald-400 hover:text-emerald-300"
-						>
-							<ExternalLink className="w-5 h-5" />
 						</a>
 					</div>
 				</div>
@@ -59,9 +51,6 @@ const Footer = () => {
 						<Link to={`/${locale}/gallery`} className="hover:text-emerald-300">
 							{t("nav.gallery")}
 						</Link>
-						{/* <Link to={`/${locale}/articles`} className="hover:text-emerald-300">
-							{t("nav.articles")}
-						</Link> */}
 						<Link to={`/${locale}/about`} className="hover:text-emerald-300">
 							{t("nav.about")}
 						</Link>
@@ -77,10 +66,16 @@ const Footer = () => {
 						<MapPin className="h-4 w-4 text-emerald-400" />
 						{t("contactSection.info.address")}
 					</p>
-					<a href="tel:+998901234567" className="inline-flex items-center gap-2 hover:text-emerald-300">
-						<Phone className="h-4 w-4 text-emerald-400" />
-						+998 90 123 45 67
-					</a>
+					<div className="space-y-1">
+						<a href="tel:+82538135515" className="inline-flex items-center gap-2 hover:text-emerald-300">
+							<Phone className="h-4 w-4 text-emerald-400" />
+							053-813-5515
+						</a>
+						<a href="tel:+821046195515" className="inline-flex items-center gap-2 hover:text-emerald-300">
+							<Phone className="h-4 w-4 text-emerald-400" />
+							010-4619-5515
+						</a>
+					</div>
 				</div>
 			</div>
 
