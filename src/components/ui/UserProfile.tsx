@@ -1,12 +1,12 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { StaffRole } from "../../lib/enums/staff-role.enum";
+import type { AuthUserType } from "../../context/auth/auth-provider";
 
 interface UserProfileMenuProps {
 	currentUser?: {
 		id: string;
-		userType: StaffRole;
+		userType: AuthUserType;
 		image?: string | null;
 		avatar?: string | null;
 		profileImage?: string | null;

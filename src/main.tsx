@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./app/App";
 import { AppProviders } from "./app/providers";
+import { ThemeProvider } from "./context/theme/theme-provider";
 
 import "./styles/index.css";
 import "./styles/global.css";
@@ -14,7 +15,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 		<BrowserRouter>
 			<AppProviders>
 				<HelmetProvider>
-					<App />
+					<ThemeProvider>
+						<App />
+					</ThemeProvider>
 				</HelmetProvider>
 			</AppProviders>
 		</BrowserRouter>

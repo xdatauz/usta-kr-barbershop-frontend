@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { ComponentType } from "react";
 import { getPublicServicesApi, getFeaturedServicesApi, type Service } from "../../lib/api/services";
+import Skeleton from "../../components/ui/Skeleton";
 
 interface ServicePageProps {
 	preview?: boolean;
@@ -80,8 +81,24 @@ const ServicePage = ({ preview = false }: ServicePageProps) => {
 			</div>
 
 			{isLoading ? (
-				<div className="mt-6 rounded-2xl border border-dashed border-slate-300 p-6 text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
-					{t("common.loading")}
+				<div
+					className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3"
+					aria-busy="true"
+					aria-label={t("common.loading")}
+				>
+					{Array.from({ length: preview ? 3 : 6 }).map((_, idx) => (
+						<div
+							key={idx}
+							className="overflow-hidden rounded-2xl border border-slate-300/70 bg-white dark:border-slate-700 dark:bg-slate-900"
+						>
+							<Skeleton className="h-48 w-full rounded-none" />
+							<div className="space-y-2 p-4">
+								<Skeleton className="h-5 w-1/2" />
+								<Skeleton className="h-3 w-full" />
+								<Skeleton className="h-3 w-5/6" />
+							</div>
+						</div>
+					))}
 				</div>
 			) : (
 				<div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -196,7 +213,7 @@ const ServicePage = ({ preview = false }: ServicePageProps) => {
 	}
 
 	return (
-		<main className="w-full px-3 pb-14 p-32 sm:px-5 lg:px-8">
+		<main className="w-full px-3 pb-14 pt-32 sm:px-5 lg:px-8">
 			<div className="mx-auto max-w-7xl">{sectionContent}</div>
 		</main>
 	);

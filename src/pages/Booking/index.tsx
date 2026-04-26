@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
-import { CalendarDays, Clock3, History, Scissors, Send, ShieldAlert } from "lucide-react";
+import { CalendarDays, CheckCircle2, Clock3, History, Scissors, Send, ShieldAlert } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -14,8 +14,17 @@ import BookingBarberSelector from "./BookingBarberSelector";
 import BookingServiceSelector from "./BookingServiceSelector";
 import BookingTimeSlots from "./BookingTimeSlots";
 import BookingSummary from "./BookingSummary";
+import BookingStepper, { type BookingStepKey } from "./BookingStepper";
 
 type SubmitStatus = "idle" | "sending" | "success" | "validationError" | "requestError" | "configError";
+
+interface SuccessInfo {
+	barberName: string;
+	serviceName: string;
+	date: string;
+	time: string;
+	reference: string;
+}
 
 const fallbackSlots = ["09:00", "10:00", "11:00", "12:00", "13:00", "15:00", "16:00", "17:00", "18:00", "19:00"];
 
@@ -39,9 +48,11 @@ const BookingPage = () => {
 
 	// React Query hooks
 	const { data: barbers = [] } = useBarbers();
-	const { data: services = [] } = usePublicServices();
-	const { data: slotsData } = useBookingSlots(form.barberId, form.date);
+	const { data: services = [], isLoading: servicesLoading } = usePublicServices();
+	const { data: slotsData, isFetching: slotsLoading } = useBookingSlots(form.barberId, form.date);
 	const createBookingMutation = useCreateBooking();
+
+	const [successInfo, setSuccessInfo] = useState<SuccessInfo | null>(null);
 
 	// Filter services based on selected barber's role
 	const filteredServices = useMemo(() => {
@@ -52,18 +63,18 @@ const BookingPage = () => {
 		return isHead ? services : services.filter((s) => !s.isHeadBarberOnly);
 	}, [form.barberId, barbers, services]);
 
-	const availableSlots = useMemo(() => {
-		if (!slotsData) return fallbackSlots;
-		const onlyAvailable = slotsData.filter((slot) => slot.available).map((slot) => slot.time);
-		const base = onlyAvailable.length ? onlyAvailable : fallbackSlots;
+	const slotObjects = useMemo(() => {
+		const base =
+			slotsData && slotsData.length
+				? slotsData.map((s) => ({ time: s.time, available: s.available }))
+				: fallbackSlots.map((time) => ({ time, available: true }));
 
-		// Bugungi sana tanlangan bo'lsa, o'tgan vaqtlarni olib tashlaymiz
 		if (form.date === today) {
 			const now = new Date();
 			const currentMinutes = now.getHours() * 60 + now.getMinutes();
-			return base.filter((slot) => {
-				const [h, m] = slot.split(":").map(Number);
-				return h * 60 + m > currentMinutes;
+			return base.map((slot) => {
+				const [h, m] = slot.time.split(":").map(Number);
+				return h * 60 + m > currentMinutes ? slot : { ...slot, available: false };
 			});
 		}
 
@@ -86,10 +97,36 @@ const BookingPage = () => {
 	}, [barbers, form.barberId]);
 
 	const selectedServiceName = useMemo(() => {
-		return form.style ? t(`bookingPage.hairstyles.${form.style}`) : "-";
-	}, [form.style, t]);
+		if (!form.style) return "-";
+		const numId = Number(form.style);
+		if (!Number.isNaN(numId)) {
+			const match = services.find((s) => s.id === numId);
+			if (match) return match.name;
+		}
+		// Backward-compat: still support legacy style keys.
+		const translationKey = `bookingPage.hairstyles.${form.style}`;
+		const translated = t(translationKey);
+		return translated !== translationKey ? translated : form.style;
+	}, [form.style, services, t]);
 
 	const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+
+	const stepCompleted = useMemo<Record<BookingStepKey, boolean>>(
+		() => ({
+			barber: !!form.barberId,
+			service: !!form.style,
+			datetime: !!form.date && !!form.time,
+			summary: status === "success",
+		}),
+		[form.barberId, form.style, form.date, form.time, status],
+	);
+
+	const currentStep = useMemo<BookingStepKey>(() => {
+		if (!form.barberId) return "barber";
+		if (!form.style) return "service";
+		if (!form.date || !form.time) return "datetime";
+		return "summary";
+	}, [form.barberId, form.style, form.date, form.time]);
 
 	const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -111,15 +148,20 @@ const BookingPage = () => {
 
 		setStatus("sending");
 
+		let bookingReference = "";
 		try {
-			await createBookingMutation.mutateAsync({
+			const response = (await createBookingMutation.mutateAsync({
 				name: result.data.name,
 				phone: result.data.phone,
 				barberId: result.data.barberId,
 				date: result.data.date,
 				time: result.data.time,
 				style: result.data.style as BookingStyle,
-			});
+			})) as unknown;
+			if (response && typeof response === "object") {
+				const r = response as Record<string, unknown>;
+				bookingReference = String(r.id ?? r.reference ?? r.bookingId ?? "");
+			}
 		} catch (error) {
 			setStatus("requestError");
 			toast.error(isApiError(error) && error.message ? error.message : t("toast.booking.submitFailed"));
@@ -128,18 +170,25 @@ const BookingPage = () => {
 
 		setStatus("success");
 		toast.success(t("toast.booking.submitSuccess"));
-		setForm({
-			name: "",
-			phone: "",
+		setSuccessInfo({
+			barberName: selectedBarberName,
+			serviceName: selectedServiceName,
+			date: result.data.date,
+			time: result.data.time,
+			reference: bookingReference,
+		});
+		// Keep name & phone for easy re-booking; reset only booking-specific fields.
+		setForm((prev) => ({
+			...prev,
 			barberId: "",
 			style: "",
 			date: "",
 			time: "",
-		});
+		}));
 	};
 
 	return (
-		<main className="w-full px-3 pb-14 p-32 sm:px-5 lg:px-8">
+		<main className="w-full px-3 pb-14 pt-32 sm:px-5 lg:px-8">
 			<div className="mx-auto max-w-7xl space-y-6">
 				<section className="overflow-hidden flex rounded-3xl border border-slate-300/70 bg-gradient-to-br from-white to-slate-100 p-5 dark:border-slate-700 dark:from-slate-900 dark:to-slate-950 sm:p-7">
 					<div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
@@ -189,6 +238,68 @@ const BookingPage = () => {
 					</div>
 				</section>
 
+				<BookingStepper currentStep={currentStep} completed={stepCompleted} />
+
+				{status === "success" && successInfo && (
+					<motion.section
+						initial={{ opacity: 0, y: 12 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.35 }}
+						className="rounded-3xl border border-emerald-300/70 bg-emerald-50 p-5 dark:border-emerald-500/30 dark:bg-emerald-500/10 sm:p-6"
+					>
+						<div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+							<div className="flex items-start gap-3">
+								<div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-white">
+									<CheckCircle2 className="h-5 w-5" />
+								</div>
+								<div className="space-y-1">
+									<h2 className="text-lg font-black text-emerald-900 dark:text-emerald-100">
+										{t("bookingPage.confirmation.title")}
+									</h2>
+									<p className="text-sm text-emerald-800/90 dark:text-emerald-200/90">
+										{t("bookingPage.confirmation.description")}
+									</p>
+									<dl className="mt-3 grid gap-1 text-sm text-emerald-900 dark:text-emerald-100 sm:grid-cols-2">
+										{successInfo.reference && (
+											<>
+												<dt className="font-semibold">{t("bookingPage.confirmation.reference")}</dt>
+												<dd className="font-mono">{successInfo.reference}</dd>
+											</>
+										)}
+										<dt className="font-semibold">{t("bookingPage.form.labels.barber")}</dt>
+										<dd>{successInfo.barberName}</dd>
+										<dt className="font-semibold">{t("bookingPage.form.labels.service")}</dt>
+										<dd>{successInfo.serviceName}</dd>
+										<dt className="font-semibold">{t("bookingPage.form.labels.date")}</dt>
+										<dd>{successInfo.date}</dd>
+										<dt className="font-semibold">{t("bookingPage.form.labels.time")}</dt>
+										<dd>{successInfo.time}</dd>
+									</dl>
+								</div>
+							</div>
+							<div className="flex shrink-0 flex-wrap gap-2">
+								<Link
+									to={`/${locale}/profile`}
+									className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
+								>
+									<History className="h-4 w-4" />
+									{t("userPage.bookingsTitle")}
+								</Link>
+								<button
+									type="button"
+									onClick={() => {
+										setSuccessInfo(null);
+										setStatus("idle");
+									}}
+									className="inline-flex items-center gap-2 rounded-xl border border-emerald-400/60 px-4 py-2 text-sm font-semibold text-emerald-800 transition hover:bg-emerald-100 dark:border-emerald-400/40 dark:text-emerald-200 dark:hover:bg-emerald-500/10"
+								>
+									{t("bookingPage.confirmation.another")}
+								</button>
+							</div>
+						</div>
+					</motion.section>
+				)}
+
 				<section className="grid gap-5 lg:grid-cols-[1.2fr_1fr]">
 					<motion.form
 						initial={{ opacity: 0, y: 14 }}
@@ -208,6 +319,8 @@ const BookingPage = () => {
 							barberId={form.barberId}
 							style={form.style}
 							barbers={barbers}
+							services={filteredServices}
+							loading={servicesLoading}
 							onBarberChange={(barberId) => setForm((prev) => ({ ...prev, barberId, time: "" }))}
 							onStyleChange={(style) => setForm((prev) => ({ ...prev, style }))}
 						/>
@@ -215,8 +328,11 @@ const BookingPage = () => {
 						<BookingTimeSlots
 							date={form.date}
 							time={form.time}
-							availableSlots={availableSlots}
+							slots={slotObjects}
 							today={today}
+							loading={!!form.barberId && slotsLoading}
+							slotsDisabled={!form.barberId}
+							disabledReason={t("quickBook.selectBarberHint")}
 							onDateChange={(date) => setForm((prev) => ({ ...prev, date, time: "" }))}
 							onTimeChange={(time) => setForm((prev) => ({ ...prev, time }))}
 						/>
@@ -233,12 +349,11 @@ const BookingPage = () => {
 
 							<Link
 								to={`/${locale}/profile`}
-								className={`inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition
-			${
-				status === "success"
-					? "bg-green-900 text-white hover:bg-slate-700 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
-					: "bg-slate-400 text-white opacity-70"
-			}`}
+								className={`inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition ${
+									status === "success"
+										? "bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:text-slate-950 dark:hover:bg-emerald-400"
+										: "border border-slate-300 bg-white text-slate-800 hover:border-slate-500 hover:bg-slate-100 dark:border-slate-600 dark:bg-slate-950/60 dark:text-slate-100 dark:hover:border-slate-400"
+								}`}
 							>
 								<History className="h-4 w-4" />
 								{t("userPage.bookingsTitle")}

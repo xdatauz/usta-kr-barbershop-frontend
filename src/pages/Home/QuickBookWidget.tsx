@@ -1,39 +1,66 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Clock, User, XCircle, Loader2, ArrowRight, Scissors, ChevronLeft, ChevronRight } from "lucide-react";
+import { Clock, User, ArrowRight, Scissors, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { getBarbersApi, type BarberProfile } from "../../lib/api/barbers";
-import api from "../../lib/api/client";
+import { useBookingSlots } from "../../hooks";
 import { localDateStr } from "../../lib/date";
-
-interface BookingSlot {
-	time: string;
-	available: boolean;
-}
-
-const getSlotsApi = async (date: string, barberId: string): Promise<BookingSlot[]> => {
-	const { data } = await api.get("/bookings/slots", { params: { date, barberId } });
-	const raw = data?.slots ?? [];
-	return (Array.isArray(raw) ? raw : [])
-		.filter((s): s is Record<string, unknown> => !!s && typeof s === "object")
-		.map((s) => ({ time: String(s.time ?? ""), available: s.available !== false }))
-		.filter((s) => s.time);
-};
+import BookingTimeSlots from "../../components/booking/BookingTimeSlots";
 
 const todayStr = () => localDateStr();
 
-const WEEKDAYS_UZ = ["Du", "Se", "Ch", "Pa", "Ju", "Sh", "Ya"];
-const MONTHS_UZ = [
-	"Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
-	"Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr",
-];
+const resolveIntlLocale = (locale: string): string => {
+	switch (locale) {
+		case "uz":
+			return "uz-Latn";
+		case "kr":
+			return "ko-KR";
+		case "ru":
+			return "ru-RU";
+		case "en":
+			return "en-US";
+		default:
+			return locale || "uz-Latn";
+	}
+};
 
-function MiniCalendar({ value, onChange, min }: { value: string; onChange: (d: string) => void; min: string }) {
+function MiniCalendar({
+	value,
+	onChange,
+	min,
+	intlLocale,
+}: {
+	value: string;
+	onChange: (d: string) => void;
+	min: string;
+	intlLocale: string;
+}) {
 	const selected = value ? new Date(value + "T00:00:00") : new Date();
 	const [viewYear, setViewYear] = useState(selected.getFullYear());
 	const [viewMonth, setViewMonth] = useState(selected.getMonth());
 
-	const minDate = min ? new Date(min + "T00:00:00") : null;
+	const minDate = useMemo(() => {
+		if (!min) return null;
+		const d = new Date(min + "T00:00:00");
+		d.setHours(0, 0, 0, 0);
+		return d;
+	}, [min]);
+
+	const weekdayLabels = useMemo(() => {
+		// Monday-first week
+		const base = new Date(2024, 0, 1); // Jan 1 2024 is a Monday
+		const formatter = new Intl.DateTimeFormat(intlLocale, { weekday: "short" });
+		return Array.from({ length: 7 }, (_, i) => {
+			const d = new Date(base);
+			d.setDate(base.getDate() + i);
+			return formatter.format(d);
+		});
+	}, [intlLocale]);
+
+	const monthLabel = useMemo(() => {
+		const formatter = new Intl.DateTimeFormat(intlLocale, { month: "long", year: "numeric" });
+		return formatter.format(new Date(viewYear, viewMonth, 1));
+	}, [intlLocale, viewYear, viewMonth]);
 
 	const days = useMemo(() => {
 		const first = new Date(viewYear, viewMonth, 1);
@@ -59,7 +86,6 @@ function MiniCalendar({ value, onChange, min }: { value: string; onChange: (d: s
 		if (!minDate) return false;
 		const d = new Date(viewYear, viewMonth, day);
 		d.setHours(0, 0, 0, 0);
-		minDate.setHours(0, 0, 0, 0);
 		return d < minDate;
 	};
 
@@ -89,7 +115,7 @@ function MiniCalendar({ value, onChange, min }: { value: string; onChange: (d: s
 					<ChevronLeft className="h-4 w-4" />
 				</button>
 				<span className="text-xs font-bold text-slate-700 dark:text-slate-200">
-					{MONTHS_UZ[viewMonth]} {viewYear}
+					{monthLabel}
 				</span>
 				<button
 					type="button"
@@ -101,7 +127,7 @@ function MiniCalendar({ value, onChange, min }: { value: string; onChange: (d: s
 			</div>
 
 			<div className="grid grid-cols-7 gap-0.5 text-center">
-				{WEEKDAYS_UZ.map((wd) => (
+				{weekdayLabels.map((wd) => (
 					<div key={wd} className="py-1 text-[10px] font-semibold uppercase text-slate-400 dark:text-slate-500">
 						{wd}
 					</div>
@@ -144,17 +170,18 @@ const FieldLabel = ({ icon, label }: { icon: React.ReactNode; label: string }) =
 );
 
 export default function QuickBookWidget() {
-	const { t } = useTranslation();
+	const { t, i18n } = useTranslation();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const locale = location.pathname.split("/")[1] || "uz";
+	const intlLocale = useMemo(() => resolveIntlLocale(i18n.resolvedLanguage || locale), [i18n.resolvedLanguage, locale]);
 
 	const [date, setDate] = useState(todayStr());
 	const [barbers, setBarbers] = useState<BarberProfile[]>([]);
 	const [barberId, setBarberId] = useState<string>("");
-	const [slots, setSlots] = useState<BookingSlot[]>([]);
 	const [time, setTime] = useState<string>("");
-	const [slotsLoading, setSlotsLoading] = useState(false);
+
+	const { data: rawSlots = [], isFetching: slotsLoading } = useBookingSlots(barberId, date);
 
 	useEffect(() => {
 		getBarbersApi()
@@ -164,27 +191,20 @@ export default function QuickBookWidget() {
 
 	useEffect(() => {
 		setTime("");
-		if (!date || !barberId) {
-			setSlots([]);
-			return;
-		}
-		setSlotsLoading(true);
-		getSlotsApi(date, barberId)
-			.then((fetched) => {
-				if (date === todayStr()) {
-					const now = new Date();
-					const currentMinutes = now.getHours() * 60 + now.getMinutes();
-					return fetched.map((s) => {
-						const [h, m] = s.time.split(":").map(Number);
-						return h * 60 + m > currentMinutes ? s : { ...s, available: false };
-					});
-				}
-				return fetched;
-			})
-			.then(setSlots)
-			.catch(() => setSlots([]))
-			.finally(() => setSlotsLoading(false));
 	}, [date, barberId]);
+
+	const slots = useMemo(() => {
+		if (!barberId || !date) return [];
+		if (date === todayStr()) {
+			const now = new Date();
+			const currentMinutes = now.getHours() * 60 + now.getMinutes();
+			return rawSlots.map((s) => {
+				const [h, m] = s.time.split(":").map(Number);
+				return h * 60 + m > currentMinutes ? s : { ...s, available: false };
+			});
+		}
+		return rawSlots;
+	}, [rawSlots, date, barberId]);
 
 	const handleBook = () => {
 		const params = new URLSearchParams({ date });
@@ -262,7 +282,7 @@ export default function QuickBookWidget() {
 						<div>
 							<FieldLabel icon={<Clock className="h-3.5 w-3.5" />} label={t("quickBook.labelDate")} />
 							<div className="rounded-xl border border-slate-200 bg-white/90 p-3 dark:border-slate-700 dark:bg-slate-900/90">
-								<MiniCalendar value={date} onChange={setDate} min={todayStr()} />
+								<MiniCalendar value={date} onChange={setDate} min={todayStr()} intlLocale={intlLocale} />
 							</div>
 						</div>
 					</div>
@@ -271,45 +291,18 @@ export default function QuickBookWidget() {
 					<div className="flex flex-col">
 						<div className="flex-1">
 							<FieldLabel icon={<Clock className="h-3.5 w-3.5" />} label={t("quickBook.labelTime")} />
-							{!barberId ? (
-								<div className={`${fieldBase} border-slate-200 dark:border-slate-700 text-slate-400 flex items-center gap-2`}>
-									<User className="h-4 w-4 shrink-0" />
-									{t("quickBook.selectBarberHint")}
-								</div>
-							) : slotsLoading ? (
-								<div className={`${fieldBase} border-slate-200 dark:border-slate-700 text-slate-400 flex items-center gap-2`}>
-									<Loader2 className="h-4 w-4 animate-spin shrink-0 text-emerald-500" />
-									{t("quickBook.loadingSlots")}
-								</div>
-							) : slots.length === 0 ? (
-								<div className={`${fieldBase} border-orange-200 bg-orange-50/80 dark:border-orange-500/20 dark:bg-orange-500/5 text-orange-600 dark:text-orange-400 flex items-center gap-2`}>
-									<XCircle className="h-4 w-4 shrink-0" />
-									{t("quickBook.noSlots")}
-								</div>
-							) : (
-								<div className="grid grid-cols-3 gap-2">
-									{slots.map((s) => (
-										<button
-											key={s.time}
-											type="button"
-											disabled={!s.available}
-											onClick={() => setTime(s.time)}
-											className={`rounded-xl border py-2.5 text-xs font-semibold transition-all duration-200 ${
-												time === s.time
-													? "border-emerald-500 bg-emerald-500 text-white shadow-md shadow-emerald-500/25 scale-105"
-													: s.available
-														? "border-slate-200 bg-white/80 text-slate-700 hover:border-emerald-400 hover:text-emerald-600 dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:border-emerald-500"
-														: "border-slate-200 bg-slate-50 text-slate-400 line-through cursor-not-allowed dark:border-slate-700 dark:bg-slate-800/40 dark:text-slate-600"
-											}`}
-										>
-											{s.time}
-										</button>
-									))}
-								</div>
-							)}
+							<BookingTimeSlots
+								slots={slots}
+								selectedTime={time}
+								loading={slotsLoading}
+								disabled={!barberId}
+								disabledReason={t("quickBook.selectBarberHint")}
+								emptyMessage={t("quickBook.noSlots")}
+								onTimeChange={setTime}
+							/>
 						</div>
 
-						{/* Book Now button — faqat vaqt tanlanganda ko'rinadi */}
+						{/* Book Now button — only visible when time is picked */}
 						{time && (
 							<button
 								type="button"

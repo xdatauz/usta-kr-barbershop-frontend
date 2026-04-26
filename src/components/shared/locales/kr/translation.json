@@ -294,7 +294,8 @@
 		"more": "더보기",
 		"loading": "로딩 중...",
 		"today": "오늘",
-		"min": "분"
+		"min": "분",
+		"close": "닫기"
 	},
 	"toast": {
 		"auth": {
@@ -368,6 +369,7 @@
 	"userPage": {
 		"backHome": "홈으로",
 		"bookingsEmpty": "아직 예약이 없습니다. 서비스 페이지에서 첫 예약을 진행하세요.",
+		"bookingsEmptyFiltered": "{{tab}} 상태의 예약이 없습니다",
 		"subtitle": "기본 계정 정보와 예약 활동을 관리하세요.",
 		"guestDescription": "개인 프로필을 보려면 먼저 로그인하세요.",
 		"guestTitle": "로그인이 필요합니다",
@@ -382,12 +384,29 @@
 		"detailId": "예약 ID",
 		"detailStatus": "상태",
 		"detailClose": "닫기",
-		"detailBookedAt": "예약한 시각"
+		"detailBookedAt": "예약한 시각",
+		"tabs": {
+			"all": "전체",
+			"pending": "대기 중",
+			"confirmed": "확정",
+			"completed": "완료",
+			"cancelled": "취소됨"
+		}
 	},
 	"bookingPage": {
 		"eyebrow": "자리를 잡아두세요",
 		"title": "내 시간, 내 스타일로 예약",
 		"description": "원하는 바버, 원하는 시간. 클릭 몇 번이면 끝입니다. 나머지는 저희가 준비할게요.",
+		"stepper": {
+			"ariaLabel": "예약 단계",
+			"progress": "단계 {{current}} / {{total}}",
+			"steps": {
+				"barber": "바버",
+				"service": "서비스",
+				"datetime": "날짜 및 시간",
+				"summary": "확인"
+			}
+		},
 		"badges": {
 			"fast": "바로 확인",
 			"time": "내 일정에 맞게",
@@ -444,6 +463,12 @@
 			"description": "괜찮습니다. 바버 프로필과 서비스 설명을 먼저 둘러보세요. 나에게 맞는 선택이 보일 거예요.",
 			"barbersCta": "바버 보기",
 			"servicesCta": "서비스 보기"
+		},
+		"confirmation": {
+			"title": "예약이 확정되었습니다",
+			"description": "예약이 성공적으로 접수되었습니다. 확인 메시지를 휴대폰으로 보내드렸어요.",
+			"reference": "예약 번호",
+			"another": "다시 예약하기"
 		}
 	},
 	"barbersPage": {
@@ -452,6 +477,7 @@
 		"loadingList": "바버 목록 불러오는 중...",
 		"loadingProfile": "바버 프로필 불러오는 중...",
 		"notFound": "바버를 찾을 수 없습니다.",
+		"newBadge": "신규",
 		"reviews": "개 리뷰",
 		"viewProfile": "프로필 보기",
 		"backToList": "바버 목록으로 돌아가기",

@@ -19,7 +19,7 @@ interface ArticlePageProps {
 	preview?: boolean;
 }
 
-const canWriteArticles = (role: StaffRole | undefined): boolean => {
+const canWriteArticles = (role: string | undefined): boolean => {
 	return role === StaffRole.ADMIN || role === StaffRole.BARBER;
 };
 

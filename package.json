@@ -27,7 +27,6 @@
 		"lucide-react": "^0.424.0",
 		"react": "19",
 		"react-dom": "19",
-		"react-helmet": "^6.1.0",
 		"react-helmet-async": "^2.0.5",
 		"react-hook-form": "^7.71.1",
 		"react-i18next": "^16.5.4",

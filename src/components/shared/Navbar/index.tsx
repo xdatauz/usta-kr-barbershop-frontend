@@ -1,13 +1,15 @@
-import { useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Instagram, Send, Menu, X, Phone, Bell } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { ThemeToggle } from "../../ui/ThemeToggle";
 import { UserProfileMenu } from "../../ui/UserProfile";
 import AuthModal from "../../ui/AuthModal";
 import { useAuth } from "../../../context/auth/auth-provider";
 import { getClientNotificationsApi } from "../../../lib/api/notifications";
+import { CONTACT } from "../../../constants/contact";
 
 interface NavbarProps {
 	scrolled: boolean;
@@ -20,14 +22,19 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 	const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 	const locale = location.pathname.split("/")[1] || "uz";
 	const { currentUser, logout } = useAuth();
-	const [unreadCount, setUnreadCount] = useState(0);
 
-	useEffect(() => {
-		if (!currentUser) { setUnreadCount(0); return; }
-		getClientNotificationsApi()
-			.then((list) => setUnreadCount(list.filter((n) => !n.isRead).length))
-			.catch(() => {});
-	}, [currentUser, location.pathname]);
+	const { data: notifications = [] } = useQuery({
+		queryKey: ["notifications", "client"],
+		queryFn: getClientNotificationsApi,
+		enabled: !!currentUser,
+		staleTime: 60_000,
+		refetchInterval: 60_000,
+	});
+
+	const unreadCount = useMemo(
+		() => (currentUser ? notifications.filter((n) => !n.isRead).length : 0),
+		[currentUser, notifications],
+	);
 
 	const navItems = [
 		{ key: "nav.home", path: "" },
@@ -45,11 +52,11 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 					{/* Left: phone */}
 					<div className="flex items-center gap-1.5">
 						<a
-							href="tel:+82538135515"
+							href={`tel:${CONTACT.phones[0].tel}`}
 							className="flex items-center gap-1.5 text-xs font-medium text-slate-500 transition hover:text-emerald-600 dark:text-slate-400 dark:hover:text-emerald-400"
 						>
 							<Phone className="h-3 w-3" />
-							053-813-5515
+							{CONTACT.phones[0].display}
 						</a>
 						{currentUser && (
 						<Link
@@ -69,7 +76,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 					{/* Right: socials · divider · language · theme */}
 					<div className="flex items-center gap-3">
 						<a
-							href="https://www.instagram.com/usta.barbershop"
+							href={CONTACT.instagram}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="text-pink-500 transition hover:text-pink-600 dark:text-pink-400 dark:hover:text-pink-300"
@@ -77,7 +84,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 							<Instagram className="h-3.5 w-3.5" />
 						</a>
 						<a
-							href="https://t.me/usta_2019"
+							href={CONTACT.telegram}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="text-sky-500 transition hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-300"
@@ -107,7 +114,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 						onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 						className="flex shrink-0 items-center"
 					>
-						<img src="/logos/main-logo.jpg" alt="Usta Barber" className="h-10 w-auto object-contain sm:h-12" />
+						<img src="/logos/main-logo.jpg" alt={CONTACT.siteName} className="h-10 w-auto object-contain sm:h-12" />
 					</Link>
 
 					{/* Desktop nav links */}
@@ -205,7 +212,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 						{/* Socials */}
 						<div className="mt-2 flex items-center justify-center gap-6 border-t border-slate-100 pt-4 dark:border-slate-800">
 							<a
-								href="https://www.instagram.com/usta.barbershop"
+								href={CONTACT.instagram}
 								target="_blank"
 								rel="noopener noreferrer"
 								className="text-pink-500 transition hover:text-pink-600 dark:text-pink-400 dark:hover:text-pink-300"
@@ -213,7 +220,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 								<Instagram className="h-5 w-5" />
 							</a>
 							<a
-								href="https://t.me/usta_2019"
+								href={CONTACT.telegram}
 								target="_blank"
 								rel="noopener noreferrer"
 								className="text-sky-500 transition hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-300"

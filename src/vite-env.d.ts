@@ -6,6 +6,7 @@ interface ImportMetaEnv {
 	readonly VITE_TELEGRAM_CHAT_ID?: string;
 	readonly VITE_INSTAGRAM_BUSINESS_ACCOUNT_ID?: string;
 	readonly VITE_INSTAGRAM_ACCESS_TOKEN?: string;
+	readonly VITE_NAVER_VERIFICATION?: string;
 	// add other env variables here as needed
 }
 

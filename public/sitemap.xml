@@ -9,6 +9,8 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz"/>
+    <lastmod>2026-04-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -18,6 +20,30 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/ru</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/en</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz"/>
+    <lastmod>2026-04-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -27,6 +53,10 @@
     <loc>https://ustabarber.pro/uz/services</loc>
     <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/services"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/services"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/services"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/services"/>
+    <lastmod>2026-04-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -34,40 +64,34 @@
     <loc>https://ustabarber.pro/kr/services</loc>
     <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/services"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/services"/>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Booking -->
-  <url>
-    <loc>https://ustabarber.pro/uz/booking</loc>
-    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/booking"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/booking"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/services"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/services"/>
+    <lastmod>2026-04-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://ustabarber.pro/kr/booking</loc>
-    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/booking"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/booking"/>
+    <loc>https://ustabarber.pro/ru/services</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/services"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/services"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/services"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/services"/>
+    <lastmod>2026-04-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- Barbers -->
   <url>
-    <loc>https://ustabarber.pro/uz/barbers</loc>
-    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/barbers"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/barbers"/>
+    <loc>https://ustabarber.pro/en/services</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/services"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/services"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/services"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/services"/>
+    <lastmod>2026-04-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://ustabarber.pro/kr/barbers</loc>
-    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/barbers"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/barbers"/>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
 
   <!-- Gallery -->
@@ -75,6 +99,10 @@
     <loc>https://ustabarber.pro/uz/gallery</loc>
     <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/gallery"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/gallery"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/gallery"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/gallery"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/gallery"/>
+    <lastmod>2026-04-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -82,6 +110,32 @@
     <loc>https://ustabarber.pro/kr/gallery</loc>
     <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/gallery"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/gallery"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/gallery"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/gallery"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/gallery"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/ru/gallery</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/gallery"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/gallery"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/gallery"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/gallery"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/gallery"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/en/gallery</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/gallery"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/gallery"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/gallery"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/gallery"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/gallery"/>
+    <lastmod>2026-04-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -91,6 +145,10 @@
     <loc>https://ustabarber.pro/uz/about</loc>
     <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/about"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/about"/>
+    <lastmod>2026-04-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -98,6 +156,32 @@
     <loc>https://ustabarber.pro/kr/about</loc>
     <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/about"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/about"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/ru/about</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/about"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/about"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/en/about</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/about"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/about"/>
+    <lastmod>2026-04-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -107,6 +191,10 @@
     <loc>https://ustabarber.pro/uz/contact</loc>
     <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/contact"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/contact"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/contact"/>
+    <lastmod>2026-04-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -114,8 +202,126 @@
     <loc>https://ustabarber.pro/kr/contact</loc>
     <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/contact"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/contact"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/contact"/>
+    <lastmod>2026-04-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/ru/contact</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/contact"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/contact"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/contact"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/contact"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/contact"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/contact"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Barbers -->
+  <url>
+    <loc>https://ustabarber.pro/uz/barbers</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/barbers"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/barbers"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/barbers"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/barbers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/barbers"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/kr/barbers</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/barbers"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/barbers"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/barbers"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/barbers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/barbers"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/ru/barbers</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/barbers"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/barbers"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/barbers"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/barbers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/barbers"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/en/barbers</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/barbers"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/barbers"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/barbers"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/barbers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/barbers"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Booking -->
+  <url>
+    <loc>https://ustabarber.pro/uz/booking</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/booking"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/booking"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/booking"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/booking"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/booking"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/kr/booking</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/booking"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/booking"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/booking"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/booking"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/booking"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/ru/booking</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/booking"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/booking"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/booking"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/booking"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/booking"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/en/booking</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/booking"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/booking"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/booking"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/booking"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/booking"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 
   <!-- Articles -->
@@ -123,6 +329,10 @@
     <loc>https://ustabarber.pro/uz/articles</loc>
     <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/articles"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/articles"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/articles"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/articles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/articles"/>
+    <lastmod>2026-04-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
@@ -130,6 +340,32 @@
     <loc>https://ustabarber.pro/kr/articles</loc>
     <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/articles"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/articles"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/articles"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/articles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/articles"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/ru/articles</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/articles"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/articles"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/articles"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/articles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/articles"/>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ustabarber.pro/en/articles</loc>
+    <xhtml:link rel="alternate" hreflang="uz" href="https://ustabarber.pro/uz/articles"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://ustabarber.pro/kr/articles"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ustabarber.pro/ru/articles"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ustabarber.pro/en/articles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ustabarber.pro/uz/articles"/>
+    <lastmod>2026-04-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>

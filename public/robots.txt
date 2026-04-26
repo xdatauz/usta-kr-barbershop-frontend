@@ -19,5 +19,12 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-Disallow: /*/profile
-Disallow: /*/notifications
+# Private client pages — not to be indexed
+Disallow: /uz/profile
+Disallow: /kr/profile
+Disallow: /ru/profile
+Disallow: /en/profile
+Disallow: /uz/notifications
+Disallow: /kr/notifications
+Disallow: /ru/notifications
+Disallow: /en/notifications

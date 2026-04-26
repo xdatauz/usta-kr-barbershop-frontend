@@ -89,10 +89,6 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 					onSubmit={onSubmit}
 					className="space-y-4 rounded-2xl border border-slate-300/70 bg-white p-4 dark:border-slate-700 dark:bg-slate-900"
 				>
-					<p className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs leading-6 text-emerald-700 dark:text-emerald-300">
-						{t("contactSection.description")}
-					</p>
-
 					<div className="grid gap-3 sm:grid-cols-2">
 						<label className="space-y-1">
 							<span className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-400">
@@ -302,7 +298,7 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 	}
 
 	return (
-		<main className="w-full px-3 pb-14 p-32 sm:px-5 lg:px-8">
+		<main className="w-full px-3 pb-14 pt-32 sm:px-5 lg:px-8">
 			<div className="mx-auto max-w-7xl">{sectionContent}</div>
 		</main>
 	);

@@ -294,7 +294,8 @@
 		"more": "Batafsil",
 		"loading": "Yuklanmoqda...",
 		"today": "Bugun",
-		"min": "daq"
+		"min": "daq",
+		"close": "Yopish"
 	},
 	"toast": {
 		"auth": {
@@ -369,6 +370,7 @@
 		"bookingsTitle": "So'nggi bronlar",
 		"backHome": "Bosh sahifaga qaytish",
 		"bookingsEmpty": "Hali bron mavjud emas. Birinchi bronni Xizmatlar bo'limidan qiling.",
+		"bookingsEmptyFiltered": "{{tab}} holatidagi bronlar yo'q",
 		"guestDescription": "Shaxsiy profilingizni ko'rish uchun tizimga kiring.",
 		"title": "Mening profilim",
 		"subtitle": "Asosiy hisob ma'lumotlari va band qilish tarixini boshqaring.",
@@ -382,12 +384,29 @@
 		"detailId": "Bron ID",
 		"detailStatus": "Holat",
 		"detailClose": "Yopish",
-		"detailBookedAt": "Bron qilingan vaqt"
+		"detailBookedAt": "Bron qilingan vaqt",
+		"tabs": {
+			"all": "Barchasi",
+			"pending": "Kutilayotgan",
+			"confirmed": "Tasdiqlangan",
+			"completed": "Yakunlangan",
+			"cancelled": "Bekor qilingan"
+		}
 	},
 	"bookingPage": {
 		"eyebrow": "Vaqtingizni band qiling",
 		"title": "O'zingizga qulay paytni tanlang",
 		"description": "Bir necha bosqichda yoziling — qolganini biz hal qilamiz. Siz faqat o'z vaqtingizda keling va rahatlaning.",
+		"stepper": {
+			"ariaLabel": "Bron qilish bosqichlari",
+			"progress": "Bosqich {{current}} / {{total}}",
+			"steps": {
+				"barber": "Sartarosh",
+				"service": "Xizmat",
+				"datetime": "Sana va vaqt",
+				"summary": "Tasdiqlash"
+			}
+		},
 		"badges": {
 			"fast": "Bir zumda tasdiqlash",
 			"time": "Sizga qulay vaqt",
@@ -444,6 +463,12 @@
 			"description": "Hech gap emas. Barberlarimiz va xizmatlar sahifasini ko'rib chiqing — o'zingizga mosini topasiz.",
 			"barbersCta": "Barberlar",
 			"servicesCta": "Xizmatlar"
+		},
+		"confirmation": {
+			"title": "Bron tasdiqlandi",
+			"description": "Sizning uchrashuvingiz ro'yxatga olindi. Tasdiqlovchi xabar telefon raqamingizga yuboriladi.",
+			"reference": "Bron raqami",
+			"another": "Yana bron qilish"
 		}
 	},
 	"barbersPage": {
@@ -452,6 +477,7 @@
 		"loadingList": "Sartaroshlar yuklanmoqda...",
 		"loadingProfile": "Sartarosh profili yuklanmoqda...",
 		"notFound": "Sartarosh topilmadi.",
+		"newBadge": "Yangi",
 		"reviews": "ta fikr",
 		"viewProfile": "Profilni ko'rish",
 		"backToList": "Sartaroshlarga qaytish",

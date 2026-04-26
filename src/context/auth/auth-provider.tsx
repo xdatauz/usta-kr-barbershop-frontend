@@ -1,13 +1,17 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { clientLogout, getClientMeApi, loginClientApi, registerClientApi } from "../../lib/api/client-auth";
 import { clearStoredTokens, isApiError } from "../../lib/api/client";
 import { StaffRole } from "../../lib/enums/staff-role.enum";
+
+export type AuthUserType = StaffRole | "CLIENT";
 
 export interface AuthUser {
 	id: string;
 	name: string;
 	phone: string;
-	userType: StaffRole;
+	userType: AuthUserType;
 	image?: string | null;
 }
 
@@ -23,27 +27,35 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 const CURRENT_USER_STORAGE_KEY = "usta_auth_user";
 
-const VALID_USER_TYPES = new Set<StaffRole>([
+const VALID_USER_TYPES = new Set<AuthUserType>([
 	StaffRole.ADMIN,
 	StaffRole.BARBER,
 	StaffRole.HEAD_BARBER,
 	StaffRole.RECEPTION,
+	"CLIENT",
 ]);
+
+const normalizeUserType = (raw: unknown): AuthUserType => {
+	if (typeof raw !== "string") return "CLIENT";
+	const upper = raw.toUpperCase();
+	if (VALID_USER_TYPES.has(upper as AuthUserType)) return upper as AuthUserType;
+	return "CLIENT";
+};
 
 const clientToAuthUser = (client: { id: string; name: string; phone: string; userType?: string }): AuthUser => ({
 	id: client.id,
 	name: client.name,
 	phone: client.phone,
-	userType:
-		client.userType && VALID_USER_TYPES.has(client.userType as StaffRole)
-			? (client.userType as StaffRole)
-			: StaffRole.BARBER,
+	userType: normalizeUserType(client.userType),
 	image: null,
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
 	const [isAuthLoading, setIsAuthLoading] = useState(false);
+	const navigate = useNavigate();
+	const location = useLocation();
+	const queryClient = useQueryClient();
 
 	// restore cached user on mount
 	useEffect(() => {
@@ -65,10 +77,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 				id: parsed.id,
 				name: parsed.name,
 				phone: parsed.phone,
-				userType:
-					parsed.userType && VALID_USER_TYPES.has(parsed.userType as StaffRole)
-						? (parsed.userType as StaffRole)
-						: StaffRole.BARBER,
+				userType: normalizeUserType(parsed.userType),
 				image: parsed.image ?? null,
 			});
 		} catch {
@@ -142,7 +151,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		clientLogout();
 		setCurrentUser(null);
 		persistUser(null);
-		window.location.reload();
+		queryClient.clear();
+		const locale = location.pathname.split("/")[1] || "uz";
+		navigate(`/${locale}`);
 	};
 
 	const value = useMemo(() => ({ currentUser, isAuthLoading, login, signup, logout }), [currentUser, isAuthLoading]);

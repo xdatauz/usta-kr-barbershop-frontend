@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
-import { Camera, Expand, Instagram, RefreshCw, AlertCircle } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Camera, Expand, Instagram, RefreshCw, AlertCircle, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useInstagramGallery } from "../../hooks/useInstagramGallery";
 
 interface GalleryPageProps {
@@ -42,13 +42,23 @@ const GalleryPage = ({ preview = false }: GalleryPageProps) => {
 	const location = useLocation();
 	const locale = location.pathname.split("/")[1] || "uz";
 	const { instagramMedia, loading: instagramLoading, error: instagramError, refresh } = useInstagramGallery(8);
-	const [expandedImage, setExpandedImage] = useState<number | null>(null);
-	const [openInstagramLink, setOpenInstagramLink] = useState<string | null>(null);
+	const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
 	// Combine hardcoded and Instagram images
 	// Instagram images are shown first (more recent content)
 	const combinedImages = [...instagramMedia, ...hardcodedImages];
 	const visibleImages = preview ? combinedImages.slice(0, 8) : combinedImages;
+
+	const lightboxImage = lightboxIndex !== null ? visibleImages[lightboxIndex] : null;
+
+	useEffect(() => {
+		if (lightboxIndex === null) return;
+		const onKey = (event: KeyboardEvent) => {
+			if (event.key === "Escape") setLightboxIndex(null);
+		};
+		window.addEventListener("keydown", onKey);
+		return () => window.removeEventListener("keydown", onKey);
+	}, [lightboxIndex]);
 
 	const sectionContent = (
 		<section className="rounded-3xl border border-slate-300/70 bg-white/80 p-4 shadow-sm backdrop-blur sm:p-6 lg:p-8 dark:border-slate-700 dark:bg-slate-900/70">
@@ -102,11 +112,18 @@ const GalleryPage = ({ preview = false }: GalleryPageProps) => {
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true, amount: 0.2 }}
 						transition={{ duration: 0.35, delay: index * 0.04 }}
-						className={`group relative overflow-hidden rounded-2xl border border-slate-300/60 dark:border-slate-700 ${
+						className={`group relative cursor-zoom-in overflow-hidden rounded-2xl border border-slate-300/60 dark:border-slate-700 ${
 							index % 5 === 0 ? "sm:col-span-2" : ""
 						}`}
-						onMouseEnter={() => setExpandedImage(index)}
-						onMouseLeave={() => setExpandedImage(null)}
+						onClick={() => setLightboxIndex(index)}
+						role="button"
+						tabIndex={0}
+						onKeyDown={(event) => {
+							if (event.key === "Enter" || event.key === " ") {
+								event.preventDefault();
+								setLightboxIndex(index);
+							}
+						}}
 					>
 						<img
 							src={image.src}
@@ -202,13 +219,80 @@ const GalleryPage = ({ preview = false }: GalleryPageProps) => {
 		</section>
 	);
 
+	const lightbox = (
+		<AnimatePresence>
+			{lightboxImage && (
+				<motion.div
+					key="lightbox"
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 0.2 }}
+					className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+					onClick={() => setLightboxIndex(null)}
+					role="dialog"
+					aria-modal="true"
+					aria-label={lightboxImage.caption || t(`gallerySection.categories.${lightboxImage.category}`)}
+				>
+					<button
+						type="button"
+						onClick={(event) => {
+							event.stopPropagation();
+							setLightboxIndex(null);
+						}}
+						className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
+						aria-label={t("common.close") || "Close"}
+					>
+						<X className="h-5 w-5" />
+					</button>
+					<motion.div
+						initial={{ opacity: 0, scale: 0.92 }}
+						animate={{ opacity: 1, scale: 1 }}
+						exit={{ opacity: 0, scale: 0.92 }}
+						transition={{ duration: 0.25, ease: "easeOut" }}
+						className="relative max-h-[90vh] max-w-5xl"
+						onClick={(event) => event.stopPropagation()}
+					>
+						<img
+							src={lightboxImage.src}
+							alt={lightboxImage.caption || t(`gallerySection.categories.${lightboxImage.category}`)}
+							className="max-h-[90vh] w-auto rounded-2xl object-contain shadow-2xl"
+						/>
+						{(lightboxImage.caption || lightboxImage.isInstagram) && (
+							<div className="mt-3 flex items-center justify-between gap-3 text-sm text-white">
+								<span className="truncate">{lightboxImage.caption}</span>
+								{lightboxImage.isInstagram && lightboxImage.permalink && (
+									<a
+										href={lightboxImage.permalink}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="inline-flex shrink-0 items-center gap-1 rounded-full border border-white/40 bg-black/30 px-3 py-1 text-xs uppercase tracking-[0.12em] text-white transition hover:bg-black/50"
+									>
+										<Instagram className="h-3 w-3" />
+										Instagram
+									</a>
+								)}
+							</div>
+						)}
+					</motion.div>
+				</motion.div>
+			)}
+		</AnimatePresence>
+	);
+
 	if (preview) {
-		return sectionContent;
+		return (
+			<>
+				{sectionContent}
+				{lightbox}
+			</>
+		);
 	}
 
 	return (
-		<main className="w-full px-3 pb-14 p-32 sm:px-5 lg:px-8">
+		<main className="w-full px-3 pb-14 pt-32 sm:px-5 lg:px-8">
 			<div className="mx-auto max-w-7xl">{sectionContent}</div>
+			{lightbox}
 		</main>
 	);
 };

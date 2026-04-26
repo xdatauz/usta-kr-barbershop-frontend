@@ -8,7 +8,8 @@ const AboutPage = lazy(() => import("../pages/About"));
 const ContactPage = lazy(() => import("../pages/Contact"));
 const UserPage = lazy(() => import("../pages/User"));
 const BookingPage = lazy(() => import("../pages/Booking"));
-const BarbersPage = lazy(() => import("../pages/Barbers"));
+const BarberListPage = lazy(() => import("../pages/Barbers/BarberListPage"));
+const BarberProfilePage = lazy(() => import("../pages/Barbers/BarberProfilePage"));
 const ArticlePage = lazy(() => import("../pages/Article"));
 const NotificationsPage = lazy(() => import("../pages/Notifications"));
 
@@ -45,8 +46,8 @@ const AppRouter = () => {
 					<Route path="contact" element={<ContactPage />} />
 					<Route path="booking" element={<BookingPage />} />
 					<Route path="articles" element={<ArticlePage />} />
-					<Route path="barbers" element={<BarbersPage />} />
-					<Route path="barbers/:barberId" element={<BarbersPage />} />
+					<Route path="barbers" element={<BarberListPage />} />
+					<Route path="barbers/:barberId" element={<BarberProfilePage />} />
 					<Route path="profile" element={<UserPage />} />
 					<Route path="notifications" element={<NotificationsPage />} />
 				</Route>

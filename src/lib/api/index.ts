@@ -24,5 +24,20 @@ export * from "./clients";
 export * from "./appointments";
 export * from "./checks";
 export * from "./payments";
-export * from "./reports";
+export {
+	getRevenueReportApi,
+	getTopServicesApi,
+	getBarberStatsReportApi,
+	getChannelStatsApi,
+	getCancelNoShowStatsApi,
+	getMonthlyOverviewApi,
+} from "./reports";
+export type {
+	RevenueReport,
+	TopService,
+	BarberStats as BarberStatsReport,
+	ChannelStats,
+	CancelNoShowStats,
+	MonthlyOverview,
+} from "./reports";
 export * from "./times";

@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Instagram, Send, Phone, MapPin } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { CONTACT } from "../../../constants/contact";
 
 const Footer = () => {
 	const { t } = useTranslation();
@@ -21,7 +22,7 @@ const Footer = () => {
 					<p className="max-w-xs text-sm text-slate-400">{t("footer.tagline")}</p>
 					<div className="flex gap-2">
 						<a
-							href="https://www.instagram.com/usta.barbershop"
+							href={CONTACT.instagram}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="rounded-lg border border-pink-500/30 bg-pink-500/10 p-2 text-pink-400 transition hover:border-pink-400 hover:bg-pink-500/20 hover:text-pink-300"
@@ -29,7 +30,7 @@ const Footer = () => {
 							<Instagram className="h-4 w-4" />
 						</a>
 						<a
-							href="https://t.me/usta_2019"
+							href={CONTACT.telegram}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="rounded-lg border border-sky-500/30 bg-sky-500/10 p-2 text-sky-400 transition hover:border-sky-400 hover:bg-sky-500/20 hover:text-sky-300"
@@ -67,14 +68,16 @@ const Footer = () => {
 						{t("contactSection.info.address")}
 					</p>
 					<div className="space-y-1">
-						<a href="tel:+82538135515" className="inline-flex items-center gap-2 hover:text-emerald-300">
-							<Phone className="h-4 w-4 text-emerald-400" />
-							053-813-5515
-						</a>
-						<a href="tel:+821046195515" className="inline-flex items-center gap-2 hover:text-emerald-300">
-							<Phone className="h-4 w-4 text-emerald-400" />
-							010-4619-5515
-						</a>
+						{CONTACT.phones.map((phone) => (
+							<a
+								key={phone.tel}
+								href={`tel:${phone.tel}`}
+								className="inline-flex items-center gap-2 hover:text-emerald-300"
+							>
+								<Phone className="h-4 w-4 text-emerald-400" />
+								{phone.display}
+							</a>
+						))}
 					</div>
 				</div>
 			</div>

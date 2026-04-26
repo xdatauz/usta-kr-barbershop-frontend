@@ -107,21 +107,25 @@ const UserPage = () => {
 	}
 
 	const tabs: { key: Tab; label: string; count: number }[] = [
-		{ key: "all", label: "All", count: counts.all },
-		{ key: "pending", label: "Pending", count: counts.pending },
-		{ key: "confirmed", label: "Confirmed", count: counts.confirmed },
-		{ key: "completed", label: "Completed", count: counts.completed },
-		{ key: "cancelled", label: "Cancelled", count: counts.cancelled },
+		{ key: "all", label: t("userPage.tabs.all"), count: counts.all },
+		{ key: "pending", label: t("userPage.tabs.pending"), count: counts.pending },
+		{ key: "confirmed", label: t("userPage.tabs.confirmed"), count: counts.confirmed },
+		{ key: "completed", label: t("userPage.tabs.completed"), count: counts.completed },
+		{ key: "cancelled", label: t("userPage.tabs.cancelled"), count: counts.cancelled },
 	];
 
 	/* -- authenticated -- */
 	return (
-		<main className="min-h-screen w-full bg-slate-50 px-4 pb-20 p-32 sm:px-6 lg:px-8 dark:bg-slate-950">
+		<main className="min-h-screen w-full bg-slate-50 px-4 pb-20 pt-32 sm:px-6 lg:px-8 dark:bg-slate-950">
 			<div className="mx-auto max-w-7xl">
 				<div className="flex flex-col gap-6 lg:flex-row lg:items-start">
 					{/* Sidebar */}
 					<UserSidebar
-						currentUser={currentUser}
+						currentUser={{
+							name: currentUser.name,
+							phone: currentUser.phone,
+							image: currentUser.image ?? null,
+						}}
 						locale={locale}
 						counts={counts}
 						onLogout={logout}
@@ -183,7 +187,9 @@ const UserPage = () => {
 											<CalendarDays className="h-7 w-7 text-slate-400 dark:text-slate-500" />
 										</div>
 										<p className="text-sm font-medium text-slate-600 dark:text-slate-400">
-											{tab === "all" ? t("userPage.bookingsEmpty") : `No ${tab} bookings`}
+											{tab === "all"
+												? t("userPage.bookingsEmpty")
+												: t("userPage.bookingsEmptyFiltered", { tab: t(`userPage.tabs.${tab}`) })}
 										</p>
 										{tab === "all" && (
 											<Link

@@ -9,6 +9,7 @@ export interface Service {
 	durationMinutes: number;
 	isActive: boolean;
 	imageUrl?: string | null;
+	isHeadBarberOnly?: boolean;
 }
 
 export interface ServiceCreatePayload {
@@ -34,6 +35,7 @@ const normalizeService = (raw: unknown): Service | null => {
 		durationMinutes: normalizeNumber(src.durationMinutes ?? src.durationMin ?? src.duration, 30),
 		isActive: src.isActive !== false,
 		imageUrl: typeof src.imageUrl === "string" ? src.imageUrl : null,
+		isHeadBarberOnly: src.isHeadBarberOnly === true,
 	};
 };
 

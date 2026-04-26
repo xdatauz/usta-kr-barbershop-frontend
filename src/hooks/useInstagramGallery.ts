@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { convertInstagramToGallery, fetchInstagramMedia, type InstagramMedia } from "../lib/api/instagram";
+import { convertInstagramToGallery, fetchInstagramMedia } from "../lib/api/instagram";
 
 interface UseInstagramGalleryReturn {
 	instagramMedia: ReturnType<typeof convertInstagramToGallery>;

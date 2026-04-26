@@ -1,18 +1,24 @@
 import AppRouter from "./router";
 import { useEffect, useState, useMemo } from "react";
 import { Helmet } from "react-helmet-async";
-import { motion } from "framer-motion";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Navbar from "../components/shared/Navbar";
 import Footer from "../components/shared/Footer";
 import ErrorBoundary from "../components/ErrorBoundary";
-import { ThemeProvider } from "../context/theme/theme-provider";
+import { CONTACT } from "../constants/contact";
 
-const SITE_URL = "https://ustabarber.pro";
+const SITE_URL = CONTACT.siteUrl;
 const LOCALES = ["uz", "kr", "ru", "en"] as const;
 const HREFLANG_MAP: Record<string, string> = { uz: "uz", kr: "ko", ru: "ru", en: "en" };
+const OG_LOCALE_MAP: Record<string, string> = {
+	uz: "uz_UZ",
+	ko: "ko_KR",
+	ru: "ru_RU",
+	en: "en_US",
+};
 
 const PAGE_META_KEYS: Record<string, { title: string; description: string }> = {
 	services: { title: "meta.servicesTitle", description: "meta.servicesDescription" },
@@ -39,8 +45,10 @@ function usePageSeo() {
 		const lang = i18n.resolvedLanguage || "uz";
 		const canonical = `${SITE_URL}${pathname}`;
 		const pathSuffix = page ? `/${page}` : "";
+		const hreflangLocale = HREFLANG_MAP[lang] || "uz";
+		const ogLocale = OG_LOCALE_MAP[hreflangLocale] || "uz_UZ";
 
-		return { title, description, lang, canonical, locale, page, pathSuffix };
+		return { title, description, lang, canonical, locale, page, pathSuffix, hreflangLocale, ogLocale, segments };
 	}, [pathname, t, i18n.resolvedLanguage]);
 }
 
@@ -49,11 +57,15 @@ function buildJsonLd(lang: string) {
 	return {
 		"@context": "https://schema.org",
 		"@type": "BarberShop",
-		"name": "Usta Barber",
+		"@id": `${SITE_URL}/#organization`,
+		"name": CONTACT.siteName,
 		"alternateName": isKo ? "우스타 바버샵" : "Usta Sartaroshxona",
 		"url": SITE_URL,
 		"logo": `${SITE_URL}/logos/main-logo.jpg`,
-		"image": `${SITE_URL}/images/home/1.webp`,
+		"image": [
+			`${SITE_URL}/logos/main-logo.jpg`,
+			`${SITE_URL}/images/home/1.webp`,
+		],
 		"description": isKo
 			? "한국에서 운영하는 우즈벡 프리미엄 바버샵. 현대적 헤어컷, 수염 스타일링, 스킨 페이드."
 			: "Koreyadagi o'zbek premium sartaroshxonasi. Zamonaviy soch turmagi, soqol parvarishi, skin fade.",
@@ -76,13 +88,42 @@ function buildJsonLd(lang: string) {
 		},
 		"address": {
 			"@type": "PostalAddress",
-			"streetAddress": "둥지로 84-1",
-			"addressLocality": "경산시",
-			"addressRegion": "경상북도",
-			"addressCountry": "KR"
+			"streetAddress": CONTACT.address.street,
+			"addressLocality": CONTACT.address.city,
+			"addressRegion": CONTACT.address.region,
+			"addressCountry": CONTACT.address.country
 		},
-		"telephone": "+82-53-813-5515",
-		"sameAs": []
+		// TODO: aniq koordinatalar bilan yangilash — hozir 경산시 taxminiy markaz
+		"geo": {
+			"@type": "GeoCoordinates",
+			"latitude": CONTACT.geo.latitude,
+			"longitude": CONTACT.geo.longitude
+		},
+		"telephone": CONTACT.phones[0].tel,
+		"sameAs": [CONTACT.instagram, CONTACT.telegram]
+	};
+}
+
+function buildBreadcrumbJsonLd(segments: string[], t: (key: string) => string) {
+	if (segments.length === 0) return null;
+
+	const items = segments.map((seg, i) => {
+		const isLocale = i === 0;
+		const navKey = `nav.${seg}`;
+		const translated = t(navKey);
+		const name = isLocale ? seg.toUpperCase() : translated !== navKey ? translated : seg;
+		return {
+			"@type": "ListItem",
+			"position": i + 1,
+			"name": name,
+			"item": `${SITE_URL}/${segments.slice(0, i + 1).join("/")}`,
+		};
+	});
+
+	return {
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		"itemListElement": items,
 	};
 }
 
@@ -93,8 +134,17 @@ export default function App() {
 	const seo = usePageSeo();
 
 	useEffect(() => {
-		const onScroll = () => setScrolled(window.scrollY > 20);
-		window.addEventListener("scroll", onScroll);
+		let ticking = false;
+		const onScroll = () => {
+			if (!ticking) {
+				window.requestAnimationFrame(() => {
+					setScrolled(window.scrollY > 20);
+					ticking = false;
+				});
+				ticking = true;
+			}
+		};
+		window.addEventListener("scroll", onScroll, { passive: true });
 		return () => window.removeEventListener("scroll", onScroll);
 	}, []);
 
@@ -103,14 +153,19 @@ export default function App() {
 	}, [location.pathname]);
 
 	const jsonLd = useMemo(() => buildJsonLd(seo.lang), [seo.lang]);
+	const breadcrumbJsonLd = useMemo(
+		() => buildBreadcrumbJsonLd(seo.segments, t),
+		[seo.segments, t],
+	);
+
+	const naverVerification = import.meta.env.VITE_NAVER_VERIFICATION;
 
 	return (
-		<>
+		<LazyMotion features={domAnimation}>
 			<Helmet key={`${i18n.resolvedLanguage}-${seo.page}`}>
 				<html lang={HREFLANG_MAP[seo.lang] || "uz"} />
 				<title>{seo.title}</title>
 				<meta name="description" content={seo.description} />
-				<meta name="keywords" content={t("meta.keywords")} />
 
 				{/* Canonical */}
 				<link rel="canonical" href={seo.canonical} />
@@ -129,8 +184,15 @@ export default function App() {
 				<meta property="og:image" content={`${SITE_URL}/logos/main-logo.jpg`} />
 				<meta property="og:image:width" content="1200" />
 				<meta property="og:image:height" content="630" />
-				<meta property="og:site_name" content="Usta Barber" />
-				<meta property="og:locale" content={HREFLANG_MAP[seo.lang] || "uz"} />
+				<meta property="og:site_name" content={CONTACT.siteName} />
+				<meta property="og:locale" content={seo.ogLocale} />
+				{LOCALES.filter((loc) => HREFLANG_MAP[loc] !== seo.hreflangLocale).map((loc) => (
+					<meta
+						key={`og-alt-${loc}`}
+						property="og:locale:alternate"
+						content={OG_LOCALE_MAP[HREFLANG_MAP[loc]]}
+					/>
+				))}
 
 				{/* Twitter Card */}
 				<meta name="twitter:card" content="summary_large_image" />
@@ -142,46 +204,50 @@ export default function App() {
 				<meta name="geo.region" content="KR" />
 				<meta name="geo.placename" content="South Korea" />
 
-				{/* Naver verification (placeholder) */}
-				{/* <meta name="naver-site-verification" content="YOUR_NAVER_CODE" /> */}
+				{/* Naver verification — configured via VITE_NAVER_VERIFICATION env var.
+				    Real code should be obtained from Naver Webmaster Tools. */}
+				{naverVerification && (
+					<meta name="naver-site-verification" content={naverVerification} />
+				)}
 
 				{/* Additional SEO */}
 				<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-				<meta name="author" content="Usta Barber" />
+				<meta name="author" content={CONTACT.siteName} />
 				<meta name="theme-color" content="#10b981" />
 
 				{/* JSON-LD Structured Data */}
 				<script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+				{breadcrumbJsonLd && (
+					<script type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</script>
+				)}
 			</Helmet>
 
-			<ThemeProvider>
-				<div className="flex min-h-screen w-full flex-col items-center bg-slate-100 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100">
-					<div className="main-container">
-						{/* HEADER */}
-						<div className="flex space-y-2 flex-col mx-auto w-full justify-center items-center">
-							<Navbar scrolled={scrolled} />
-						</div>
-						{/* MAIN CONTENT */}
-						<ErrorBoundary>
-							<motion.div
-								className="w-full"
-								initial={{ opacity: 0, scale: 0.95, y: 20 }}
-								animate={{ opacity: 1, scale: 1, y: 0 }}
-								exit={{ opacity: 0, scale: 0.95, y: 20 }}
-								transition={{ duration: 0.5, ease: "easeInOut" }}
-							>
-								<AppRouter />
-							</motion.div>
-						</ErrorBoundary>
-
-						{/* FOOTER */}
-						<div className="w-full border-t border-slate-300 dark:border-slate-800">
-							<Footer />
-						</div>
+			<div className="flex min-h-screen w-full flex-col items-center bg-slate-100 text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100">
+				<div className="main-container">
+					{/* HEADER */}
+					<div className="flex space-y-2 flex-col mx-auto w-full justify-center items-center">
+						<Navbar scrolled={scrolled} />
 					</div>
-					<ToastContainer position="top-right" autoClose={3500} closeOnClick pauseOnHover theme="colored" />
+					{/* MAIN CONTENT */}
+					<ErrorBoundary>
+						<m.div
+							className="w-full"
+							initial={{ opacity: 0, scale: 0.95, y: 20 }}
+							animate={{ opacity: 1, scale: 1, y: 0 }}
+							exit={{ opacity: 0, scale: 0.95, y: 20 }}
+							transition={{ duration: 0.5, ease: "easeInOut" }}
+						>
+							<AppRouter />
+						</m.div>
+					</ErrorBoundary>
+
+					{/* FOOTER */}
+					<div className="w-full border-t border-slate-300 dark:border-slate-800">
+						<Footer />
+					</div>
 				</div>
-			</ThemeProvider>
-		</>
+				<ToastContainer position="top-right" autoClose={3500} closeOnClick pauseOnHover theme="colored" />
+			</div>
+		</LazyMotion>
 	);
 }

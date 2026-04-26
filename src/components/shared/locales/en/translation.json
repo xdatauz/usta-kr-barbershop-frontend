@@ -294,7 +294,8 @@
 		"more": "More",
 		"loading": "Loading...",
 		"today": "Today",
-		"min": "min"
+		"min": "min",
+		"close": "Close"
 	},
 	"toast": {
 		"auth": {
@@ -368,6 +369,7 @@
 	"userPage": {
 		"guestDescription": "Please login to access your personal profile.",
 		"bookingsEmpty": "No bookings yet. Book your first appointment from Services.",
+		"bookingsEmptyFiltered": "No {{tab}} bookings",
 		"guestTitle": "Login required",
 		"title": "My Profile",
 		"subtitle": "Manage your basic account details and booking activity.",
@@ -382,12 +384,29 @@
 		"detailId": "Booking ID",
 		"detailStatus": "Status",
 		"detailClose": "Close",
-		"detailBookedAt": "Booked at"
+		"detailBookedAt": "Booked at",
+		"tabs": {
+			"all": "All",
+			"pending": "Pending",
+			"confirmed": "Confirmed",
+			"completed": "Completed",
+			"cancelled": "Cancelled"
+		}
 	},
 	"bookingPage": {
 		"eyebrow": "Reserve Your Chair",
 		"title": "Your Time. Your Barber. Your Call.",
 		"description": "Pick the day, pick the barber, and show up knowing the chair is ready and waiting for you.",
+		"stepper": {
+			"ariaLabel": "Booking steps",
+			"progress": "Step {{current}} of {{total}}",
+			"steps": {
+				"barber": "Barber",
+				"service": "Service",
+				"datetime": "Date & time",
+				"summary": "Confirm"
+			}
+		},
 		"badges": {
 			"fast": "Confirmed in seconds",
 			"time": "Times that fit your life",
@@ -444,6 +463,12 @@
 			"description": "No worries. Browse our barbers to find your match, or check out our services to see what catches your eye.",
 			"barbersCta": "View Barbers",
 			"servicesCta": "View Services"
+		},
+		"confirmation": {
+			"title": "Booking confirmed",
+			"description": "Your appointment is on the books. We have sent a confirmation to your phone.",
+			"reference": "Booking ref.",
+			"another": "Book another"
 		}
 	},
 	"barbersPage": {
@@ -452,6 +477,7 @@
 		"loadingList": "Loading barbers...",
 		"loadingProfile": "Loading barber profile...",
 		"notFound": "Barber not found.",
+		"newBadge": "New",
 		"reviews": "reviews",
 		"viewProfile": "View Profile",
 		"backToList": "Back to Barbers",
