@@ -110,17 +110,19 @@ function MiniCalendar({
 					type="button"
 					onClick={prevMonth}
 					disabled={!canGoPrev}
-					className="rounded-lg p-1 text-slate-500 transition hover:bg-slate-100 disabled:opacity-30 dark:text-slate-400 dark:hover:bg-slate-800"
+					aria-label="Previous month"
+					className="rounded-lg p-1 text-muted-foreground transition hover:bg-muted disabled:opacity-30"
 				>
 					<ChevronLeft className="h-4 w-4" />
 				</button>
-				<span className="text-xs font-bold text-slate-700 dark:text-slate-200">
+				<span className="text-xs font-bold text-foreground">
 					{monthLabel}
 				</span>
 				<button
 					type="button"
 					onClick={nextMonth}
-					className="rounded-lg p-1 text-slate-500 transition hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+					aria-label="Next month"
+					className="rounded-lg p-1 text-muted-foreground transition hover:bg-muted"
 				>
 					<ChevronRight className="h-4 w-4" />
 				</button>
@@ -128,7 +130,7 @@ function MiniCalendar({
 
 			<div className="grid grid-cols-7 gap-0.5 text-center">
 				{weekdayLabels.map((wd) => (
-					<div key={wd} className="py-1 text-[10px] font-semibold uppercase text-slate-400 dark:text-slate-500">
+					<div key={wd} className="py-1 text-[10px] font-semibold uppercase text-muted-foreground">
 						{wd}
 					</div>
 				))}
@@ -141,14 +143,14 @@ function MiniCalendar({
 							type="button"
 							disabled={isDisabled(day)}
 							onClick={() => onChange(toStr(day))}
-							className={`rounded-lg py-1.5 text-xs font-medium transition-all duration-150
+							className={`rounded-lg py-1.5 text-xs font-medium transition-colors duration-150
 								${isSelected(day)
-									? "bg-emerald-500 text-white font-bold shadow-sm shadow-emerald-500/25"
+									? "bg-primary text-primary-foreground font-bold"
 									: isToday(day)
-										? "bg-emerald-50 text-emerald-700 font-bold dark:bg-emerald-900/30 dark:text-emerald-300"
+										? "bg-primary-light text-primary font-bold"
 										: isDisabled(day)
-											? "text-slate-300 cursor-not-allowed dark:text-slate-600"
-											: "text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+											? "text-muted-foreground/50 cursor-not-allowed"
+											: "text-foreground hover:bg-muted"
 								}`}
 						>
 							{day}
@@ -162,8 +164,8 @@ function MiniCalendar({
 
 const FieldLabel = ({ icon, label }: { icon: React.ReactNode; label: string }) => (
 	<div className="mb-1.5 flex items-center gap-1.5">
-		<span className="text-emerald-500 dark:text-emerald-400">{icon}</span>
-		<span className="text-[11px] font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400">
+		<span className="text-primary">{icon}</span>
+		<span className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
 			{label}
 		</span>
 	</div>
@@ -216,27 +218,27 @@ export default function QuickBookWidget() {
 	const availableCount = slots.filter((s) => s.available).length;
 
 	const fieldBase =
-		"w-full rounded-xl border bg-white/90 px-4 py-3 text-sm text-slate-800 outline-none transition-all duration-200 dark:bg-slate-900/90 dark:text-slate-100";
+		"w-full rounded-xl border bg-input-bg px-4 py-3 text-base text-foreground outline-none transition-colors duration-200";
 	const fieldIdle =
-		"border-slate-200 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 dark:border-slate-700 dark:focus:border-emerald-500";
+		"border-input-border focus:border-primary focus:ring-2 focus:ring-ring";
 
 	return (
-		<div className="relative overflow-hidden rounded-2xl border border-slate-200/60 bg-white/80 shadow-lg backdrop-blur-sm dark:border-slate-700/50 dark:bg-slate-900/80">
-			{/* Top accent bar */}
-			<div className="h-1 w-full bg-gradient-to-r from-emerald-400 via-emerald-500 to-teal-500" />
+		<div className="relative overflow-hidden rounded-2xl border border-border bg-card">
+			{/* Top accent stripe — single solid emerald, no gradient */}
+			<div className="h-1 w-full bg-primary" />
 
 			<div className="p-5">
 				{/* Header */}
 				<div className="mb-4 flex items-center justify-between">
 					<div className="flex items-center gap-3">
-						<div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 shadow-sm">
-							<Scissors className="h-4 w-4 text-white" />
+						<div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary">
+							<Scissors className="h-4 w-4 text-primary-foreground" />
 						</div>
 						<div>
-							<p className="text-sm font-black tracking-wide text-slate-900 dark:text-slate-50">
+							<p className="text-sm font-black tracking-wide text-foreground">
 								{t("quickBook.title")}
 							</p>
-							<p className="text-[11px] text-slate-500 dark:text-slate-400">
+							<p className="text-[11px] text-muted-foreground">
 								{availableCount > 0
 									? `${availableCount} ${t("quickBook.slotsAvailable")}`
 									: t("quickBook.selectBarberHint")}
@@ -245,12 +247,12 @@ export default function QuickBookWidget() {
 					</div>
 
 					{/* Step dots */}
-					<div className="flex items-center gap-1.5">
+					<div className="flex items-center gap-1.5" aria-label="Booking steps">
 						{[!!barberId, !!date, !!time].map((done, i) => (
 							<div
 								key={i}
-								className={`h-2 w-2 rounded-full transition-all duration-300 ${
-									done ? "bg-emerald-500 scale-110" : "bg-slate-200 dark:bg-slate-700"
+								className={`h-2 w-2 rounded-full transition-colors duration-200 ${
+									done ? "bg-primary" : "bg-muted"
 								}`}
 							/>
 						))}
@@ -281,7 +283,7 @@ export default function QuickBookWidget() {
 						{/* Calendar */}
 						<div>
 							<FieldLabel icon={<Clock className="h-3.5 w-3.5" />} label={t("quickBook.labelDate")} />
-							<div className="rounded-xl border border-slate-200 bg-white/90 p-3 dark:border-slate-700 dark:bg-slate-900/90">
+							<div className="rounded-xl border border-border bg-card p-3">
 								<MiniCalendar value={date} onChange={setDate} min={todayStr()} intlLocale={intlLocale} />
 							</div>
 						</div>
@@ -307,11 +309,10 @@ export default function QuickBookWidget() {
 							<button
 								type="button"
 								onClick={handleBook}
-								className="group relative mt-4 flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-slate-900 to-slate-700 py-3 text-sm font-bold text-white shadow-md transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 dark:from-emerald-500 dark:to-teal-500 dark:text-slate-950 dark:hover:shadow-emerald-500/30"
+								className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 text-base font-bold text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 							>
-								<span className="absolute inset-0 translate-x-[-100%] bg-white/10 transition-transform duration-500 group-hover:translate-x-[100%]" />
 								{t("quickBook.bookNow")}
-								<ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+								<ArrowRight className="h-4 w-4" />
 							</button>
 						)}
 					</div>

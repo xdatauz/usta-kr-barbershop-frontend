@@ -61,7 +61,7 @@ const GalleryPage = ({ preview = false }: GalleryPageProps) => {
 	}, [lightboxIndex]);
 
 	const sectionContent = (
-		<section className="rounded-3xl border border-slate-300/70 bg-white/80 p-4 shadow-sm backdrop-blur sm:p-6 lg:p-8 dark:border-slate-700 dark:bg-slate-900/70">
+		<section className="rounded-3xl border border-border bg-card p-4 sm:p-6 lg:p-8">
 			<div className="flex items-start justify-between">
 				<div className="max-w-2xl space-y-2">
 					<p className="text-xs font-semibold uppercase tracking-[0.17em] text-emerald-700 dark:text-emerald-300">

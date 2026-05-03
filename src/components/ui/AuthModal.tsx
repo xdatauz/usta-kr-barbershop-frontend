@@ -75,10 +75,27 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 			return;
 		}
 
+		// Map a stable error code from the auth provider to a localised string.
+		// Falls back to the raw backend message, then to a generic translated label.
+		const localiseAuthError = (
+			code: string | undefined,
+			raw: string | undefined,
+			fallbackKey: string,
+		): string => {
+			if (code) {
+				const key = `auth.errors.${code}`;
+				const translated = t(key);
+				if (translated && translated !== key) return translated;
+			}
+			return raw && raw.trim() ? raw : t(fallbackKey);
+		};
+
 		if (mode === "login") {
 			const result = await login({ phone: form.phone.trim(), password: form.password });
 			if (!result.ok) {
-				toast.error(result.error || t("toast.auth.loginFailed"));
+				toast.error(
+					localiseAuthError(result.errorCode, result.error, "toast.auth.loginFailed"),
+				);
 				return;
 			}
 			toast.success(t("toast.auth.loginSuccess"));
@@ -97,7 +114,9 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 				password: form.password,
 			});
 			if (!result.ok) {
-				toast.error(result.error || t("toast.auth.signupFailed"));
+				toast.error(
+					localiseAuthError(result.errorCode, result.error, "toast.auth.signupFailed"),
+				);
 				return;
 			}
 			toast.success(t("toast.auth.signupSuccess"));
@@ -120,7 +139,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 			<div className="flex h-full items-start justify-center overflow-y-auto py-6 sm:items-center">
 				<div className="w-full max-w-sm overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-slate-700 dark:bg-slate-900">
 					{/* color bar */}
-					<div className="h-1.5 bg-gradient-to-r from-slate-900 to-slate-600 dark:from-emerald-500 dark:to-emerald-700" />
+					<div className="h-1.5 bg-primary" />
 
 					<div className="p-5">
 						{/* header */}

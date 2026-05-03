@@ -246,7 +246,15 @@ export default function App() {
 						<Footer />
 					</div>
 				</div>
-				<ToastContainer position="top-right" autoClose={3500} closeOnClick pauseOnHover theme="colored" />
+				<ToastContainer
+					position="top-right"
+					autoClose={3500}
+					closeOnClick
+					pauseOnHover
+					theme="colored"
+					role="status"
+					aria-live="polite"
+				/>
 			</div>
 		</LazyMotion>
 	);

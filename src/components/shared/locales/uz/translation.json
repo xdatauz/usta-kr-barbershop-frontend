@@ -348,6 +348,15 @@
 		"phoneInvalid": "Iltimos, to'g'ri Koreya telefon raqamini kiriting (masalan, 010-1234-5678).",
 		"confirmPassword": "Parolni tasdiqlang",
 		"passwordMismatch": "Parollar mos kelmaydi.",
+		"errors": {
+			"CONFLICT": "Bu telefon raqami allaqachon ro'yxatdan o'tgan.",
+			"INVALID_CREDENTIALS": "Telefon yoki parol noto'g'ri.",
+			"VALIDATION_ERROR": "Ma'lumotlar noto'g'ri to'ldirilgan. Iltimos, qaytadan tekshiring.",
+			"SERVER_ERROR": "Server xatosi. Birozdan keyin qayta urinib ko'ring.",
+			"REQUEST_FAILED": "Yuborib bo'lmadi. Qayta urinib ko'ring.",
+			"NETWORK_TIMEOUT": "So'rov vaqti tugadi. Internet aloqangizni tekshiring.",
+			"NETWORK_ERROR": "Serverga ulanib bo'lmadi. Internet aloqangizni tekshiring."
+		},
 		"loginHint": "Davom etish uchun telefon raqam va parolingizni kiriting.",
 		"signupHint": "Ism, telefon raqam va parol bilan ro'yxatdan o'ting.",
 		"switchToLogin": "Kirish",

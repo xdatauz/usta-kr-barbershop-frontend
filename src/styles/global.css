@@ -1,34 +1,147 @@
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	/* ── LIGHT MODE — Clean, modern, airy (matches admin tokens) ── */
+	:root {
+		--background: oklch(0.98 0.002 250);
+		--foreground: oklch(0.18 0.02 260);
+		--card: oklch(1 0 0);
+		--card-foreground: oklch(0.18 0.02 260);
+		--popover: oklch(1 0 0);
+		--popover-foreground: oklch(0.18 0.02 260);
+
+		/* Primary — Master Emerald */
+		--primary: oklch(0.696 0.17 162.48);
+		--primary-foreground: oklch(1 0 0);
+		--primary-hover: oklch(0.636 0.17 162.48);
+		--primary-light: oklch(0.696 0.17 162.48 / 8%);
+
+		/* Secondary */
+		--secondary: oklch(0.96 0.005 250);
+		--secondary-foreground: oklch(0.28 0.02 260);
+
+		/* Muted */
+		--muted: oklch(0.955 0.005 250);
+		--muted-foreground: oklch(0.42 0.02 260);
+
+		/* Accent */
+		--accent: oklch(0.955 0.005 250);
+		--accent-foreground: oklch(0.28 0.02 260);
+
+		/* Semantic */
+		--destructive: oklch(0.577 0.245 27.325);
+		--success: oklch(0.723 0.191 149.579);
+		--warning: oklch(0.795 0.184 86.047);
+		--info: oklch(0.715 0.143 215.221);
+
+		/* Form inputs */
+		--input-bg: oklch(1 0 0);
+		--input-border: oklch(0.88 0.005 250);
+		--input-focus: oklch(0.696 0.17 162.48);
+
+		/* Borders & rings */
+		--border: oklch(0.915 0.005 250);
+		--input: oklch(0.915 0.005 250);
+		--ring: oklch(0.696 0.17 162.48 / 25%);
+		--radius: 0.625rem;
+	}
+
+	/* ── DARK MODE — same hue family, lighter for surfaces ── */
+	.dark {
+		--background: oklch(0.16 0.01 260);
+		--foreground: oklch(0.93 0.005 250);
+		--card: oklch(0.2 0.012 260);
+		--card-foreground: oklch(0.93 0.005 250);
+		--popover: oklch(0.22 0.012 260);
+		--popover-foreground: oklch(0.93 0.005 250);
+
+		--primary: oklch(0.696 0.17 162.48);
+		--primary-foreground: oklch(1 0 0);
+		--primary-hover: oklch(0.636 0.17 162.48);
+		--primary-light: oklch(0.696 0.17 162.48 / 12%);
+
+		--secondary: oklch(0.25 0.012 260);
+		--secondary-foreground: oklch(0.88 0.005 250);
+
+		--muted: oklch(0.24 0.012 260);
+		--muted-foreground: oklch(0.6 0.015 250);
+
+		--accent: oklch(0.25 0.012 260);
+		--accent-foreground: oklch(0.88 0.005 250);
+
+		--destructive: oklch(0.65 0.22 25);
+		--success: oklch(0.696 0.17 162.48);
+		--warning: oklch(0.78 0.16 80);
+		--info: oklch(0.68 0.14 240);
+
+		--input-bg: oklch(0.22 0.012 260);
+		--input-border: oklch(0.32 0.015 260);
+		--input-focus: oklch(0.696 0.17 162.48);
+
+		--border: oklch(0.3 0.012 260);
+		--input: oklch(0.3 0.012 260);
+		--ring: oklch(0.696 0.17 162.48 / 35%);
+	}
 }
 
-body {
-	overflow-x: hidden;
-	overflow-y: auto;
-	scroll-behavior: smooth;
+@layer base {
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	html {
+		color-scheme: light;
+	}
+
+	html.dark {
+		color-scheme: dark;
+	}
+
+	body {
+		overflow-x: hidden;
+		overflow-y: auto;
+		scroll-behavior: smooth;
+		background-color: var(--background);
+		color: var(--foreground);
+		font-family: "Montserrat Variable", "Montserrat", system-ui, -apple-system, sans-serif;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	::-webkit-scrollbar {
+		width: 6px;
+		background-color: transparent;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background-color: var(--primary);
+		border-radius: 6px;
+		opacity: 0.6;
+	}
+
+	::-webkit-scrollbar-track {
+		background: transparent !important;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		opacity: 1;
+	}
 }
 
-::-webkit-scrollbar {
-	width: 6px;
-	background-color: transparent;
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
 }
-
-::-webkit-scrollbar-thumb {
-	background-color: #1d3557;
-	border-radius: 6px;
-}
-
-::-webkit-scrollbar-track {
-	background: transparent !important;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background-color: #555;
-	transition: background-color 0.3s ease;
-}
-
 
 .main-container {
 	width: 99%;
@@ -37,7 +150,7 @@ body {
 
 @media (min-width: 768px) {
 	.main-container {
-		max-width: 1400px;    
+		max-width: 1400px;
 	}
 }
 

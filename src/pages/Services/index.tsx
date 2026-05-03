@@ -32,6 +32,25 @@ const SERVICE_IMAGES = [
 	"/images/services/8.webp",
 ];
 
+// Name-keyed overrides so themed services (kids, beard, etc.) don't fall on
+// a round-robin slot that misrepresents them. Match against a lowercase
+// substring of the service name.
+const SERVICE_IMAGE_OVERRIDES: Array<{ match: string; image: string }> = [
+	{ match: "kid", image: "/images/services/kids.svg" },
+	{ match: "bola", image: "/images/services/kids.svg" },
+	{ match: "детск", image: "/images/services/kids.svg" },
+	{ match: "어린이", image: "/images/services/kids.svg" },
+];
+
+function pickServiceImage(name: string, index: number, custom?: string | null): string {
+	if (custom) return custom;
+	const lower = name.toLowerCase();
+	for (const o of SERVICE_IMAGE_OVERRIDES) {
+		if (lower.includes(o.match)) return o.image;
+	}
+	return SERVICE_IMAGES[index % SERVICE_IMAGES.length];
+}
+
 const ServicePage = ({ preview = false }: ServicePageProps) => {
 	const { t } = useTranslation();
 	const location = useLocation();
@@ -58,7 +77,7 @@ const ServicePage = ({ preview = false }: ServicePageProps) => {
 	const visibleServices = services;
 
 	const sectionContent = (
-		<section className="rounded-3xl border border-slate-300/70 bg-white/80 p-4 shadow-sm backdrop-blur sm:p-6 lg:p-8 dark:border-slate-700 dark:bg-slate-900/70">
+		<section className="rounded-3xl border border-border bg-card p-4 sm:p-6 lg:p-8">
 			<div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 				<div className="max-w-2xl space-y-2">
 					<p className="text-xs font-semibold uppercase tracking-[0.17em] text-emerald-700 dark:text-emerald-300">
@@ -104,7 +123,7 @@ const ServicePage = ({ preview = false }: ServicePageProps) => {
 				<div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
 					{visibleServices.map((service, index) => {
 						const Icon = SERVICE_ICONS[index % SERVICE_ICONS.length];
-						const image = service.imageUrl || SERVICE_IMAGES[index % SERVICE_IMAGES.length];
+						const image = pickServiceImage(service.name, index, service.imageUrl);
 
 						return (
 							<motion.article

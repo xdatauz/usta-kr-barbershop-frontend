@@ -103,8 +103,8 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 			<div
 				className={`transition-all duration-300 ${
 					scrolled
-						? "bg-white/95 shadow-md backdrop-blur-md dark:bg-slate-950/95"
-						: "bg-white/80 backdrop-blur-md dark:bg-slate-950/80"
+						? "bg-card border-b border-border shadow-sm"
+						: "bg-card"
 				}`}
 			>
 				<div className="navbar-container mx-auto flex items-center justify-between px-6 py-3">
@@ -207,6 +207,11 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 								closeMenuHandler={() => setIsOpen(false)}
 								logoutHandler={logout}
 							/>
+						</div>
+
+						{/* Language switcher */}
+						<div className="mt-2 flex items-center justify-center border-t border-slate-100 pt-4 dark:border-slate-800">
+							<LanguageSwitcher />
 						</div>
 
 						{/* Socials */}

@@ -21,9 +21,9 @@ const UserSidebar = ({ currentUser, locale, counts, onLogout }: UserSidebarProps
 		<aside className="w-full shrink-0 lg:w-72">
 			<div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
 				{/* cover + avatar */}
-				<div className="relative h-24 bg-gradient-to-br from-slate-900 to-slate-600 dark:from-emerald-900 dark:to-slate-800">
+				<div className="relative h-24 bg-primary">
 					<div className="absolute -bottom-9 left-1/2 -translate-x-1/2">
-						<div className="flex h-[72px] w-[72px] items-center justify-center rounded-full border-4 border-white bg-gradient-to-br from-emerald-500 to-emerald-700 text-lg font-black text-white shadow-lg dark:border-slate-900">
+						<div className="flex h-[72px] w-[72px] items-center justify-center rounded-full border-4 border-card bg-primary text-lg font-black text-primary-foreground">
 							{currentUser.image ? (
 								<img
 									src={currentUser.image}

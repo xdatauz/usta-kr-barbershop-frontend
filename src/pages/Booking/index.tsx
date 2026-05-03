@@ -190,7 +190,7 @@ const BookingPage = () => {
 	return (
 		<main className="w-full px-3 pb-14 pt-32 sm:px-5 lg:px-8">
 			<div className="mx-auto max-w-7xl space-y-6">
-				<section className="overflow-hidden flex rounded-3xl border border-slate-300/70 bg-gradient-to-br from-white to-slate-100 p-5 dark:border-slate-700 dark:from-slate-900 dark:to-slate-950 sm:p-7">
+				<section className="overflow-hidden flex rounded-3xl border border-border bg-card p-5 sm:p-7">
 					<div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
 						<div className="space-y-3">
 							<p className="text-xs font-semibold uppercase tracking-[0.17em] text-emerald-700 dark:text-emerald-300">

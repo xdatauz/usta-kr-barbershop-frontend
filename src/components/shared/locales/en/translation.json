@@ -348,6 +348,15 @@
 		"phoneInvalid": "Please enter a valid Korean phone number (e.g. 010-1234-5678).",
 		"confirmPassword": "Confirm password",
 		"passwordMismatch": "Passwords do not match.",
+		"errors": {
+			"CONFLICT": "This phone number is already registered.",
+			"INVALID_CREDENTIALS": "Phone number or password is incorrect.",
+			"VALIDATION_ERROR": "Some fields are invalid. Please check and try again.",
+			"SERVER_ERROR": "Server error. Please try again in a minute.",
+			"REQUEST_FAILED": "Request failed. Please try again.",
+			"NETWORK_TIMEOUT": "Request timed out. Check your internet connection.",
+			"NETWORK_ERROR": "Could not reach the server. Check your internet connection."
+		},
 		"loginHint": "Enter your phone number and password to continue.",
 		"signupHint": "Register with your name, phone number and password.",
 		"haveAccount": "Already have an account?",

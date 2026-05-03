@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="kidsBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a7f3d0"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#kidsBg)"/>
+  <!-- Kid silhouette -->
+  <g fill="#ffffff" opacity="0.95">
+    <circle cx="200" cy="135" r="48"/>
+    <path d="M152,135 a48,42 0 0,1 96,0 q-48,-26 -96,0 z"/>
+    <rect x="152" y="180" width="96" height="80" rx="20"/>
+  </g>
+  <!-- Scissors accent -->
+  <g stroke="#0f5132" stroke-width="3" stroke-linecap="round" fill="none">
+    <circle cx="312" cy="240" r="9"/>
+    <circle cx="340" cy="240" r="9"/>
+    <line x1="305" y1="232" x2="356" y2="200"/>
+    <line x1="333" y1="232" x2="356" y2="218"/>
+  </g>
+</svg>

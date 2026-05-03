@@ -63,6 +63,9 @@ const api = axios.create({
   baseURL: `${API_BASE_URL}/api/v1`,
   headers: { Accept: "application/json", "Content-Type": "application/json" },
   withCredentials: true,
+  // 30s ceiling so a hanging request fails loudly instead of leaving the user
+  // staring at a spinner for a minute (#18 in the audit).
+  timeout: 30_000,
 });
 
 // Attach auth token

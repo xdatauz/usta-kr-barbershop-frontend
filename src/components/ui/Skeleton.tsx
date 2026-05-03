@@ -1,14 +1,16 @@
-import type { HTMLAttributes } from "react";
+import { type HTMLAttributes } from "react";
+import { cn } from "@/lib/utils";
 
 interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
 	className?: string;
 }
 
-const Skeleton = ({ className = "", ...rest }: SkeletonProps) => (
+const Skeleton = ({ className, ...rest }: SkeletonProps) => (
 	<div
 		{...rest}
-		className={`animate-pulse rounded-lg bg-slate-200/80 dark:bg-slate-800/70 ${className}`}
+		className={cn("animate-pulse rounded-lg bg-muted", className)}
 	/>
 );
 
+export { Skeleton };
 export default Skeleton;

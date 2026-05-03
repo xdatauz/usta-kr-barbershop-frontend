@@ -68,7 +68,7 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 	};
 
 	const sectionContent = (
-		<section className="rounded-3xl border border-slate-300/70 bg-white/80 p-4 shadow-sm backdrop-blur sm:p-6 lg:p-8 dark:border-slate-700 dark:bg-slate-900/70">
+		<section className="rounded-3xl border border-border bg-card p-4 sm:p-6 lg:p-8">
 			<div className="max-w-2xl space-y-2">
 				<p className="text-xs font-semibold uppercase tracking-[0.17em] text-emerald-700 dark:text-emerald-300">
 					{t("contactSection.eyebrow")}
@@ -240,7 +240,10 @@ const ContactPage = ({ preview = false }: ContactPageProps) => {
 			>
 				<iframe
 					title={t("contactSection.info.mapLabel")}
-					src="https://www.google.com/maps?q=35.8251,128.7414&z=16&output=embed"
+					// Naming the place in the q= param keeps the marker pinned even if the
+					// user pans or searches inside the embed. Encoded via encodeURIComponent
+					// to handle the brand name correctly.
+					src={`https://www.google.com/maps?q=${encodeURIComponent("Usta Barbershop, 35.8251, 128.7414")}&z=16&output=embed`}
 					className="h-96 w-full border-0"
 					loading="lazy"
 					referrerPolicy="no-referrer-when-downgrade"

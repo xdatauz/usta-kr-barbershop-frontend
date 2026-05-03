@@ -84,7 +84,7 @@ const UserPage = () => {
 		return (
 			<main className="flex min-h-screen w-full items-center justify-center px-4 pt-20 pb-14">
 				<div className="w-full max-w-sm overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900">
-					<div className="h-1.5 bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 dark:from-emerald-600 dark:via-emerald-400 dark:to-emerald-600" />
+					<div className="h-1.5 bg-primary" />
 					<div className="p-8 text-center">
 						<div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-slate-100 ring-4 ring-slate-200 dark:bg-slate-800 dark:ring-slate-700">
 							<UserRound className="h-9 w-9 text-slate-400 dark:text-slate-500" />

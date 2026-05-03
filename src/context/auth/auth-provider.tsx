@@ -18,8 +18,8 @@ export interface AuthUser {
 interface AuthContextValue {
 	currentUser: AuthUser | null;
 	isAuthLoading: boolean;
-	login: (payload: { phone: string; password: string }) => Promise<{ ok: boolean; error?: string }>;
-	signup: (payload: { name: string; phone: string; password: string }) => Promise<{ ok: boolean; error?: string }>;
+	login: (payload: { phone: string; password: string }) => Promise<{ ok: boolean; error?: string; errorCode?: string }>;
+	signup: (payload: { name: string; phone: string; password: string }) => Promise<{ ok: boolean; error?: string; errorCode?: string }>;
 	logout: () => void;
 }
 
@@ -115,6 +115,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		localStorage.setItem(CURRENT_USER_STORAGE_KEY, JSON.stringify(user));
 	};
 
+	// Pull a stable error code so AuthModal can map it to a localised string.
+	// Network/timeout errors don't have an HTTP status — surface them as
+	// `NETWORK_ERROR` so the UI can show a clear "couldn't reach the server"
+	// message instead of an English axios stack.
+	const extractErrorCode = (error: unknown): string | undefined => {
+		if (isApiError(error)) {
+			if (error.code) return error.code;
+			if (error.status === 409) return "CONFLICT";
+			if (error.status === 401) return "INVALID_CREDENTIALS";
+			if (error.status === 400) return "VALIDATION_ERROR";
+			if (error.status >= 500) return "SERVER_ERROR";
+			return "REQUEST_FAILED";
+		}
+		const e = error as { code?: string; message?: string } | null;
+		if (e?.code === "ECONNABORTED" || e?.message?.toLowerCase().includes("timeout"))
+			return "NETWORK_TIMEOUT";
+		return "NETWORK_ERROR";
+	};
+
 	const login = async ({ phone, password }: { phone: string; password: string }) => {
 		setIsAuthLoading(true);
 		try {
@@ -124,8 +143,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			persistUser(user);
 			return { ok: true };
 		} catch (error) {
-			const errorMessage = isApiError(error) ? error.message : undefined;
-			return { ok: false, error: errorMessage };
+			return {
+				ok: false,
+				errorCode: extractErrorCode(error),
+				error: isApiError(error) ? error.message : undefined,
+			};
 		} finally {
 			setIsAuthLoading(false);
 		}
@@ -140,8 +162,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			persistUser(user);
 			return { ok: true };
 		} catch (error) {
-			const errorMessage = isApiError(error) ? error.message : undefined;
-			return { ok: false, error: errorMessage };
+			return {
+				ok: false,
+				errorCode: extractErrorCode(error),
+				error: isApiError(error) ? error.message : undefined,
+			};
 		} finally {
 			setIsAuthLoading(false);
 		}
