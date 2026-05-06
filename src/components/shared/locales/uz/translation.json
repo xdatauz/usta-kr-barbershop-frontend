@@ -438,7 +438,7 @@
 			},
 			"placeholders": {
 				"name": "Ismingizni kiriting",
-				"phone": "010-1234-5678",
+				"phone": "+998 90 123 45 67 yoki 010-1234-5678",
 				"barber": "Barberni tanlang",
 				"service": "Xizmatni tanlang",
 				"time": "Vaqtni tanlang",
@@ -453,6 +453,15 @@
 				"validationError": "Iltimos, barcha majburiy maydonlarni to'ldiring.",
 				"sendFail": "Bron yuborishda xatolik yuz berdi.",
 				"configError": "Server sozlamalarida xatolik."
+			},
+			"validation": {
+				"nameRequired": "Ismni kiriting.",
+				"phoneRequired": "Telefon raqamini kiriting.",
+				"phoneInvalid": "Telefon raqami noto'g'ri formatda.",
+				"barberRequired": "Sartaroshni tanlang.",
+				"serviceRequired": "Xizmatni tanlang.",
+				"dateRequired": "Sanani tanlang.",
+				"timeRequired": "Vaqtni tanlang."
 			}
 		},
 		"hairstyles": {

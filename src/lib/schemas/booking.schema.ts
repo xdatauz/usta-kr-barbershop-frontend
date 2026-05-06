@@ -1,10 +1,11 @@
 import { z } from "zod";
 
 /**
- * Korean phone number format: 010-1234-5678 or 01012345678
- * Accepts both formatted (with hyphens) and raw digits.
+ * Phone format: accept Uzbek (+998…) and Korean (010-…) variants, with or
+ * without spaces, dashes, or parentheses. We just require 9–15 digits total
+ * and an optional leading "+".
  */
-const koreanPhoneRegex = /^01[016789]-?\d{3,4}-?\d{4}$/;
+const phoneRegex = /^\+?[\d\s().-]{9,20}$/;
 
 export const bookingFormSchema = z.object({
 	name: z
@@ -15,7 +16,7 @@ export const bookingFormSchema = z.object({
 		.string()
 		.trim()
 		.min(1, "bookingPage.form.validation.phoneRequired")
-		.regex(koreanPhoneRegex, "bookingPage.form.validation.phoneInvalid"),
+		.regex(phoneRegex, "bookingPage.form.validation.phoneInvalid"),
 	barberId: z
 		.string()
 		.min(1, "bookingPage.form.validation.barberRequired"),

@@ -453,6 +453,15 @@
 				"validationError": "필수 항목을 모두 입력해주세요.",
 				"sendFail": "예약 전송에 실패했습니다.",
 				"configError": "서버 설정 오류입니다."
+			},
+			"validation": {
+				"nameRequired": "이름을 입력해주세요.",
+				"phoneRequired": "전화번호를 입력해주세요.",
+				"phoneInvalid": "전화번호 형식이 올바르지 않습니다.",
+				"barberRequired": "바버를 선택해주세요.",
+				"serviceRequired": "서비스를 선택해주세요.",
+				"dateRequired": "날짜를 선택해주세요.",
+				"timeRequired": "시간을 선택해주세요."
 			}
 		},
 		"hairstyles": {

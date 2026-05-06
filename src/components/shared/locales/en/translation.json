@@ -453,6 +453,15 @@
 				"validationError": "Please fill in all required fields.",
 				"sendFail": "Failed to send booking. Please try again.",
 				"configError": "Server configuration error."
+			},
+			"validation": {
+				"nameRequired": "Please enter your name.",
+				"phoneRequired": "Please enter a phone number.",
+				"phoneInvalid": "Phone number format is invalid.",
+				"barberRequired": "Please select a barber.",
+				"serviceRequired": "Please select a service.",
+				"dateRequired": "Please pick a date.",
+				"timeRequired": "Please pick a time."
 			}
 		},
 		"hairstyles": {
