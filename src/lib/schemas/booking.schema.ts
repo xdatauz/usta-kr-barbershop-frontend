@@ -1,11 +1,12 @@
 import { z } from "zod";
 
 /**
- * Phone format: accept Uzbek (+998…) and Korean (010-…) variants, with or
- * without spaces, dashes, or parentheses. We just require 9–15 digits total
- * and an optional leading "+".
+ * Korean phone format: 010-1234-5678 / 01012345678 / 011-123-4567, etc.
+ * Mobile prefixes 010, 011, 016, 017, 018, 019 are accepted. Dashes and
+ * spaces are optional. International form `+82 10-1234-5678` is also
+ * accepted so re-edited values from the server still pass validation.
  */
-const phoneRegex = /^\+?[\d\s().-]{9,20}$/;
+const phoneRegex = /^(\+?82[\s-]?)?0?1[016789][\s-]?\d{3,4}[\s-]?\d{4}$/;
 
 export const bookingFormSchema = z.object({
 	name: z

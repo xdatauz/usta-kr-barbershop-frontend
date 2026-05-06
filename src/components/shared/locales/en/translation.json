@@ -457,7 +457,7 @@
 			"validation": {
 				"nameRequired": "Please enter your name.",
 				"phoneRequired": "Please enter a phone number.",
-				"phoneInvalid": "Phone number format is invalid.",
+				"phoneInvalid": "Please enter a Korean phone number (e.g. 010-1234-5678).",
 				"barberRequired": "Please select a barber.",
 				"serviceRequired": "Please select a service.",
 				"dateRequired": "Please pick a date.",

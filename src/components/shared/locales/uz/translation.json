@@ -438,7 +438,7 @@
 			},
 			"placeholders": {
 				"name": "Ismingizni kiriting",
-				"phone": "+998 90 123 45 67 yoki 010-1234-5678",
+				"phone": "010-1234-5678",
 				"barber": "Barberni tanlang",
 				"service": "Xizmatni tanlang",
 				"time": "Vaqtni tanlang",
@@ -457,7 +457,7 @@
 			"validation": {
 				"nameRequired": "Ismni kiriting.",
 				"phoneRequired": "Telefon raqamini kiriting.",
-				"phoneInvalid": "Telefon raqami noto'g'ri formatda.",
+				"phoneInvalid": "Telefon raqamini Koreya formatida kiriting (masalan, 010-1234-5678).",
 				"barberRequired": "Sartaroshni tanlang.",
 				"serviceRequired": "Xizmatni tanlang.",
 				"dateRequired": "Sanani tanlang.",

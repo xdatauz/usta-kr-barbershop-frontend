@@ -6,6 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { type BookingStyle } from "../../lib/api/bookings";
 import { isApiError } from "../../lib/api/client";
+import { toInternationalKoreanPhone } from "../../lib/phone";
 import { useAuth } from "../../context/auth/auth-provider";
 import { useBarbers, useBookingSlots, useCreateBooking, usePublicServices } from "../../hooks";
 import { bookingFormSchema } from "../../lib/schemas/booking.schema";
@@ -152,7 +153,7 @@ const BookingPage = () => {
 		try {
 			const response = (await createBookingMutation.mutateAsync({
 				name: result.data.name,
-				phone: result.data.phone,
+				phone: toInternationalKoreanPhone(result.data.phone),
 				barberId: result.data.barberId,
 				date: result.data.date,
 				time: result.data.time,

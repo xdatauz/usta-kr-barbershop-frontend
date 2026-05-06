@@ -457,7 +457,7 @@
 			"validation": {
 				"nameRequired": "이름을 입력해주세요.",
 				"phoneRequired": "전화번호를 입력해주세요.",
-				"phoneInvalid": "전화번호 형식이 올바르지 않습니다.",
+				"phoneInvalid": "한국 전화번호를 입력해 주세요 (예: 010-1234-5678).",
 				"barberRequired": "바버를 선택해주세요.",
 				"serviceRequired": "서비스를 선택해주세요.",
 				"dateRequired": "날짜를 선택해주세요.",

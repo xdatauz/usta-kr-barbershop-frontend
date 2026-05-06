@@ -4,6 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { clientLogout, getClientMeApi, loginClientApi, registerClientApi } from "../../lib/api/client-auth";
 import { clearStoredTokens, isApiError } from "../../lib/api/client";
 import { StaffRole } from "../../lib/enums/staff-role.enum";
+import { toInternationalKoreanPhone } from "../../lib/phone";
 
 export type AuthUserType = StaffRole | "CLIENT";
 
@@ -137,7 +138,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const login = async ({ phone, password }: { phone: string; password: string }) => {
 		setIsAuthLoading(true);
 		try {
-			const result = await loginClientApi({ phone: phone.trim(), password });
+			const result = await loginClientApi({ phone: toInternationalKoreanPhone(phone), password });
 			const user = clientToAuthUser(result.client);
 			setCurrentUser(user);
 			persistUser(user);
@@ -156,7 +157,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const signup = async ({ name, phone, password }: { name: string; phone: string; password: string }) => {
 		setIsAuthLoading(true);
 		try {
-			const result = await registerClientApi({ fullName: name.trim(), phone: phone.trim(), password });
+			const result = await registerClientApi({ fullName: name.trim(), phone: toInternationalKoreanPhone(phone), password });
 			const user = clientToAuthUser(result.client);
 			setCurrentUser(user);
 			persistUser(user);
